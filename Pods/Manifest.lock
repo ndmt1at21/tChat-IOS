@@ -52,6 +52,7 @@ PODS:
   - Hero (1.5.0)
   - IQKeyboardManagerSwift (6.5.6)
   - leveldb-library (1.22)
+  - lottie-ios (3.1.9)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -67,6 +68,7 @@ DEPENDENCIES:
   - FloatingPanel
   - Hero
   - IQKeyboardManagerSwift
+  - lottie-ios
   - SkyFloatingLabelTextField
 
 SPEC REPOS:
@@ -84,6 +86,7 @@ SPEC REPOS:
     - Hero
     - IQKeyboardManagerSwift
     - leveldb-library
+    - lottie-ios
     - nanopb
     - PromisesObjC
     - SkyFloatingLabelTextField
@@ -102,10 +105,11 @@ SPEC CHECKSUMS:
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
 
-PODFILE CHECKSUM: 00fc619e8edf9d704b8bd55c12a5a8c7ebf1ecfa
+PODFILE CHECKSUM: 0f413df06a0c741296d239eb38e0e57d714e0d08
 
 COCOAPODS: 1.10.0

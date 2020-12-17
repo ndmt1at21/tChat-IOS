@@ -12,4 +12,5 @@ target 'MeloApp' do
 	pod 'IQKeyboardManagerSwift'
 	pod 'Hero'
 	pod 'SkyFloatingLabelTextField'
+	pod 'lottie-ios'
 end

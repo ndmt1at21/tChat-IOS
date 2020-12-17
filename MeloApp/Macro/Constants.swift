@@ -14,4 +14,9 @@ struct K {
         static let contactCell = "ContactCell"
         static let onlineFriend = "OnlineFriendCell"
     }
+    
+    struct segueID {
+        static let loginToConversation = "LoginToConversations"
+        static let registerToConversation = "RegisterToConversation"
+    }
 }

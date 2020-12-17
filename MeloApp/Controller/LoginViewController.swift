@@ -46,8 +46,6 @@ class LoginViewController: UIViewController {
         if let email = emailTextField.text {
             if !email.isValidEmail() {
                errorMsgEmail = "Email không đúng định dạng"
-            } else {
-                // Login
             }
         } else {
             errorMsgEmail = "Bạn quên chưa nhập email ^^"
@@ -63,9 +61,35 @@ class LoginViewController: UIViewController {
         if errorMsgEmail.count > 0 {
             emailTextField.errorMessage = errorMsgEmail
             return
+        } else if errorMsgPwd.count > 0 {
+            self.passwordTextField.errorMessage = errorMsgPwd
+            return
         }
 
-        self.passwordTextField.errorMessage = errorMsgPwd
+        handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+            if err != nil {
+                self.emailTextField.errorMessage = err
+                self.emailTextField.textErrorColor = self.emailTextField.textColor
+                return
+            }
+            
+            self.performSegue(withIdentifier: K.segueID.loginToConversation, sender: self)
+        }
+    }
+    
+    func handleLogin(email: String, password: String, completion: @escaping (_ error: String?) -> Void) {
+        
+        let loadingIndicator = LoadingIndicator()
+        loadingIndicator.startAnimation()
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+            loadingIndicator.stopAnimation()
+            if authResult?.user.uid != nil {
+                return completion(nil)
+            }
+            
+            return completion("Sai tên đăng nhập hoặc mật khẩu")
+        }
     }
     
     @IBAction func textFieldDidChange(_ sender: Any) {

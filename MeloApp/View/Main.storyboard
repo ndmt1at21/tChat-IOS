@@ -43,7 +43,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADT-tm-fQS" userLabel="View2">
                                                 <rect key="frame" x="0.0" y="309.5" width="414" height="350"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q6Q-4Y-Ahk" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="dfdfhnjhjh@gmail.com" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q6Q-4Y-Ahk" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                         <rect key="frame" x="20" y="80" width="374" height="50"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -85,7 +85,7 @@
                                                             <action selector="textFieldDidChange:" destination="FIh-sm-ZLK" eventType="editingChanged" id="MUE-Wh-mew"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c4G-kj-tOa" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12345678" placeholder="Mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c4G-kj-tOa" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                         <rect key="frame" x="20" y="150" width="374" height="50"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -217,6 +217,7 @@
                         <outlet property="loginButton" destination="uy2-9W-rTZ" id="R7o-SB-NfG"/>
                         <outlet property="passwordTextField" destination="c4G-kj-tOa" id="Xxa-Bc-HGh"/>
                         <outlet property="registerButton" destination="QdV-Td-4hE" id="Qf8-3C-jya"/>
+                        <segue destination="5uT-cX-yoe" kind="show" identifier="LoginToConversations" id="sHa-N8-ieN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jvp-Tv-vx8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -309,6 +310,9 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="selectedTitle" value="Email"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="Email"/>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="tEw-CD-L4u" eventType="editingChanged" id="Rmo-47-ch1"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="D4V-Zj-eW2" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                         <rect key="frame" x="20" y="150" width="374" height="50"/>
@@ -355,6 +359,9 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="selectedTitle" value="Tên"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="Tên"/>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="tEw-CD-L4u" eventType="editingChanged" id="nod-z8-4LK"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="6TR-p3-rhi" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                         <rect key="frame" x="20" y="220" width="374" height="50"/>
@@ -362,7 +369,7 @@
                                                             <constraint firstAttribute="height" constant="50" id="2D6-xS-xqP"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                                 <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -411,7 +418,7 @@
                                                             <constraint firstAttribute="height" constant="50" id="FhL-DL-Xaq"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                                 <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -450,6 +457,9 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="selectedTitle" value="Xác nhận mật khẩu"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="Xác nhận mật khẩu"/>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="tEw-CD-L4u" eventType="editingChanged" id="2XP-l5-2Zu"/>
+                                                        </connections>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="385-iI-ZX1">
                                                         <rect key="frame" x="20" y="380" width="374" height="50"/>
@@ -464,6 +474,7 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="loginButtonPressed:" destination="FIh-sm-ZLK" eventType="touchUpInside" id="tWg-Nb-yVm"/>
+                                                            <action selector="registerButtonPressed:" destination="tEw-CD-L4u" eventType="touchUpInside" id="yXi-cw-nGp"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -526,11 +537,12 @@
                         <outlet property="passwordTextField" destination="6TR-p3-rhi" id="ov7-n3-z7n"/>
                         <outlet property="registerButton" destination="385-iI-ZX1" id="e6Z-JT-uBC"/>
                         <outlet property="retypePasswordTextField" destination="bLe-6x-Zw6" id="qjH-hn-SRH"/>
+                        <segue destination="5uT-cX-yoe" kind="show" identifier="RegisterToConversation" id="QFd-eh-g93"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZo-Kd-JVo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3135" y="301"/>
+            <point key="canvasLocation" x="3140.579710144928" y="669.64285714285711"/>
         </scene>
         <!--Item-->
         <scene sceneID="N1Z-Uk-T5Z">
@@ -570,7 +582,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G8v-R0-aJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3135" y="-396"/>
+            <point key="canvasLocation" x="3143" y="-28"/>
         </scene>
         <!--Danh bạ-->
         <scene sceneID="2af-YC-kSM">
@@ -603,7 +615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IVH-MT-AHG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5150.7246376811599" y="-36.160714285714285"/>
+            <point key="canvasLocation" x="5028" y="335"/>
         </scene>
         <!--Họ tên-->
         <scene sceneID="ykc-RE-NqH">
@@ -736,7 +748,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfj-bX-175" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5152.1739130434789" y="-770.08928571428567"/>
+            <point key="canvasLocation" x="5028" y="-382"/>
         </scene>
         <!--Chat-->
         <scene sceneID="52E-ZF-dri">
@@ -755,7 +767,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kAt-V6-eCd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4242.0289855072469" y="-770.08928571428567"/>
+            <point key="canvasLocation" x="4100" y="-382"/>
         </scene>
         <!--Danh bạ-->
         <scene sceneID="pc0-Zc-QN0">
@@ -763,6 +775,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eUU-BY-4U2" customClass="NavigationBarController" customModule="MeloApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Danh bạ" image="person.2.fill" catalog="system" id="Lmn-wC-rvD"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="1jn-YL-fxp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jl2-cb-cO2">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -774,29 +787,32 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLJ-A1-uMU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4240.579710144928" y="-36.160714285714285"/>
+            <point key="canvasLocation" x="4100" y="335"/>
         </scene>
     </scenes>
     <designables>
         <designable name="6TR-p3-rhi">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="143.5" height="34"/>
         </designable>
         <designable name="D4V-Zj-eW2">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="132.5" height="34"/>
         </designable>
         <designable name="G8A-fN-baK">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="178" height="34"/>
         </designable>
         <designable name="Q6Q-4Y-Ahk">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="176" height="22"/>
         </designable>
         <designable name="bLe-6x-Zw6">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="164.5" height="34"/>
         </designable>
         <designable name="c4G-kj-tOa">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="81" height="21"/>
         </designable>
     </designables>
+    <inferredMetricsTieBreakers>
+        <segue reference="sHa-N8-ieN"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="logo-fill" width="1200" height="1200"/>
         <image name="message.fill" catalog="system" width="128" height="113"/>

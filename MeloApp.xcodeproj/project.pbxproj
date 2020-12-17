@@ -33,6 +33,9 @@
 		5A70C1C92588F71D0048560F /* TypeDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A70C1C82588F71D0048560F /* TypeDef.swift */; };
 		5A70C1CC2588F88D0048560F /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A70C1CB2588F88D0048560F /* UserAction.swift */; };
 		5A70C1CF25890EBC0048560F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A70C1CE25890EBC0048560F /* Extension.swift */; };
+		5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */; };
+		5A754A11258BA80100A3B21D /* LoadingIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A754A10258BA80100A3B21D /* LoadingIndicator.xib */; };
+		5A754A1C258BBC4000A3B21D /* loadingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A754A1B258BBC4000A3B21D /* loadingAnimation.json */; };
 		5AC65940258A644800155FB5 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC6593F258A644800155FB5 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		5A70C1C82588F71D0048560F /* TypeDef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDef.swift; sourceTree = "<group>"; };
 		5A70C1CB2588F88D0048560F /* UserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAction.swift; sourceTree = "<group>"; };
 		5A70C1CE25890EBC0048560F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		5A754A10258BA80100A3B21D /* LoadingIndicator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingIndicator.xib; sourceTree = "<group>"; };
+		5A754A1B258BBC4000A3B21D /* loadingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loadingAnimation.json; sourceTree = SOURCE_ROOT; };
 		5AC6593F258A644800155FB5 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		CF6C6652C0B662584432F7D6 /* Pods_MeloApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFF9234769C530D7763BC809 /* Pods-MeloApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloApp.debug.xcconfig"; path = "Target Support Files/Pods-MeloApp/Pods-MeloApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,7 +125,7 @@
 				5A70C1C72588F7050048560F /* Macro */,
 				5A4C35A82587517C00AAED51 /* AppDelegate.swift */,
 				5A4C35AA2587517C00AAED51 /* SceneDelegate.swift */,
-				5A4C35B12587517E00AAED51 /* Assets.xcassets */,
+				5A754A18258BBBEC00A3B21D /* Assets */,
 				5A4C35B62587517E00AAED51 /* Info.plist */,
 				5A70C19A2588F1230048560F /* GoogleService-Info.plist */,
 				5A2666DC258993A500669B03 /* eercast.ttf */,
@@ -172,6 +178,7 @@
 				5A506570258B1114000A97F2 /* LauchScreen */,
 				5A50656F258B1100000A97F2 /* View Cell */,
 				5A2666ED25899DF500669B03 /* Main.storyboard */,
+				5A754A10258BA80100A3B21D /* LoadingIndicator.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +191,7 @@
 				5AC6593F258A644800155FB5 /* RegisterViewController.swift */,
 				5A506549258AEAD1000A97F2 /* CoversationsViewController.swift */,
 				5A50654C258AF796000A97F2 /* ContactsViewController.swift */,
+				5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */,
 				5A506574258B5661000A97F2 /* TabBarController.swift */,
 				5A506577258B6467000A97F2 /* NavigationBarController.swift */,
 			);
@@ -205,6 +213,23 @@
 				5A70C1CE25890EBC0048560F /* Extension.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		5A754A18258BBBEC00A3B21D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5A754A19258BBBFA00A3B21D /* Animation */,
+				5A4C35B12587517E00AAED51 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		5A754A19258BBBFA00A3B21D /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				5A754A1B258BBC4000A3B21D /* loadingAnimation.json */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		EB8ECEC8FD5E991F7F356E5E /* Frameworks */ = {
@@ -276,12 +301,14 @@
 			files = (
 				5A2666EE25899DF500669B03 /* Main.storyboard in Resources */,
 				5A2666DD258993A500669B03 /* eercast.ttf in Resources */,
+				5A754A11258BA80100A3B21D /* LoadingIndicator.xib in Resources */,
 				5A50656D258B10F0000A97F2 /* OnlineFriendCell.xib in Resources */,
 				5A4C35B52587517E00AAED51 /* LaunchScreen.storyboard in Resources */,
 				5A70C19B2588F1230048560F /* GoogleService-Info.plist in Resources */,
 				5A506559258B01D4000A97F2 /* ConversationPrivateCell.xib in Resources */,
 				5A4C35B22587517E00AAED51 /* Assets.xcassets in Resources */,
 				5A506567258B0E45000A97F2 /* ContactCell.xib in Resources */,
+				5A754A1C258BBC4000A3B21D /* loadingAnimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +378,7 @@
 				5A50655D258B0D1A000A97F2 /* Constants.swift in Sources */,
 				5A70C1C22588F4CB0048560F /* Group.swift in Sources */,
 				5A50656C258B10F0000A97F2 /* OnlineFriendCell.swift in Sources */,
+				5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */,
 				5A4C35AB2587517C00AAED51 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
