@@ -13,10 +13,14 @@ struct K {
         static let conversationGroup = "ConversationGroupCell"
         static let contactCell = "ContactCell"
         static let onlineFriend = "OnlineFriendCell"
+        static let bubbleChatFromMe = "BubbleChatFromMe"
+        static let bubbleChatFromFriend = "BubbleChatFromFriend"
     }
     
     struct segueID {
         static let loginToConversation = "LoginToConversations"
         static let registerToConversation = "RegisterToConversation"
+        static let newMessageToChatLog = "NewMessageToChatLog"
+        static let conversationToChatLog = "ConversationToChatLog"
     }
 }

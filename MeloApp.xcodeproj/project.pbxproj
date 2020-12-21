@@ -35,8 +35,18 @@
 		5A70C1CF25890EBC0048560F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A70C1CE25890EBC0048560F /* Extension.swift */; };
 		5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */; };
 		5A754A11258BA80100A3B21D /* LoadingIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A754A10258BA80100A3B21D /* LoadingIndicator.xib */; };
-		5A754A1C258BBC4000A3B21D /* loadingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A754A1B258BBC4000A3B21D /* loadingAnimation.json */; };
+		5A791833258C867B009051BA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A791832258C867B009051BA /* AuthController.swift */; };
+		5A791837258C9881009051BA /* UserAcitivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A791836258C9881009051BA /* UserAcitivity.swift */; };
+		5A79183B258CE4E3009051BA /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79183A258CE4E3009051BA /* NewMessageViewController.swift */; };
+		5A79183F258CF0F2009051BA /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79183E258CF0F2009051BA /* DatabaseController.swift */; };
+		5A7F8F34258C26C5005092FD /* loadingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A7F8F33258C26C5005092FD /* loadingAnimation.json */; };
+		5A7F8F52258C3243005092FD /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F8F51258C3243005092FD /* CurrentUser.swift */; };
+		5A992F2E258F349700BEF630 /* BubbleChatFromMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A992F2C258F349700BEF630 /* BubbleChatFromMe.swift */; };
+		5A992F2F258F349700BEF630 /* BubbleChatFromFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A992F2D258F349700BEF630 /* BubbleChatFromFriend.xib */; };
+		5A992F33258F34AD00BEF630 /* BubbleChatFromFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A992F31258F34AD00BEF630 /* BubbleChatFromFriend.swift */; };
+		5A992F34258F34AD00BEF630 /* BubbleChatFromMe.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A992F32258F34AD00BEF630 /* BubbleChatFromMe.xib */; };
 		5AC65940258A644800155FB5 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC6593F258A644800155FB5 /* RegisterViewController.swift */; };
+		5AED0C85258D9ACC004D1900 /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,8 +79,18 @@
 		5A70C1CE25890EBC0048560F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		5A754A10258BA80100A3B21D /* LoadingIndicator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingIndicator.xib; sourceTree = "<group>"; };
-		5A754A1B258BBC4000A3B21D /* loadingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loadingAnimation.json; sourceTree = SOURCE_ROOT; };
+		5A791832258C867B009051BA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		5A791836258C9881009051BA /* UserAcitivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAcitivity.swift; sourceTree = "<group>"; };
+		5A79183A258CE4E3009051BA /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
+		5A79183E258CF0F2009051BA /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
+		5A7F8F33258C26C5005092FD /* loadingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = loadingAnimation.json; path = ../../../../../../.Trash/loadingAnimation.json; sourceTree = "<group>"; };
+		5A7F8F51258C3243005092FD /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		5A992F2C258F349700BEF630 /* BubbleChatFromMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleChatFromMe.swift; sourceTree = "<group>"; };
+		5A992F2D258F349700BEF630 /* BubbleChatFromFriend.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleChatFromFriend.xib; sourceTree = "<group>"; };
+		5A992F31258F34AD00BEF630 /* BubbleChatFromFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleChatFromFriend.swift; sourceTree = "<group>"; };
+		5A992F32258F34AD00BEF630 /* BubbleChatFromMe.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleChatFromMe.xib; sourceTree = "<group>"; };
 		5AC6593F258A644800155FB5 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
 		CF6C6652C0B662584432F7D6 /* Pods_MeloApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeloApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFF9234769C530D7763BC809 /* Pods-MeloApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloApp.debug.xcconfig"; path = "Target Support Files/Pods-MeloApp/Pods-MeloApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E07A5DE286C57D271543718E /* Pods-MeloApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeloApp.release.xcconfig"; path = "Target Support Files/Pods-MeloApp/Pods-MeloApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,16 +138,16 @@
 		5A4C35A72587517C00AAED51 /* MeloApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A4C35A82587517C00AAED51 /* AppDelegate.swift */,
+				5A4C35AA2587517C00AAED51 /* SceneDelegate.swift */,
+				5A70C19A2588F1230048560F /* GoogleService-Info.plist */,
+				5A4C35B62587517E00AAED51 /* Info.plist */,
 				5A70C1972588F05B0048560F /* Model */,
 				5A70C1982588F0610048560F /* View */,
 				5A70C1992588F0680048560F /* Controller */,
 				5A70C1D125890FFB0048560F /* Helper */,
 				5A70C1C72588F7050048560F /* Macro */,
-				5A4C35A82587517C00AAED51 /* AppDelegate.swift */,
-				5A4C35AA2587517C00AAED51 /* SceneDelegate.swift */,
 				5A754A18258BBBEC00A3B21D /* Assets */,
-				5A4C35B62587517E00AAED51 /* Info.plist */,
-				5A70C19A2588F1230048560F /* GoogleService-Info.plist */,
 				5A2666DC258993A500669B03 /* eercast.ttf */,
 			);
 			path = MeloApp;
@@ -139,6 +159,8 @@
 				5A506557258B01D4000A97F2 /* ConversationPrivateCell.xib */,
 				5A506565258B0E45000A97F2 /* ContactCell.xib */,
 				5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */,
+				5A992F32258F34AD00BEF630 /* BubbleChatFromMe.xib */,
+				5A992F2D258F349700BEF630 /* BubbleChatFromFriend.xib */,
 			);
 			path = "View Cell";
 			sourceTree = "<group>";
@@ -154,6 +176,8 @@
 		5A506572258B1131000A97F2 /* ControllerCell */ = {
 			isa = PBXGroup;
 			children = (
+				5A992F2C258F349700BEF630 /* BubbleChatFromMe.swift */,
+				5A992F31258F34AD00BEF630 /* BubbleChatFromFriend.swift */,
 				5A50656A258B10F0000A97F2 /* OnlineFriendCell.swift */,
 				5A506564258B0E45000A97F2 /* ContactCell.swift */,
 				5A506556258B01D4000A97F2 /* ConversationPrivateCell.swift */,
@@ -168,6 +192,7 @@
 				5A70C1C12588F4CB0048560F /* Group.swift */,
 				5A70C1C42588F5D50048560F /* Message.swift */,
 				5A70C1CB2588F88D0048560F /* UserAction.swift */,
+				5A7F8F51258C3243005092FD /* CurrentUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -194,6 +219,11 @@
 				5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */,
 				5A506574258B5661000A97F2 /* TabBarController.swift */,
 				5A506577258B6467000A97F2 /* NavigationBarController.swift */,
+				5A791832258C867B009051BA /* AuthController.swift */,
+				5A79183A258CE4E3009051BA /* NewMessageViewController.swift */,
+				5A791836258C9881009051BA /* UserAcitivity.swift */,
+				5A79183E258CF0F2009051BA /* DatabaseController.swift */,
+				5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -227,7 +257,7 @@
 		5A754A19258BBBFA00A3B21D /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				5A754A1B258BBC4000A3B21D /* loadingAnimation.json */,
+				5A7F8F33258C26C5005092FD /* loadingAnimation.json */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -302,13 +332,15 @@
 				5A2666EE25899DF500669B03 /* Main.storyboard in Resources */,
 				5A2666DD258993A500669B03 /* eercast.ttf in Resources */,
 				5A754A11258BA80100A3B21D /* LoadingIndicator.xib in Resources */,
+				5A992F2F258F349700BEF630 /* BubbleChatFromFriend.xib in Resources */,
 				5A50656D258B10F0000A97F2 /* OnlineFriendCell.xib in Resources */,
+				5A992F34258F34AD00BEF630 /* BubbleChatFromMe.xib in Resources */,
 				5A4C35B52587517E00AAED51 /* LaunchScreen.storyboard in Resources */,
 				5A70C19B2588F1230048560F /* GoogleService-Info.plist in Resources */,
 				5A506559258B01D4000A97F2 /* ConversationPrivateCell.xib in Resources */,
 				5A4C35B22587517E00AAED51 /* Assets.xcassets in Resources */,
 				5A506567258B0E45000A97F2 /* ContactCell.xib in Resources */,
-				5A754A1C258BBC4000A3B21D /* loadingAnimation.json in Resources */,
+				5A7F8F34258C26C5005092FD /* loadingAnimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,24 +394,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A506566258B0E45000A97F2 /* ContactCell.swift in Sources */,
+				5A992F33258F34AD00BEF630 /* BubbleChatFromFriend.swift in Sources */,
 				5A2666EA25899D4F00669B03 /* LoginViewController.swift in Sources */,
 				5A506558258B01D4000A97F2 /* ConversationPrivateCell.swift in Sources */,
+				5A79183B258CE4E3009051BA /* NewMessageViewController.swift in Sources */,
 				5AC65940258A644800155FB5 /* RegisterViewController.swift in Sources */,
 				5A50654A258AEAD1000A97F2 /* CoversationsViewController.swift in Sources */,
 				5A70C1CF25890EBC0048560F /* Extension.swift in Sources */,
+				5A992F2E258F349700BEF630 /* BubbleChatFromMe.swift in Sources */,
 				5A506575258B5662000A97F2 /* TabBarController.swift in Sources */,
 				5A70C1CC2588F88D0048560F /* UserAction.swift in Sources */,
 				5A50654D258AF796000A97F2 /* ContactsViewController.swift in Sources */,
 				5A70C1BF2588F3870048560F /* User.swift in Sources */,
+				5A7F8F52258C3243005092FD /* CurrentUser.swift in Sources */,
 				5A70C1C92588F71D0048560F /* TypeDef.swift in Sources */,
 				5A4C35A92587517C00AAED51 /* AppDelegate.swift in Sources */,
 				5A70C1C52588F5D50048560F /* Message.swift in Sources */,
+				5AED0C85258D9ACC004D1900 /* ChatLogViewController.swift in Sources */,
 				5A506578258B6467000A97F2 /* NavigationBarController.swift in Sources */,
 				5A50655D258B0D1A000A97F2 /* Constants.swift in Sources */,
 				5A70C1C22588F4CB0048560F /* Group.swift in Sources */,
 				5A50656C258B10F0000A97F2 /* OnlineFriendCell.swift in Sources */,
 				5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */,
+				5A79183F258CF0F2009051BA /* DatabaseController.swift in Sources */,
+				5A791833258C867B009051BA /* AuthController.swift in Sources */,
 				5A4C35AB2587517C00AAED51 /* SceneDelegate.swift in Sources */,
+				5A791837258C9881009051BA /* UserAcitivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

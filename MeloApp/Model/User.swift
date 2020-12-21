@@ -7,18 +7,20 @@
 
 import Foundation
 
-struct User {
-    var name: String?
-    var email: String?
+struct User: Codable {
+    var uid: StringUID
+    var name: String
+    var email: String
     var profileImage: String?
-    var lastLogin: NSNumber?
-    var isOnline: Bool?
+    var friends: [StringUID]?
+    var friendRequests: [StringUID]?
     
-    init(name: String?, email: String?, profileImgUrl: String?, lastLogin: NSNumber?, isOnline: Bool?) {
-        self.name = name
-        self.email = email
-        self.profileImage = profileImgUrl
-        self.lastLogin = lastLogin
-        self.isOnline = isOnline
+    enum CodingKeys: String, CodingKey {
+        case uid
+        case name
+        case email
+        case profileImage
+        case friends
+        case friendRequests
     }
 }

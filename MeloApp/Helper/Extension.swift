@@ -186,4 +186,21 @@ extension String {
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: self)
     }
+    
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+
+        return ceil(boundingBox.height)
+    }
+}
+
+extension Date {
+    var milisecondSince1970: UInt64 {
+        return UInt64((self.timeIntervalSince1970 * 1000.0).rounded())
+    }
+    
+    init(miliseconds: UInt64) {
+        self = Date(timeIntervalSince1970: TimeInterval(miliseconds) / 1000)
+    }
 }

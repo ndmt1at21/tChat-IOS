@@ -14,9 +14,12 @@ class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(handleFriendRequest))
     }
     
+    @objc func handleFriendRequest() {
+        
+    }
 
     /*
     // MARK: - Navigation

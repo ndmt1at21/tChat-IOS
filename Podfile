@@ -10,7 +10,9 @@ target 'MeloApp' do
 	pod 'Firebase/Database'
 	pod 'FloatingPanel'
 	pod 'IQKeyboardManagerSwift'
-	pod 'Hero'
 	pod 'SkyFloatingLabelTextField'
 	pod 'lottie-ios'
+	pod 'Firebase/Firestore'
+	pod 'FirebaseFirestoreSwift'
+	pod 'MaterialComponents/Buttons'
 end

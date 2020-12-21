@@ -121,7 +121,7 @@ class Core: NSObject, UIGestureRecognizerDelegate {
             switch (from, to) {
             case (.hidden, let to):
                 animator = vc.animatorForPresenting(to: to)
-            case (let from, .hidden):
+            case ( _, .hidden):
                 let animationVector = CGVector(dx: abs(removalVector.dx), dy: abs(removalVector.dy))
                 animator = vc.animatorForDismissing(with: animationVector)
             default:

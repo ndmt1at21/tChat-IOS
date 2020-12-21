@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum TypeMessage {
+enum TypeMessage: Int, Codable {
     case text
     case image
     case video
 }
 
-struct Message {
-    var id: StringUID
-    var sendBy: String
-    var sendAt: NSNumber
-    var type: TypeMessage
-    var content: String
+struct Message: Codable {
+    var uid: StringUID
+    var sendBy: StringUID
+    var sendAt: UInt64?
+    var type: TypeMessage?
+    var content: String?
 }

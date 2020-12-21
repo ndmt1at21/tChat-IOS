@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct RecentMessage {
+struct RecentMessage: Codable {
     var message: Message
-    var readBy: [StringUID]
+    var readBy: [StringUID: Bool]?
 }
 
-struct Group {
-    var id: StringUID?
-    var createdAt: NSNumber?
+struct Group: Codable {
+    var uid: StringUID?
+    var createdAt: UInt64?
     var createdBy: StringUID? // uid user
-    var memberIDs: [StringUID] // list uid
+    var members: [StringUID: Bool]? // list uid
     var recentMessage: RecentMessage?
     var displayName: String?
 }

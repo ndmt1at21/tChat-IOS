@@ -27,7 +27,11 @@ class TabBarController: UITabBarController {
         tabBar.clipsToBounds = false
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
-
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
     }
 }
 

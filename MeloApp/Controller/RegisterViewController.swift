@@ -7,17 +7,18 @@
 
 import UIKit
 import SkyFloatingLabelTextField
-import FirebaseAuth
+import MaterialComponents
+import Firebase
 
 class RegisterViewController: UIViewController {
 
     
+    @IBOutlet weak var registerButton: MDCButton!
     @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var nameTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var retypePasswordTextField: SkyFloatingLabelTextField!
     
-    @IBOutlet weak var registerButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -28,11 +29,6 @@ class RegisterViewController: UIViewController {
         
         registerButton.addGradientLayer(colors: [UIColor(named: "primaryBlue")!.cgColor, UIColor(named: "lightBlue")!.cgColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y:0), locations: [0, 1])
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
-    
     
     @IBAction func registerButtonPressed(_ sender: UIButton) {
         var errorMsgEmail = ""
@@ -85,31 +81,37 @@ class RegisterViewController: UIViewController {
             retypePasswordTextField.errorMessage = errorMsgRetypePwd
         }
         
-        handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+        let loadingAnimation = LoadingIndicator()
+        loadingAnimation.startAnimation()
+        
+        AuthController.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+            
+            // Error
             if err != nil {
                 self.emailTextField.errorMessage = err
                 self.emailTextField.textErrorColor = self.emailTextField.textColor
+                loadingAnimation.stopAnimation()
                 return
             }
             
-            self.performSegue(withIdentifier: K.segueID.registerToConversation, sender: self)
+            
+            // Register success
+            let name = self.nameTextField.text!
+            
+            if let currentUser = Auth.auth().currentUser {
+                
+                let db = Firestore.firestore()
+                db.collection("users").document(currentUser.uid).setData(["name": name, "email": currentUser.email!])
+               
+                UserActivity.updateCurrentUserActivity(true)
+                loadingAnimation.stopAnimation()
+                
+                self.performSegue(withIdentifier: K.segueID.registerToConversation, sender: self)
+            }
         }
         
     }
     
-    func handleRegister(email: String, password: String, completion: @escaping (_ err: String?) -> Void) {
-        
-        let loadingIndicator = LoadingIndicator()
-        loadingIndicator.startAnimation()
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (authResult, err) in
-            loadingIndicator.stopAnimation()
-            if authResult?.user.uid != nil {
-                return completion(nil)
-            }
-            return completion("Đăng ký tài khoản không thành công")
-        }
-    }
     
     @IBAction func textFieldDidChange(_ sender: Any) {
         if let textField = sender as? SkyFloatingLabelTextField {

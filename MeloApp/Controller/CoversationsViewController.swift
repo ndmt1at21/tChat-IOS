@@ -10,29 +10,41 @@ import UIKit
 class CoversationsViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    
     @IBOutlet weak var collectionFriendOnline: UICollectionView!
     @IBOutlet weak var tableConversation: UITableView!
+    
+    
+    var groups: [Group] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableConversation.delegate = self
+
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = false
+    @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
+
+        UserActivity.updateCurrentUserActivity(false)
+        AuthController.handleLogout()
+        performSegue(withIdentifier: "UnwindToLoginController", sender: self)
     }
     
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension CoversationsViewController: UITableViewDelegate {
+    
+}
+
+
+extension CoversationsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    
 }

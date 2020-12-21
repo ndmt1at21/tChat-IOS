@@ -7,15 +7,15 @@
 
 import UIKit
 import SkyFloatingLabelTextField
-import FirebaseAuth
-
+import MaterialComponents
 
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var registerButton: UIButton!
+   
+    @IBOutlet weak var loginButton: MDCButton!
+    @IBOutlet weak var registerButton: MDCButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +26,19 @@ class LoginViewController: UIViewController {
         registerButton.border(.all, 0, UIColor.clear.cgColor, 15)
         
         loginButton.addGradientLayer(colors: [UIColor(named: "primaryBlue")!.cgColor, UIColor(named: "lightBlue")!.cgColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y:0), locations: [0, 1])
-        
+
+        loginButton.rippleColor = UIColor(named: "darkBlue")
+
         registerButton.addGradientLayer(colors: [UIColor.systemGray5.cgColor, UIColor.systemGray6.cgColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y:0), locations: [0, 1])
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
     }
 
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -66,29 +70,21 @@ class LoginViewController: UIViewController {
             return
         }
 
-        handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+        let loadingIndicator = LoadingIndicator()
+        loadingIndicator.startAnimation()
+        
+        AuthController.handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+            
+            loadingIndicator.stopAnimation()
+            
             if err != nil {
                 self.emailTextField.errorMessage = err
                 self.emailTextField.textErrorColor = self.emailTextField.textColor
                 return
             }
             
+            UserActivity.updateCurrentUserActivity(true)
             self.performSegue(withIdentifier: K.segueID.loginToConversation, sender: self)
-        }
-    }
-    
-    func handleLogin(email: String, password: String, completion: @escaping (_ error: String?) -> Void) {
-        
-        let loadingIndicator = LoadingIndicator()
-        loadingIndicator.startAnimation()
-        
-        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
-            loadingIndicator.stopAnimation()
-            if authResult?.user.uid != nil {
-                return completion(nil)
-            }
-            
-            return completion("Sai tên đăng nhập hoặc mật khẩu")
         }
     }
     
@@ -96,5 +92,9 @@ class LoginViewController: UIViewController {
         if let textField = sender as? SkyFloatingLabelTextField {
             textField.errorMessage = ""
         }
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
     }
 }
