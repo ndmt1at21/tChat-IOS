@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 class DatabaseController {
+    
     static func getUser(userUID: StringUID, completion: @escaping (_ user: User?) -> Void) {
         
         Firestore.firestore().collection("users").document(userUID).getDocument { (userDoc, error) in
@@ -18,15 +19,7 @@ class DatabaseController {
             }
             
             if let userData = userDoc?.data() {
-                let user = User(
-                    uid: userUID,
-                    name: userData["name"] as! String,
-                    email: userData["email"] as! String,
-                    profileImage: userData["profileImage"] as? String,
-                    friends: userData["friends"] as? [StringUID],
-                    friendRequests: userData["friendRequests"] as? [StringUID]
-                )
-                
+                let user = User(uid: userUID, dictionary: userData)
                 return completion(user)
             }
             

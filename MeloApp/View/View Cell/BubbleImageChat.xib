@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BubbleImageChat" rowHeight="70" id="KGk-i7-Jjw" customClass="BubbleImageChat" customModule="MeloApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="236" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="236" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bDW-f1-EwX">
+                        <rect key="frame" x="10" y="35" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="DFS-fX-gc9"/>
+                            <constraint firstAttribute="height" constant="30" id="jir-gN-Wu0"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQe-xf-wUn">
+                        <rect key="frame" x="50" y="5" width="165" height="60"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Q4-RT-Vx7">
+                                <rect key="frame" x="0.0" y="0.0" width="165" height="60"/>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8N5-hc-lff">
+                                <rect key="frame" x="0.0" y="58" width="165" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="b0T-kC-WDb"/>
+                                </constraints>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1Q4-RT-Vx7" firstAttribute="top" secondItem="NQe-xf-wUn" secondAttribute="top" id="7tX-NV-z4P"/>
+                            <constraint firstItem="1Q4-RT-Vx7" firstAttribute="leading" secondItem="NQe-xf-wUn" secondAttribute="leading" id="KuB-ny-QQe"/>
+                            <constraint firstAttribute="trailing" secondItem="1Q4-RT-Vx7" secondAttribute="trailing" id="XFs-Gf-SiD"/>
+                            <constraint firstAttribute="bottom" secondItem="8N5-hc-lff" secondAttribute="bottom" id="dtp-NX-jX3"/>
+                            <constraint firstAttribute="trailing" secondItem="8N5-hc-lff" secondAttribute="trailing" id="idK-tA-3Nr"/>
+                            <constraint firstItem="8N5-hc-lff" firstAttribute="leading" secondItem="NQe-xf-wUn" secondAttribute="leading" id="kYA-3u-Dm4"/>
+                            <constraint firstAttribute="bottom" secondItem="1Q4-RT-Vx7" secondAttribute="bottom" id="lXV-ht-58E"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xKw-v7-dyP">
+                        <rect key="frame" x="216" y="50.5" width="15" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="9jo-ea-laH"/>
+                            <constraint firstAttribute="width" constant="15" id="YX6-Y9-usB"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NQe-xf-wUn" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.7" id="3fd-0S-m0U"/>
+                    <constraint firstItem="xKw-v7-dyP" firstAttribute="leading" secondItem="NQe-xf-wUn" secondAttribute="trailing" priority="999" constant="5" id="4E8-Gg-YCB"/>
+                    <constraint firstItem="bDW-f1-EwX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Ccs-8g-Naz"/>
+                    <constraint firstItem="NQe-xf-wUn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Hsi-iD-jeQ"/>
+                    <constraint firstAttribute="trailing" secondItem="xKw-v7-dyP" secondAttribute="trailing" constant="5" id="QZW-xy-IVC"/>
+                    <constraint firstItem="NQe-xf-wUn" firstAttribute="leading" secondItem="bDW-f1-EwX" secondAttribute="trailing" constant="10" id="cA2-DL-DRf"/>
+                    <constraint firstAttribute="bottom" secondItem="bDW-f1-EwX" secondAttribute="bottom" constant="5" id="hSm-3M-HSl"/>
+                    <constraint firstAttribute="bottom" secondItem="NQe-xf-wUn" secondAttribute="bottom" constant="5" id="ijX-XP-6XQ"/>
+                    <constraint firstAttribute="bottom" secondItem="xKw-v7-dyP" secondAttribute="bottom" constant="5" id="nfR-MI-lck"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="avatar" destination="bDW-f1-EwX" id="Y1E-bE-fVe"/>
+                <outlet property="bubbleView" destination="NQe-xf-wUn" id="RMC-ak-vX5"/>
+                <outlet property="leftConstraintToViewCell" destination="Ccs-8g-Naz" id="mjE-pD-8dw"/>
+                <outlet property="progressBar" destination="8N5-hc-lff" id="eyi-2X-Ju4"/>
+                <outlet property="rightConstraintToStatusCircle" destination="4E8-Gg-YCB" id="mii-uU-Cpc"/>
+                <outlet property="sendingStatusCircle" destination="xKw-v7-dyP" id="EHP-bz-fh0"/>
+                <outlet property="thumbnail" destination="1Q4-RT-Vx7" id="DF2-aM-5Ty"/>
+            </connections>
+            <point key="canvasLocation" x="-147.82608695652175" y="77.678571428571431"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -64,6 +64,8 @@ class NewMessageViewController: UIViewController{
                     self.friends.append(friend)
                     self.tableListFriends.reloadData()
                 }
+                
+                print(friends)
             }
         }
     }
@@ -77,10 +79,11 @@ extension NewMessageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let friend = friends[indexPath.row]
         
-        guard let currentUser = Auth.auth().currentUser else { return AuthController.handleLogout()
+        guard let currentUser = Auth.auth().currentUser else { return AuthController.shared.handleLogout()
         }
         
-        fetchGroup(from: [currentUser.uid, friend.uid]) { (group) in
+        print(friend.uid!)
+        fetchGroup(from: [currentUser.uid, friend.uid!]) { (group) in
             guard let groupInfor = group else { return }
 
             if let chatViewController = self.storyboard?.instantiateViewController(identifier: "ChatLogViewController") as? ChatLogViewController {
@@ -93,8 +96,6 @@ extension NewMessageViewController: UITableViewDelegate {
     
     func fetchGroup(from usersUID: [StringUID], completion: @escaping (_ group: Group?) -> Void) {
         let groupRef = Firestore.firestore().collection("groups")
-     
-        
         
         let queryFindGroup = groupRef
             .whereField("members.\(usersUID[0])", isEqualTo: true)
@@ -159,9 +160,7 @@ extension NewMessageViewController: UITableViewDataSource {
         cell.name.text = friend.name
         cell.imageCover = UIImageView()
         
-        print(cell.onlineCircleImage.frame)
-        
-        UserActivity.observeUserActivity(userUID: friend.uid) { (isOnline) in
+        UserActivity.observeUserActivity(userUID: friend.uid!) { (isOnline) in
             cell.isOnline = isOnline
         }
 

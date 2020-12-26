@@ -84,7 +84,7 @@ class RegisterViewController: UIViewController {
         let loadingAnimation = LoadingIndicator()
         loadingAnimation.startAnimation()
         
-        AuthController.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+        AuthController.shared.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
             // Error
             if err != nil {
@@ -94,14 +94,17 @@ class RegisterViewController: UIViewController {
                 return
             }
             
-            
             // Register success
             let name = self.nameTextField.text!
             
             if let currentUser = Auth.auth().currentUser {
                 
                 let db = Firestore.firestore()
-                db.collection("users").document(currentUser.uid).setData(["name": name, "email": currentUser.email!])
+                db.collection("users").document(currentUser.uid).setData([
+                    "name": name,
+                    "email": currentUser.email!,
+                    "profileImage": K.defaultAvatar
+                ])
                
                 UserActivity.updateCurrentUserActivity(true)
                 loadingAnimation.stopAnimation()

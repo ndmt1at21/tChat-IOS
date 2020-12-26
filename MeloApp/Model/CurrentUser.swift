@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 class CurrentUser {
     static var uid: String!

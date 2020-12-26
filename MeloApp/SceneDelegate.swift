@@ -21,11 +21,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if Auth.auth().currentUser != nil {
-           
-            UserActivity.updateCurrentUserActivity(true)
-            let controller = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
-            window?.rootViewController?.navigationController?.popToViewController(controller, animated: true)
+        AuthController.shared.setupCurrentUser { (user) in
+            if let _ = user {
+                
+                UserActivity.updateCurrentUserActivity(true)
+                
+                let controller = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+                self.window?.rootViewController?.navigationController?.popToViewController(controller, animated: true)
+            } else {
+                AuthController.shared.handleLogout()
+            }
         }
     }
 

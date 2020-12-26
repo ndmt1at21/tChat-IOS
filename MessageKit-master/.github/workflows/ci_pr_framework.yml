@@ -1,0 +1,15 @@
+name: Build Framework
+
+on: pull_request
+
+jobs:
+  tests:
+    name: Build Framework
+    runs-on: macOS-latest
+    env: 
+       DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+    - name: Build framework
+      run: ./GitHubActions/build.sh framework

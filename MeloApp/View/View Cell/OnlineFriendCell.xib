@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="238" height="115"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="P6F-iA-N35">
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="P6F-iA-N35">
                         <rect key="frame" x="89" y="32.5" width="60" height="50"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="john" translatesAutoresizingMaskIntoConstraints="NO" id="Trw-Rz-7ia">
@@ -28,7 +28,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineCircle" translatesAutoresizingMaskIntoConstraints="NO" id="T4W-lv-rrz">
-                                <rect key="frame" x="50" y="20" width="10" height="10"/>
+                                <rect key="frame" x="50" y="40" width="10" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="Het-jX-tG6"/>
                                     <constraint firstAttribute="height" constant="10" id="ZyA-fP-IDM"/>

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 extension UIView {
     func shadow(_ x: Double, _ y: Double, _ radius: CGFloat, _ color: CGColor) {
@@ -202,5 +203,84 @@ extension Date {
     
     init(miliseconds: UInt64) {
         self = Date(timeIntervalSince1970: TimeInterval(miliseconds) / 1000)
+    }
+}
+
+extension PHAsset {
+
+    func getURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
+        if self.mediaType == .image {
+            let options: PHContentEditingInputRequestOptions = PHContentEditingInputRequestOptions()
+            options.canHandleAdjustmentData = {(adjustmeta: PHAdjustmentData) -> Bool in
+                return true
+            }
+            self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
+                completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
+            })
+        } else if self.mediaType == .video {
+            let options: PHVideoRequestOptions = PHVideoRequestOptions()
+            options.version = .original
+            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+                if let urlAsset = asset as? AVURLAsset {
+                    let localVideoUrl: URL = urlAsset.url as URL
+                    completionHandler(localVideoUrl)
+                } else {
+                    completionHandler(nil)
+                }
+            })
+        }
+    }
+    
+    func getImage() -> UIImage {
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        var image = UIImage()
+        option.isSynchronous = true
+        
+        manager.requestImage(for: self, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { (result, _) in
+            image = result!
+        }
+        
+        return image
+    }
+}
+
+extension UIImage {
+    // https://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
+    func resize(targetSize: CGSize) -> UIImage? {
+        var size = self.size
+
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if widthRatio > heightRatio {
+            newSize = CGSize(
+                width: size.width * heightRatio,
+                height: size.height * heightRatio
+            )
+        } else {
+            newSize = CGSize(
+                width: size.width * widthRatio,
+                height: size.height * widthRatio
+            )
+        }
+
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
+    
+    func resize(width: CGFloat) -> UIImage? {
+        let height = self.size.width * self.size.height / width
+        return self.resize(targetSize: CGSize(width: width, height: height))
     }
 }

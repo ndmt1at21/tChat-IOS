@@ -5,7 +5,7 @@ target 'MeloApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  	pod 'Firebase/Auth'
+  pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
 	pod 'Firebase/Database'
 	pod 'FloatingPanel'
@@ -15,4 +15,6 @@ target 'MeloApp' do
 	pod 'Firebase/Firestore'
 	pod 'FirebaseFirestoreSwift'
 	pod 'MaterialComponents/Buttons'
+  pod 'FMPhotoPicker'
+  pod 'Kingfisher'
 end

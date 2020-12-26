@@ -26,7 +26,7 @@ class CoversationsViewController: UIViewController {
     @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
 
         UserActivity.updateCurrentUserActivity(false)
-        AuthController.handleLogout()
+        AuthController.shared.handleLogout()
         performSegue(withIdentifier: "UnwindToLoginController", sender: self)
     }
     

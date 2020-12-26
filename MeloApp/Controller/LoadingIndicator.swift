@@ -37,9 +37,9 @@ class LoadingIndicator: UIView {
         loadingView.addSubview(animationView)
         
         animationView.animation = Animation.named("loadingAnimation")
-        animationView.play()
         animationView.loopMode = .loop
-        
+        animationView.play()
+
     }
     
     func stopAnimation() {

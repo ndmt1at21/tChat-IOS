@@ -8,3 +8,8 @@
 import Foundation
 
 typealias StringUID = String
+
+enum MessageDestination {
+    case me
+    case friend
+}

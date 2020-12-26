@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
         let loadingIndicator = LoadingIndicator()
         loadingIndicator.startAnimation()
         
-        AuthController.handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
+        AuthController.shared.handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
             loadingIndicator.stopAnimation()
             
