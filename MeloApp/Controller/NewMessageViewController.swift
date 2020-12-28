@@ -20,14 +20,14 @@ class NewMessageViewController: UIViewController{
         
         navigationController?.navigationBar.clipsToBounds = true
         
-        let loading = LoadingIndicator()
+        let loading = LoadingIndicator(frame: view.bounds)
         loading.startAnimation()
-        
-        
+        loading.isTurnBlurEffect = false
+        tableListFriends.addSubview(loading)
+    
         // Search View
         searchView.clipsToBounds = false
         searchView.shadow(0, 2, 2, UIColor.systemGray5.cgColor)
-        
         
         // Table
         tableListFriends.delegate = self
@@ -36,24 +36,39 @@ class NewMessageViewController: UIViewController{
         
         tableListFriends.register(UINib(nibName: "ContactCell", bundle: .main), forCellReuseIdentifier: K.cellID.contactCell)
         
-        DatabaseController.getUser(userUID: Auth.auth().currentUser!.uid) { (user) in
+        guard let currentUser = Auth.auth().currentUser else {
+            loading.stopAnimation()
+            AuthController.shared.handleLogout()
+            return
+        }
+        
+        DatabaseController.getUser(userUID: currentUser.uid) { (user) in
             if let user = user {
                 self.fetchDataFriends(currUser: user)
                 loading.stopAnimation()
+                loading.removeFromSuperview()
             }
+            
+
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = true
+//        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
+//        tabBarController?.tabBar.isHidden = false
+        print(isMovingFromParent)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("disapp")
+        print(navigationController?.viewControllers)
     }
     
     func fetchDataFriends(currUser: User) {
-        
+
         guard let friends = currUser.friends else {
             return
         }
@@ -64,8 +79,6 @@ class NewMessageViewController: UIViewController{
                     self.friends.append(friend)
                     self.tableListFriends.reloadData()
                 }
-                
-                print(friends)
             }
         }
     }
@@ -77,24 +90,35 @@ extension NewMessageViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         let friend = friends[indexPath.row]
         
+        print("to select")
         guard let currentUser = Auth.auth().currentUser else { return AuthController.shared.handleLogout()
         }
         
-        print(friend.uid!)
+        print("cleicked")
         fetchGroup(from: [currentUser.uid, friend.uid!]) { (group) in
             guard let groupInfor = group else { return }
 
-            if let chatViewController = self.storyboard?.instantiateViewController(identifier: "ChatLogViewController") as? ChatLogViewController {
-                chatViewController.group = groupInfor
-                
-                self.navigationController?.pushViewController(chatViewController, animated: true)
-            }
+            print("slowwww")
+            self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: groupInfor)
+            print("comeback--newmessage???????")
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.segueID.newMessageToChatLog {
+            let group = sender as! Group
+            let des = segue.destination as! ChatLogViewController
+            des.group = group
+        }
+    }
+
+    
     func fetchGroup(from usersUID: [StringUID], completion: @escaping (_ group: Group?) -> Void) {
+        
         let groupRef = Firestore.firestore().collection("groups")
         
         let queryFindGroup = groupRef
@@ -157,6 +181,7 @@ extension NewMessageViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID.contactCell) as! ContactCell
         
         let friend = friends[indexPath.row]
+        print(friend)
         cell.name.text = friend.name
         cell.imageCover = UIImageView()
         

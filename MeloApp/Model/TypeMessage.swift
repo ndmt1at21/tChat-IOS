@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 enum TypeMessage: Int, Codable {
     case text
@@ -47,6 +48,23 @@ extension TypeMessage {
             
         case .video:
             return BubbleVideoChat.cellHeight(message)
+        }
+    }
+    
+    func cancelDownloadThumnbail(_ cell: UITableViewCell) {
+        let baseCell = cell as! BubbleBaseChat
+        
+        switch self {
+        case .image:
+            let imgCell = baseCell as! BubbleImageChat
+            imgCell.thumbnail.kf.cancelDownloadTask()
+            
+        case .video:
+            let videoCell = baseCell as! BubbleVideoChat
+            videoCell.thumbnail.kf.cancelDownloadTask()
+            
+        case .text:
+            let _ = baseCell as! BubbleTextChat
         }
     }
 }

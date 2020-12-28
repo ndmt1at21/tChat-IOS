@@ -24,7 +24,6 @@ class ContactCell: UITableViewCell {
         
         set {
             isOnlineValue = newValue
-            print("set", isOnlineValue)
             
             if !isOnlineValue {
                 DispatchQueue.main.async {

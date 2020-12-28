@@ -14,6 +14,8 @@ class BubbleTextChat: BubbleBaseChat {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        message.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         message.textContainer.lineFragmentPadding = .zero
         progressBar.isHidden = true
         

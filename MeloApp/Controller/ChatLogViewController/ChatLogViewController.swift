@@ -33,8 +33,20 @@ class ChatLogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTableMessages()
+        setupScreenInfor()
+        setupObserverKeyboard()
+        setupImageCover()
+
+        self.hero.isEnabled = true
+        observerMessage(groupUID: group.uid!)
+    }
+    
+    func setupTableMessages() {
         tableMessages.delegate = self
         tableMessages.dataSource = self
+        tableMessages.prefetchDataSource = self
+        tableMessages.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         tableMessages.register(UINib(nibName: K.nib.bubbleTextChat, bundle: .main), forCellReuseIdentifier: K.cellID.bubbleTextChat)
         tableMessages.register(UINib(nibName: K.nib.bubbleImageChat, bundle: .main), forCellReuseIdentifier: K.cellID.bubbleImageChat)
@@ -42,12 +54,6 @@ class ChatLogViewController: UIViewController {
         
         tableMessages.estimatedRowHeight = 100
         tableMessages.rowHeight = UITableView.automaticDimension
-        
-        setupScreenInfor()
-        setupObserverKeyboard()
-        setupImageCover()
-
-        observerMessage(groupUID: group.uid!)
     }
     
     func setupScreenInfor() {
@@ -67,6 +73,11 @@ class ChatLogViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
         IQKeyboardManager.shared.enable = true
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tableMessages.layoutIfNeeded()
     }
   
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -189,6 +200,18 @@ extension ChatLogViewController: UITableViewDataSource {
         let type: TypeMessage = messages[indexPath.row].type!
 
         return type.bubbleChatCell(tableView, message: message, self)
+    }
+}
+
+extension ChatLogViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        let imageThumnailUrls = messages
+//            .filter{ $0.thumbnail != nil
+//                && $0.type == TypeMessage.image
+//                || $0.type == TypeMessage.video
+//            }.map{ URL(string: $0.thumbnail!)! }
+//
+//        ImagePrefetcher(urls: imageThumnailUrls).start()
     }
 }
 

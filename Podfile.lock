@@ -310,6 +310,7 @@ PODS:
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.5.0)
+  - Hero (1.5.0)
   - IQKeyboardManagerSwift (6.5.6)
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
@@ -379,6 +380,7 @@ DEPENDENCIES:
   - FirebaseFirestoreSwift
   - FloatingPanel
   - FMPhotoPicker
+  - Hero
   - IQKeyboardManagerSwift
   - Kingfisher
   - lottie-ios
@@ -404,6 +406,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - Hero
     - IQKeyboardManagerSwift
     - Kingfisher
     - leveldb-library
@@ -433,6 +436,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
@@ -444,6 +448,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
 
-PODFILE CHECKSUM: e0c77519a76e0c471e736dfcd67c8d5ab8108b26
+PODFILE CHECKSUM: 1ebe529dca926b510a8b4e07cd185ebc0daca440
 
 COCOAPODS: 1.10.0

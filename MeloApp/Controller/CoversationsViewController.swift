@@ -20,14 +20,19 @@ class CoversationsViewController: UIViewController {
         super.viewDidLoad()
         
         tableConversation.delegate = self
-
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
 
         UserActivity.updateCurrentUserActivity(false)
         AuthController.shared.handleLogout()
+        
         performSegue(withIdentifier: "UnwindToLoginController", sender: self)
+    }
+    
+    
+    @IBAction func newMessagePressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "ConversationToNewMessage", sender: self)
     }
     
 }
@@ -45,6 +50,4 @@ extension CoversationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
-    
-    
 }

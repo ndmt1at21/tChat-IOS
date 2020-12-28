@@ -22,24 +22,25 @@ class BubbleBaseChat: UITableViewCell {
     var messageModel: Message? = nil {
         didSet {
             setupContentCell()
+            layoutIfNeeded()
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatar.layer.cornerRadius = avatar.layer.frame.height / 2
-        progressBar.progress = 0
-        
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(avatarImageTaped))
         
         let longPressBubble = UILongPressGestureRecognizer(target: self, action: #selector(longPressBubbleView))
         
+        self.avatar.layer.cornerRadius = avatar.layer.frame.height / 2
         self.avatar.isUserInteractionEnabled = true
         self.avatar.addGestureRecognizer(tapAvatar)
         
         self.bubbleView.addGestureRecognizer(longPressBubble)
-   
+        progressBar.progress = 0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -55,8 +56,6 @@ class BubbleBaseChat: UITableViewCell {
             } else {
                 setupViewCellFromFriend()
             }
-            
-            layoutIfNeeded()
         }
     }
     
@@ -80,13 +79,15 @@ class BubbleBaseChat: UITableViewCell {
 
         imgLoading.loadingImageAndCaching(
             target: avatar,
-            with: AuthController.shared.currentUser?.profileImage
+            with: AuthController.shared.currentUser?.profileImage,
+            placeholder: nil
         ) { (_, _) in
 
         } completion: { (error) in
             if error != nil {
                 print("Error: ", error!)
             }
+            self.setNeedsLayout()
         }
     }
     

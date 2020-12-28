@@ -19,10 +19,8 @@ class NavigationBarController: UINavigationController {
         navigationBar.backgroundColor = UIColor.white
         navigationBar.layer.borderWidth = 0
         navigationItem.hidesBackButton = true
-       
-
+    
         navigationBar.shadow(0, 3, 4, UIColor.systemGray6.cgColor)
-
         navigationBar.clipsToBounds = false
         navigationBar.shadowImage = UIImage()
     }

@@ -12,15 +12,22 @@ class ImageLoading {
     func loadingImageAndCaching(
         target: UIImageView,
         with url: String?,
+        placeholder: UIImage?,
         progressHandler: DownloadProgressBlock?,
         completion: @escaping (_ error: String?) -> Void) {
         
         guard let urlStr = url else { return }
         guard let safeUrl = URL(string: urlStr) else { return }
+        let cacheRes = ImageCache.default.isCached(forKey: urlStr)
+        
+        if cacheRes {
+            target.kf.setImage(with: safeUrl)
+            return completion(nil)
+        }
         
         target.kf.setImage(
             with: safeUrl,
-            placeholder: nil,
+            placeholder: placeholder,
             options: [
                 .cacheOriginalImage,
                 .targetCache(cache)

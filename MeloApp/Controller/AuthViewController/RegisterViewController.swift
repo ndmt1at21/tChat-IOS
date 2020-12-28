@@ -83,6 +83,7 @@ class RegisterViewController: UIViewController {
         
         let loadingAnimation = LoadingIndicator()
         loadingAnimation.startAnimation()
+        view.addSubview(loadingAnimation)
         
         AuthController.shared.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
@@ -90,7 +91,10 @@ class RegisterViewController: UIViewController {
             if err != nil {
                 self.emailTextField.errorMessage = err
                 self.emailTextField.textErrorColor = self.emailTextField.textColor
+                
                 loadingAnimation.stopAnimation()
+                loadingAnimation.removeFromSuperview()
+                
                 return
             }
             
@@ -108,6 +112,7 @@ class RegisterViewController: UIViewController {
                
                 UserActivity.updateCurrentUserActivity(true)
                 loadingAnimation.stopAnimation()
+                loadingAnimation.removeFromSuperview()
                 
                 self.performSegue(withIdentifier: K.segueID.registerToConversation, sender: self)
             }

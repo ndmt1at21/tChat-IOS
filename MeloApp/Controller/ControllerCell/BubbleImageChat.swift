@@ -14,6 +14,7 @@ class BubbleImageChat: BubbleBaseChat {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         bubbleView.layer.cornerRadius = 20
         bubbleView.layer.masksToBounds = true
         
@@ -34,7 +35,7 @@ class BubbleImageChat: BubbleBaseChat {
     
     override func setupContentCell() {
         super.setupContentCell()
-        
+
         var url: String {
             guard let _ = messageModel?.thumbnail else {
                 return messageModel!.content!
@@ -42,12 +43,15 @@ class BubbleImageChat: BubbleBaseChat {
             return messageModel!.thumbnail!
         }
         
+        
+        print("download???")
         // load image from url
         let imgLoad = ImageLoading()
         imgLoad.loadingImageAndCaching(
             target: thumbnail,
-            with: url) { (downloaded, totalSize) in
-
+            with: url,
+            placeholder: nil) { (downloaded, totalSize) in
+            
             DispatchQueue.main.async {
                 self.progressBar.isHidden = false
                 self.progressBar.progress = Float(downloaded) / Float(totalSize)
@@ -58,6 +62,7 @@ class BubbleImageChat: BubbleBaseChat {
                 return
             }
             
+            self.setNeedsLayout()
             self.progressBar.isHidden = true
         }
     }
@@ -73,7 +78,9 @@ class BubbleImageChat: BubbleBaseChat {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         thumbnail.image = nil
+        thumbnail.kf.cancelDownloadTask()
     }
     
     @objc func bubbleImagePressed(sender: UITapGestureRecognizer) {

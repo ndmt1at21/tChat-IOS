@@ -17,4 +17,5 @@ target 'MeloApp' do
 	pod 'MaterialComponents/Buttons'
   pod 'FMPhotoPicker'
   pod 'Kingfisher'
+  pod 'Hero'
 end

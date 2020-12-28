@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1067894296850-p384smregvajgfjgphnjdok7mt2veii3.apps.googleusercontent.com</string>
+	<string>687071259463-0ebpriedddt8t6ihvvblc1il0opp5f5o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1067894296850-p384smregvajgfjgphnjdok7mt2veii3</string>
+	<string>com.googleusercontent.apps.687071259463-0ebpriedddt8t6ihvvblc1il0opp5f5o</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD3z448_yCv6OFj_RI_an-n2NflEG8YZOY</string>
+	<string>AIzaSyDg8GP-kKtN--asbp9ZyGW3jFPparq2tE0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1067894296850</string>
+	<string>687071259463</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ndmt1at21.MeloApp</string>
+	<string>com.tChat.ndmt1at21</string>
 	<key>PROJECT_ID</key>
-	<string>meloapp-8e16e</string>
+	<string>tchat-b3ac5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>meloapp-8e16e.appspot.com</string>
+	<string>tchat-b3ac5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1067894296850:ios:527b4738999fe816eb23cb</string>
+	<string>1:687071259463:ios:fcc2d24a4fc94ba3defa62</string>
 </dict>
 </plist>

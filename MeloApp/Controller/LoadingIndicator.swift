@@ -14,39 +14,74 @@ class LoadingIndicator: UIView {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var blurEffect: UIVisualEffectView!
     
-    let windowApp = UIApplication.shared.windows[0]
     let animationView = AnimationView()
+    
+    enum ColorIndicator {
+        case white
+        case blue
+    }
+    
+    var colorIndicator: ColorIndicator = .blue {
+        didSet {
+            if colorIndicator == .blue {
+                animationView.animation = Animation.named("loadingAnimation")
+            } else {
+                animationView.animation = Animation.named("loadingAnimation-white")
+            }
+            
+        }
+    }
+    
+    var isTurnBlurEffect: Bool = true {
+        didSet {
+            if !isTurnBlurEffect {
+                blurEffect.isHidden = true
+            }
+        }
+    }
+    
+    var blurStyle: UIBlurEffect.Style = .systemMaterial {
+        didSet {
+            let blur = UIBlurEffect(style: blurStyle)
+            blurEffect.effect = blur
+        }
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
     }
     
-    func startAnimation() {
+    private func setupView() {
         guard let view = self.loadViewFromNib(nibName: "LoadingIndicator") else {
             return
         }
         
-        view.frame = windowApp.bounds
-        windowApp.addSubview(view)
+        view.frame = self.bounds
+        self.addSubview(view)
+ 
         blurEffect.alpha = 0.4
         animationView.frame = loadingView.bounds
         loadingView.addSubview(animationView)
         
         animationView.animation = Animation.named("loadingAnimation")
         animationView.loopMode = .loop
-        animationView.play()
-
+    }
+    
+    func startAnimation() {
+        DispatchQueue.main.async {
+            self.animationView.play()
+        }
     }
     
     func stopAnimation() {
         animationView.stop()
-        animationView.removeFromSuperview()
-        loadingView.removeFromSuperview()
-        blurEffect.removeFromSuperview()
+
         contentView.removeFromSuperview()
     }
 }

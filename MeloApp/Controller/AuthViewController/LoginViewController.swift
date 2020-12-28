@@ -70,12 +70,15 @@ class LoginViewController: UIViewController {
             return
         }
 
-        let loadingIndicator = LoadingIndicator()
+        let loadingIndicator = LoadingIndicator(frame: view.bounds)
         loadingIndicator.startAnimation()
+        view.addSubview(loadingIndicator)
+        
         
         AuthController.shared.handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
             loadingIndicator.stopAnimation()
+            loadingIndicator.removeFromSuperview()
             
             if err != nil {
                 self.emailTextField.errorMessage = err
@@ -95,6 +98,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-
+       
     }
 }

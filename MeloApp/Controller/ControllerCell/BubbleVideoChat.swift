@@ -34,6 +34,8 @@ class BubbleVideoChat: BubbleBaseChat {
         super.prepareForReuse()
         
         thumbnail.image = nil
+        thumbnail.kf.cancelDownloadTask()
+        
         playButton.isHidden = false
         player?.pause()
         playerLayer?.removeFromSuperlayer()
@@ -66,17 +68,20 @@ class BubbleVideoChat: BubbleBaseChat {
         let imgLoad = ImageLoading()
         imgLoad.loadingImageAndCaching(
             target: thumbnail,
-            with: url) { (downloaded, totalSize) in
+            with: url,
+            placeholder: nil) { (downloaded, totalSize) in
+            
             DispatchQueue.main.async {
                 self.progressBar.isHidden = false
                 self.progressBar.progress = Float(downloaded) / Float(totalSize)
             }
         } completion: { (error) in
             if error != nil {
-                print(error!)
+                print("Error: ", error!)
                 return
             }
             
+            self.setNeedsLayout()
             self.progressBar.isHidden = true
         }
     }

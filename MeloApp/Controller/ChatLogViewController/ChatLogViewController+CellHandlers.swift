@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Hero
 
 extension ChatLogViewController: BubbleBaseChatDelegate {
     func cellLongPress(_ cell: BubbleBaseChat) {
@@ -25,7 +26,7 @@ extension ChatLogViewController: BubbleBaseChatDelegate {
     }
     
     func cellDidTapVideo(_ cell: BubbleBaseChat) {
-        print("video tap")
+        performSegue(withIdentifier: K.segueID.videoToDetailView, sender: cell)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,7 +34,20 @@ extension ChatLogViewController: BubbleBaseChatDelegate {
             let controller = segue.destination as! ImageDetailViewController
             let cell = sender as! BubbleImageChat
             
+            controller.thumbnail = cell.thumbnail.image
             controller.originUrlImage = URL(string: cell.messageModel!.content!)
+            
+        } else if segue.identifier == K.segueID.videoToDetailView {
+            let controller = segue.destination as! VideoDetailViewController
+            let cell = sender as! BubbleVideoChat
+            
+            controller.imageThumbnail = cell.thumbnail.image
+            controller.urlVideo = URL(string: cell.messageModel!.content!)
+            
+            cell.thumbnail.hero.id = "cellVideo"
+            self.hero.modalAnimationType = .fade
+            navigationController?.hero.isEnabled = true
+            navigationController?.hero.navigationAnimationType = .fade
         }
     }
 }

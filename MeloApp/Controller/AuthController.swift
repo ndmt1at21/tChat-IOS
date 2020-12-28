@@ -21,21 +21,22 @@ class AuthController {
         if !isFirstFetch {
             return completion(self.currentUser)
         }
-        
+
         Firestore.firestore().collection("users").document(currentUser.uid).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 print("Error: ", error!.localizedDescription)
                 return completion(nil)
             }
-            
+
             if let data = snapshot?.data() {
                 self.isFirstFetch = false
                 let user = User(uid: currentUser.uid, dictionary: data)
                 self.currentUser = user
-                
+
                 return completion(user)
             }
         }
+       
     }
     
     private init() {}
@@ -45,7 +46,6 @@ class AuthController {
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
             
             if authResult?.user.uid != nil {
-                print("authresulttight", authResult?.user.uid)
                 return completion(nil)
             }
             
@@ -87,6 +87,7 @@ class AuthController {
     }
     
     func handleLogout() {
+        print("fuck log out")
         do {
             try Auth.auth().signOut()
         } catch let err as NSError {

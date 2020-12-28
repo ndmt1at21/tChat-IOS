@@ -21,17 +21,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        AuthController.shared.setupCurrentUser { (user) in
-            if let _ = user {
-                
-                UserActivity.updateCurrentUserActivity(true)
-                
-                let controller = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
-                self.window?.rootViewController?.navigationController?.popToViewController(controller, animated: true)
-            } else {
-                AuthController.shared.handleLogout()
-            }
-        }
+//        AuthController.shared.setupCurrentUser { (user) in
+//            if let _ = user {
+//                
+//                UserActivity.updateCurrentUserActivity(true)
+//                
+//                print("scnre")
+//                let controller = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+//                self.window?.rootViewController?.navigationController?.popToViewController(controller, animated: true)
+//                print("scnre")
+//            } else {
+//                AuthController.shared.handleLogout()
+//            }
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

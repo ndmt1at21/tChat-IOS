@@ -31,6 +31,7 @@ struct K {
         static let newMessageToChatLog = "NewMessageToChatLog"
         static let conversationToChatLog = "ConversationToChatLog"
         static let imageToZoomView = "ImageToImageZoomView"
+        static let videoToDetailView = "VideoToDetailView"
     }
     
     static let primaryColor = UIColor(named: "primaryBlue") ?? UIColor.systemBlue
