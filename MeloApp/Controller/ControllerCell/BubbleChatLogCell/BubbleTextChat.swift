@@ -48,6 +48,8 @@ class BubbleTextChat: BubbleBaseChat {
         
         message.text = messageModel?.content
         message.sizeToFit()
+        
+        self.setNeedsLayout()
     }
     
     class func cellHeight(_ message: Message) -> CGFloat {

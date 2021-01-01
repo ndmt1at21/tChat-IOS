@@ -18,8 +18,6 @@ class NewMessageViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.clipsToBounds = true
-        
         let loading = LoadingIndicator(frame: view.bounds)
         loading.startAnimation()
         loading.isTurnBlurEffect = false
@@ -33,7 +31,6 @@ class NewMessageViewController: UIViewController{
         tableListFriends.delegate = self
         tableListFriends.dataSource = self
         tableListFriends.separatorStyle = .none
-        
         tableListFriends.register(UINib(nibName: "ContactCell", bundle: .main), forCellReuseIdentifier: K.cellID.contactCell)
         
         guard let currentUser = Auth.auth().currentUser else {
@@ -48,22 +45,18 @@ class NewMessageViewController: UIViewController{
                 loading.stopAnimation()
                 loading.removeFromSuperview()
             }
-            
-
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        tabBarController?.tabBar.isHidden = true
+        navigationController?.navigationBar.clipsToBounds = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        tabBarController?.tabBar.isHidden = false
-        print(isMovingFromParent)
+        navigationController?.navigationBar.clipsToBounds = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        print("disapp")
         print(navigationController?.viewControllers)
     }
     

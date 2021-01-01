@@ -13,3 +13,9 @@ enum MessageDestination {
     case me
     case friend
 }
+
+enum StatusPlaying {
+    case loading
+    case playing
+    case pause
+}

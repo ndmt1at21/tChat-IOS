@@ -22,7 +22,7 @@ class BubbleBaseChat: UITableViewCell {
     var messageModel: Message? = nil {
         didSet {
             setupContentCell()
-            layoutIfNeeded()
+            setNeedsLayout()
         }
     }
     

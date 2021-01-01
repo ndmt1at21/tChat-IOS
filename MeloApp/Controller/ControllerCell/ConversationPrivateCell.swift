@@ -26,7 +26,6 @@ class ConversationPrivateCell: UITableViewCell {
         imageCover.layer.cornerRadius = imageCover.frame.height / 2
         seenImageCover.layer.cornerRadius = imageCover.frame.height / 2
     
-        
         onlineCircleImage.frame = CGRect(x: imageCover.frame.width - 5, y: imageCover.frame.height - 5, width: 10, height: 10)
         
         imageCover.addSubview(onlineCircleImage)

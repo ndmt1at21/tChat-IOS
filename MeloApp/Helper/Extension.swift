@@ -284,3 +284,31 @@ extension UIImage {
         return self.resize(targetSize: CGSize(width: width, height: height))
     }
 }
+
+
+func thumbnailImageForFileUrl(_ fileUrl: URL) -> UIImage? {
+    let asset = AVAsset(url: fileUrl)
+    return thumbnailImageForAsset(asset, CMTime(value: 1, timescale: 60))
+}
+
+func thumbnailImageForAsset(_ asset: AVAsset, _ time: CMTime) -> UIImage? {
+    let imageGenerator = AVAssetImageGenerator(asset: asset)
+    
+    do {
+        let thumbnailCGImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+        return UIImage(cgImage: thumbnailCGImage)
+        
+    } catch let err {
+        print(err)
+    }
+    
+    return nil
+}
+
+func readPlist(forResource path: String?) -> [[String:Any]]? {
+    if let path = Bundle.main.path(forResource: path, ofType: "plist") {
+        return NSArray(contentsOfFile: path) as? [[String:Any]]
+    }
+    
+    return []
+}

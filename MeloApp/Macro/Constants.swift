@@ -34,6 +34,10 @@ struct K {
         static let videoToDetailView = "VideoToDetailView"
     }
     
+    struct sbID {
+        static let videoDetailViewController = "VideoDetailViewController"
+    }
+    
     static let primaryColor = UIColor(named: "primaryBlue") ?? UIColor.systemBlue
     static let secondaryColor = UIColor(named: "lightBlue") ?? UIColor.blue
     

@@ -43,8 +43,6 @@ class BubbleImageChat: BubbleBaseChat {
             return messageModel!.thumbnail!
         }
         
-        
-        print("download???")
         // load image from url
         let imgLoad = ImageLoading()
         imgLoad.loadingImageAndCaching(
@@ -62,8 +60,8 @@ class BubbleImageChat: BubbleBaseChat {
                 return
             }
             
-            self.setNeedsLayout()
             self.progressBar.isHidden = true
+            self.setNeedsLayout()
         }
     }
     

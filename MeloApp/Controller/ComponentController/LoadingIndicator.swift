@@ -81,7 +81,5 @@ class LoadingIndicator: UIView {
     
     func stopAnimation() {
         animationView.stop()
-
-        contentView.removeFromSuperview()
     }
 }

@@ -11,6 +11,7 @@ import Firebase
 import FMPhotoPicker
 import Photos
 import Kingfisher
+import ISEmojiView
 
 class ChatLogViewController: UIViewController {
 
@@ -19,41 +20,74 @@ class ChatLogViewController: UIViewController {
     @IBOutlet weak var chatLogContentView: UIView!
     @IBOutlet weak var tableMessages: UITableView!
 
+    @IBOutlet weak var chatTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatTextView: UITextView!
-    @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
-
-    
     @IBOutlet weak var nameGroup: UILabel!
     @IBOutlet weak var groupStatus: UILabel!
+    @IBOutlet weak var emojiButton: UIButton!
+    @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
     
     var group: Group = Group()
     var messages: [Message] = []
     var nMessagePending: Int = 0
     
+    internal var isKeyboardShow: Bool = false
+    internal var isEmotionInputShow: Bool = false {
+        didSet {
+            emotionInputView.isHidden = !isEmotionInputShow
+        }
+    }
+    
+    internal lazy var videoDetailViewController: VideoDetailViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        
+        let instance = storyboard.instantiateViewController(identifier: K.sbID.videoDetailViewController) as! VideoDetailViewController
+        
+        return instance
+    }()
+    
+    lazy var emotionInputView: EmotionInputView = {
+        let emotion = EmotionInputView(frame: .zero)
+        emotion.delegate = self
+        emotion.isHidden = true
+        return emotion
+    }()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
         setupTableMessages()
         setupScreenInfor()
         setupObserverKeyboard()
+        setupObserveTapScreen()
         setupImageCover()
-
-        self.hero.isEnabled = true
+        setupChatTextView()
         observerMessage(groupUID: group.uid!)
     }
+
+    private func setupObserveTapScreen() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapInScreen))
+        self.view.addGestureRecognizer(tap)
+        tap.delegate = self
+    }
     
-    func setupTableMessages() {
-        tableMessages.delegate = self
-        tableMessages.dataSource = self
-        tableMessages.prefetchDataSource = self
-        tableMessages.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        tableMessages.register(UINib(nibName: K.nib.bubbleTextChat, bundle: .main), forCellReuseIdentifier: K.cellID.bubbleTextChat)
-        tableMessages.register(UINib(nibName: K.nib.bubbleImageChat, bundle: .main), forCellReuseIdentifier: K.cellID.bubbleImageChat)
-        tableMessages.register(UINib(nibName: K.nib.bubbleVideoChat, bundle: .main), forCellReuseIdentifier: K.cellID.bubbleVideoChat)
-        
-        tableMessages.estimatedRowHeight = 100
-        tableMessages.rowHeight = UITableView.automaticDimension
+    @objc func handleTapInScreen(_ sender: UITapGestureRecognizer) {
+        chatTextView.endEditing(true)
+        handleEmotionInputViewWillHide()
+    }
+    
+    private func setupChatTextView() {
+        chatTextView.textContainer.lineFragmentPadding = 1.25
+        chatTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        chatTextView.layer.cornerRadius = 20
+        chatTextView.delegate = self
+        chatTextViewHeightConstraint.constant = chatTextView.contentSize.height
     }
     
     func setupScreenInfor() {
@@ -71,23 +105,46 @@ class ChatLogViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-        IQKeyboardManager.shared.enable = true
+        PlayerManager.shared.clear()
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tableMessages.layoutIfNeeded()
+        tabBarController?.tabBar.isHidden = true
     }
   
+    override func willMove(toParent parent: UIViewController?) {
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     @IBAction func backButtonPressed(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
+        IQKeyboardManager.shared.enable = true
     }
     
 
+    @IBAction func emojiButtonPressed(_ sender: UIButton) {
+        if emotionInputView.isHidden {
+            handleEmotionInputViewWillShow()
+            chatTextView.resignFirstResponder()
+        } else {
+            chatTextView.becomeFirstResponder()
+            handleEmotionInputViewWillHide()
+        }
+    }
+    
+    
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         sendTextMessage { (error) in
-
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            self.chatTextView.text = nil
+            self.chatTextViewHeightConstraint.constant = self.chatTextView.contentSize.height
         }
     }
     
@@ -132,7 +189,7 @@ class ChatLogViewController: UIViewController {
                                             
                         DispatchQueue.main.async {
                             self.tableMessages.reloadData()
-                            self.scrollToBottom()
+                            self.scrollToBottom(animation: true)
                         }
                     }
                 } else if doc.type == .removed {
@@ -146,7 +203,9 @@ class ChatLogViewController: UIViewController {
 // MARK: - PhotoPickerDelegate
 extension ChatLogViewController: FMPhotoPickerViewControllerDelegate {
     func fmPhotoPickerController(_ picker: FMPhotoPickerViewController, didFinishPickingPhotoWith assets: [PHAsset]) {
-
+       
+        tabBarController?.tabBar.isHidden = true
+        
         guard let _ = Auth.auth().currentUser else { return }
         
         dismiss(animated: true, completion: nil)
@@ -166,54 +225,6 @@ extension ChatLogViewController: FMPhotoPickerViewControllerDelegate {
     }
 }
 
-// MARK: - TableViewDelegate
-extension ChatLogViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        if let type = messages[indexPath.row].type {
-            return type.bubbleHeight(messages[indexPath.row])
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
- 
-        return UITableView.automaticDimension
-    }
-}
-
-
-// MARK: - TableViewDataSource
-extension ChatLogViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let message = messages[indexPath.row]
-        let type: TypeMessage = messages[indexPath.row].type!
-
-        return type.bubbleChatCell(tableView, message: message, self)
-    }
-}
-
-extension ChatLogViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//        let imageThumnailUrls = messages
-//            .filter{ $0.thumbnail != nil
-//                && $0.type == TypeMessage.image
-//                || $0.type == TypeMessage.video
-//            }.map{ URL(string: $0.thumbnail!)! }
-//
-//        ImagePrefetcher(urls: imageThumnailUrls).start()
-    }
-}
 
 // MARK: - HandleSendMessage
 extension ChatLogViewController {
@@ -231,7 +242,6 @@ extension ChatLogViewController {
             text
         )
         
-        chatTextView.text = nil
         sendMessageFirestore(message: message, to: group.uid!) { (error) in
             if error != nil {
                 return completion(nil)
@@ -340,7 +350,7 @@ extension ChatLogViewController {
             message.idLocalPending = localUID
             
             self.sendMessageFirestore(message: message, to: self.group.uid!) { (error) in
-                print(error)
+                if error != nil { print(error!) }
             }
         }
     }
@@ -375,8 +385,7 @@ extension ChatLogViewController {
             self.messages.append(message)
                     
             DispatchQueue.main.async {
-                self.tableMessages.reloadData()
-                self.scrollToBottom()
+                self.scrollToBottom(animation: true)
             }
             
             return completion(nil)
@@ -392,5 +401,27 @@ extension ChatLogViewController {
         } catch let error {
             return completion(error.localizedDescription)
         }
+    }
+}
+
+extension ChatLogViewController: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        let contentSize = chatTextView.contentSize
+        self.chatTextViewHeightConstraint.constant = contentSize.height
+        self.view.layoutIfNeeded()
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        chatTextView.tintColor = .black
+        chatTextView.keyboardType = .default
+        return true
+    }
+}
+
+extension ChatLogViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    
+        if touch.view?.isDescendant(of: tableMessages) == true { return true }
+        return false
     }
 }

@@ -18,4 +18,5 @@ target 'MeloApp' do
   pod 'FMPhotoPicker'
   pod 'Kingfisher'
   pod 'Hero'
+  pod 'ISEmojiView'
 end

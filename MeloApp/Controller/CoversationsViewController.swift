@@ -13,7 +13,6 @@ class CoversationsViewController: UIViewController {
     @IBOutlet weak var collectionFriendOnline: UICollectionView!
     @IBOutlet weak var tableConversation: UITableView!
     
-    
     var groups: [Group] = []
     
     override func viewDidLoad() {

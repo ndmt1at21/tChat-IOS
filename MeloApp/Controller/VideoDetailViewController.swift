@@ -4,11 +4,15 @@
 //
 //  Created by Minh Tri on 12/27/20.
 //
-
 import UIKit
 import AVFoundation
 import AVKit
 import Hero
+
+protocol VideoDetailViewControllerDelegate: class {
+    func willDismiss(_ controller: VideoDetailViewController, playingStatus: Bool)
+    func finishPlaying(_ controller: VideoDetailViewController)
+}
 
 class VideoDetailViewController: UIViewController {
 
@@ -18,13 +22,14 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
     
-    var urlVideo: URL?
     var imageThumbnail: UIImage?
-    
     var player: AVPlayer?
     var layerPlayer: AVPlayerLayer?
-    var timeObserverToken: Any?
     var isPlaying: Bool = false
+    var cellSender: BubbleVideoChat?
+    private var timeObserverToken: Any?
+    
+    weak var delegate: VideoDetailViewControllerDelegate?
     
     let loadingAnimation: LoadingIndicator = {
         let loading = LoadingIndicator(frame: .zero)
@@ -32,6 +37,11 @@ class VideoDetailViewController: UIViewController {
         loading.colorIndicator = .white
         return loading
     }()
+    
+    deinit {
+        removePeriodicTimeObserver()
+        player?.currentItem?.removeObserver(self, forKeyPath: "loadedTimeRanges", context: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,23 +51,18 @@ class VideoDetailViewController: UIViewController {
         
         thumbnailImageView.image = imageThumbnail
         thumbnailImageView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-       
-        self.hero.isEnabled = true
-        thumbnailImageView.hero.id = "cellVideo"
-        
-        self.hero.modalAnimationType = .fade
-        navigationController?.hero.isEnabled = true
-        navigationController?.hero.navigationAnimationType = .fade
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(playerDidFinishPlaying),
-            name: .AVPlayerItemDidPlayToEndTime, object: nil
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: nil
         )
     }
     
     @objc func playerDidFinishPlaying(_ notifi: Notification) {
         isPlaying = false
+        delegate?.finishPlaying(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,20 +97,11 @@ class VideoDetailViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = false
         
-        removePeriodicTimeObserver()
-        player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges", context: nil)
-        
-        DispatchQueue.main.async {
-            self.player?.pause()
-            self.layerPlayer?.removeFromSuperlayer()
-        }
+        player?.pause()
+        delegate?.willDismiss(self, playingStatus: self.isPlaying)
     }
     
     func setupVideo() {
-        
-        guard let safeUrl = urlVideo else { return }
-
-        player = AVPlayer(url: safeUrl)
         
         layerPlayer = AVPlayerLayer(player: player)
         layerPlayer?.frame = thumbnailImageView.bounds
@@ -114,9 +110,9 @@ class VideoDetailViewController: UIViewController {
         thumbnailImageView.layer.addSublayer(layerPlayer!)
         
         player?.play()
-        player?.addObserver(
+        player?.currentItem?.addObserver(
             self,
-            forKeyPath: "currentItem.loadedTimeRanges",
+            forKeyPath: #keyPath(AVPlayerItem.status),
             options: .new,
             context: nil
         )
@@ -157,19 +153,31 @@ class VideoDetailViewController: UIViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         // player ready to play
-        if keyPath == "currentItem.loadedTimeRanges" {
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItem.Status
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
             
-            loadingAnimation.stopAnimation()
-            
-            // not set slider, user use it before load -> value = nan
-            isPlaying = true
-            sliderTrack.isUserInteractionEnabled = true
-            thumbnailImageView.image = nil
-           
-            // set total label time
-            if let duration = player?.currentItem?.duration {
-                let seconds = CMTimeGetSeconds(duration)
-                totalTimeLabel.text = formatSecondToHour(Int(seconds))
+            switch status {
+            case .readyToPlay:
+                loadingAnimation.stopAnimation()
+                isPlaying = true
+                
+                sliderTrack.isUserInteractionEnabled = true
+               
+                // set total label time
+                if let duration = player?.currentItem?.duration {
+                    let seconds = CMTimeGetSeconds(duration)
+                    totalTimeLabel.text = formatSecondToHour(Int(seconds))
+                }
+                
+            case .failed:
+                isPlaying = false
+            default:
+                print("no unknown")
             }
         }
     }
@@ -203,8 +211,10 @@ class VideoDetailViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func backButtonPressed(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        removeFromParent()
+        view.removeFromSuperview()
     }
     
     @IBAction func pauseButtonPressed(_ sender: UIButton) {

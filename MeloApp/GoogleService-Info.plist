@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>687071259463-0ebpriedddt8t6ihvvblc1il0opp5f5o.apps.googleusercontent.com</string>
+	<string>265860709996-tsjvbbmqvrfaaih9k7ihqh7pcbmr0476.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.687071259463-0ebpriedddt8t6ihvvblc1il0opp5f5o</string>
+	<string>com.googleusercontent.apps.265860709996-tsjvbbmqvrfaaih9k7ihqh7pcbmr0476</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDg8GP-kKtN--asbp9ZyGW3jFPparq2tE0</string>
+	<string>AIzaSyDfesakJ_7nR2DokHVoYJLxo0LeAt2MMOk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>687071259463</string>
+	<string>265860709996</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.tChat.ndmt1at21</string>
 	<key>PROJECT_ID</key>
-	<string>tchat-b3ac5</string>
+	<string>tchat-5c8f9</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tchat-b3ac5.appspot.com</string>
+	<string>tchat-5c8f9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:687071259463:ios:fcc2d24a4fc94ba3defa62</string>
+	<string>1:265860709996:ios:825efbf2963ba821d12249</string>
 </dict>
 </plist>

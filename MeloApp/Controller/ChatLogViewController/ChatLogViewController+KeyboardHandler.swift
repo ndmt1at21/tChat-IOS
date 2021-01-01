@@ -12,33 +12,46 @@ extension ChatLogViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {
+        
+        isKeyboardShow = true
+        isEmotionInputShow = false
+        
         let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
         let keyboardDuration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
         
-        
         let window = UIApplication.shared.windows[0]
         let bottomPadding = window.safeAreaInsets.bottom
-        bottomConstraintChatLogContentView.constant = keyboardFrame!.height - bottomPadding
-       
+        
+        let heightKeyboard = keyboardFrame!.height - bottomPadding
+        bottomConstraintChatLogContentView.constant = heightKeyboard
+        
         UIView.animate(withDuration: keyboardDuration!) {
             self.view.layoutIfNeeded()
+            
+        } completion: { (_) in
+            
         }
-        self.scrollToBottom()
-        
+        self.scrollToBottom(animation: false)
     }
     
     @objc func handleKeyboardWillHide(_ notification: Notification) {
+        
+        isKeyboardShow = false
+        
         let keyboardDuration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
         
-        bottomConstraintChatLogContentView.constant = 0
-        UIView.animate(withDuration: keyboardDuration!) {
+        if !isEmotionInputShow {
+            bottomConstraintChatLogContentView.constant = 0
+            UIView.animate(withDuration: keyboardDuration!) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            print("layout ")
             self.view.layoutIfNeeded()
         }
     }
 }
+

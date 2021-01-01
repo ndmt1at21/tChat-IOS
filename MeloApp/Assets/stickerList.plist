@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>stickers</key>
+		<array>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/1.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/2.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/3.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/4.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/5.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/6.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/7.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/8.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/9.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/10.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/11.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/12.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/13.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/14.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/15.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/16.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/17.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/18.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/19.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/20.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/21.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/22.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/23.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/24.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/25.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/26.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/27.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/28.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/29.gif</string>
+			<string>https://stc-chat.zdn.vn/images/stickers/default/30.gif</string>
+		</array>
+	</dict>
+	<dict>
+		<key>stickers</key>
+		<array>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18906</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18907</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18908</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18909</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18910</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18911</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18912</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18913</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18914</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18915</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18916</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18917</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18918</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18919</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18920</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18921</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18922</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18923</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18924</string>
+			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18925</string>
+		</array>
+	</dict>
+</array>
+</plist>

@@ -19,8 +19,6 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var retypePasswordTextField: SkyFloatingLabelTextField!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,14 +85,14 @@ class RegisterViewController: UIViewController {
         
         AuthController.shared.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
+            loadingAnimation.stopAnimation()
+            loadingAnimation.removeFromSuperview()
+            
             // Error
             if err != nil {
                 self.emailTextField.errorMessage = err
                 self.emailTextField.textErrorColor = self.emailTextField.textColor
-                
-                loadingAnimation.stopAnimation()
-                loadingAnimation.removeFromSuperview()
-                
+    
                 return
             }
             

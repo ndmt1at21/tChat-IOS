@@ -23,7 +23,6 @@ class ImageDetailViewController: UIViewController {
         scrollView.minimumZoomScale = 1.0
         scrollView.delegate = self
         
-  
         progressBar.progress = 0
         
         setupImage()
