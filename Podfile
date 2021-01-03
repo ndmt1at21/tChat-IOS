@@ -15,8 +15,8 @@ target 'MeloApp' do
 	pod 'Firebase/Firestore'
 	pod 'FirebaseFirestoreSwift'
 	pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/List'
   pod 'FMPhotoPicker'
   pod 'Kingfisher'
   pod 'Hero'
-  pod 'ISEmojiView'
 end

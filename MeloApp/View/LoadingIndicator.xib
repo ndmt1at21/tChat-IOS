@@ -40,9 +40,9 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
-                <constraint firstItem="7dz-Ld-waA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="6E6-N3-3X6"/>
+                <constraint firstItem="7dz-Ld-waA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6E6-N3-3X6"/>
                 <constraint firstItem="7dz-Ld-waA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Cir-UP-1dn"/>
-                <constraint firstItem="7dz-Ld-waA" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="T74-BG-bVG"/>
+                <constraint firstItem="7dz-Ld-waA" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="T74-BG-bVG"/>
                 <constraint firstItem="u4d-SY-e2e" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eVy-jW-JeR"/>
                 <constraint firstAttribute="bottom" secondItem="7dz-Ld-waA" secondAttribute="bottom" id="jfF-73-qdd"/>
                 <constraint firstItem="u4d-SY-e2e" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wlW-ZP-hzr"/>

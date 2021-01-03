@@ -11,28 +11,57 @@ import Firebase
 class NewMessageViewController: UIViewController{
 
     @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var tableListFriends: UITableView!
+    @IBOutlet weak var collectionListFriends: UICollectionView!
+    @IBOutlet weak var customNavBar: NavigationBarNormal!
+    
+    lazy var loading: LoadingIndicator = {
+        let loading = LoadingIndicator(frame: view.bounds)
+        loading.startAnimation()
+        loading.isTurnBlurEffect = false
+        
+        return loading
+    }()
     
     private var friends: [User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let loading = LoadingIndicator(frame: view.bounds)
-        loading.startAnimation()
-        loading.isTurnBlurEffect = false
-        tableListFriends.addSubview(loading)
+        setupCustomNavBar()
+        setupLoadingView()
+        setupSearchView()
+        setupCollectionListFriends()
+        fetchFriendsAndUpdateTable()
+    }
     
-        // Search View
+    private func setupCustomNavBar() {
+        customNavBar.delegate = self
+        
+        customNavBar.titleLabel.text = "Tin nhắn mới"
+        customNavBar.preferLarge = false
+        
+        customNavBar.backgroundColor = .white
+        customNavBar.backButton.backgroundColor = .white
+        customNavBar.backButton.inkColor = .systemGray5
+    }
+    
+    private func setupLoadingView() {
+        loading.frame = collectionListFriends.bounds
+        collectionListFriends.addSubview(loading)
+    }
+    
+    private func setupSearchView() {
         searchView.clipsToBounds = false
         searchView.shadow(0, 2, 2, UIColor.systemGray5.cgColor)
-        
-        // Table
-        tableListFriends.delegate = self
-        tableListFriends.dataSource = self
-        tableListFriends.separatorStyle = .none
-        tableListFriends.register(UINib(nibName: "ContactCell", bundle: .main), forCellReuseIdentifier: K.cellID.contactCell)
-        
+    }
+    
+    private func setupCollectionListFriends() {
+        collectionListFriends.delegate = self
+        collectionListFriends.dataSource = self
+        collectionListFriends.register(UINib(nibName: "ContactCell", bundle: .main), forCellWithReuseIdentifier: K.cellID.contactCell)
+    }
+    
+    private func fetchFriendsAndUpdateTable() {
         guard let currentUser = Auth.auth().currentUser else {
             loading.stopAnimation()
             AuthController.shared.handleLogout()
@@ -42,25 +71,13 @@ class NewMessageViewController: UIViewController{
         DatabaseController.getUser(userUID: currentUser.uid) { (user) in
             if let user = user {
                 self.fetchDataFriends(currUser: user)
-                loading.stopAnimation()
-                loading.removeFromSuperview()
+                self.loading.stopAnimation()
+                self.loading.removeFromSuperview()
             }
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.clipsToBounds = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.clipsToBounds = false
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print(navigationController?.viewControllers)
-    }
-    
-    func fetchDataFriends(currUser: User) {
+    private func fetchDataFriends(currUser: User) {
 
         guard let friends = currUser.friends else {
             return
@@ -70,47 +87,13 @@ class NewMessageViewController: UIViewController{
             DatabaseController.getUser(userUID: friendUID) { (friend) in
                 if let friend = friend {
                     self.friends.append(friend)
-                    self.tableListFriends.reloadData()
+                    self.collectionListFriends.reloadData()
                 }
             }
         }
     }
-}
-
-extension NewMessageViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let friend = friends[indexPath.row]
-        
-        print("to select")
-        guard let currentUser = Auth.auth().currentUser else { return AuthController.shared.handleLogout()
-        }
-        
-        print("cleicked")
-        fetchGroup(from: [currentUser.uid, friend.uid!]) { (group) in
-            guard let groupInfor = group else { return }
-
-            print("slowwww")
-            self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: groupInfor)
-            print("comeback--newmessage???????")
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueID.newMessageToChatLog {
-            let group = sender as! Group
-            let des = segue.destination as! ChatLogViewController
-            des.group = group
-        }
-    }
-
-    
-    func fetchGroup(from usersUID: [StringUID], completion: @escaping (_ group: Group?) -> Void) {
+    private func fetchGroup(from usersUID: [StringUID], completion: @escaping (_ group: Group?) -> Void) {
         
         let groupRef = Firestore.firestore().collection("groups")
         
@@ -157,24 +140,52 @@ extension NewMessageViewController: UITableViewDelegate {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.segueID.newMessageToChatLog {
+            let group = sender as! Group
+            let des = segue.destination as! ChatLogViewController
+            des.group = group
+        }
+    }
 }
 
-
-extension NewMessageViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+extension NewMessageViewController: UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 60)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionListFriends.deselectItem(at: indexPath, animated: true)
+        
+        let friend = friends[indexPath.row]
+        
+        guard let currentUser = Auth.auth().currentUser else {
+            return AuthController.shared.handleLogout()
+        }
+        
+        fetchGroup(from: [currentUser.uid, friend.uid!]) { (group) in
+            guard let groupInfor = group else { return }
+
+            self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: groupInfor)
+        }
+    }
+}
+
+extension NewMessageViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return friends.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID.contactCell) as! ContactCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionListFriends.dequeueReusableCell(withReuseIdentifier: K.cellID.contactCell, for: indexPath) as! ContactCell
         
         let friend = friends[indexPath.row]
-        print(friend)
+ 
         cell.name.text = friend.name
         cell.imageCover = UIImageView()
         
@@ -184,6 +195,14 @@ extension NewMessageViewController: UITableViewDataSource {
 
         return cell
     }
+}
+
+extension NewMessageViewController: UICollectionViewDelegateFlowLayout {
     
-    
+}
+
+extension NewMessageViewController: NavigationBarNormalDelegate {
+    func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
 }

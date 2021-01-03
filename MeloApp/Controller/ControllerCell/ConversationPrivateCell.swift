@@ -9,20 +9,36 @@ import UIKit
 
 class ConversationPrivateCell: UITableViewCell {
 
-    
     @IBOutlet weak var imageCover: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var recentMessage: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var seenImageCover: UIImageView!
     
-    @IBOutlet weak var onlineCircleImage: UIImageView!
+    var group: Group? {
+        didSet {
+            if group != nil {
+               
+            }
+        }
+    }
+    
+    lazy var onlineCircleImage: UIView = {
+        let circle = UIView()
+        circle.layer.cornerRadius = circle.frame.height / 2
+        circle.layer.borderWidth = 2
+        circle.backgroundColor = .systemGreen
+        
+        return circle
+    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.layoutIfNeeded()
-        
+    
+        setupCell()
+    }
+
+    private func setupCell() {
         imageCover.layer.cornerRadius = imageCover.frame.height / 2
         seenImageCover.layer.cornerRadius = imageCover.frame.height / 2
     
@@ -30,7 +46,7 @@ class ConversationPrivateCell: UITableViewCell {
         
         imageCover.addSubview(onlineCircleImage)
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

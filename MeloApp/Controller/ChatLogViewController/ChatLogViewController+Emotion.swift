@@ -28,7 +28,10 @@ extension ChatLogViewController {
             self.emotionInputView.frame.origin.y = screenHeight - EmotionInputView.kHeightEmotionInputView
         }
 
-        bottomConstraintChatLogContentView.constant = EmotionInputView.kHeightEmotionInputView
+        let window = UIApplication.shared.windows[0]
+        let bottomPadding = window.safeAreaInsets.bottom
+        
+        bottomConstraintChatLogContentView.constant = EmotionInputView.kHeightEmotionInputView - bottomPadding
         
         scrollToBottom(animation: false)
         

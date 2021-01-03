@@ -74,7 +74,6 @@ class LoginViewController: UIViewController {
         loadingIndicator.startAnimation()
         view.addSubview(loadingIndicator)
         
-        
         AuthController.shared.handleLogin(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
             loadingIndicator.stopAnimation()

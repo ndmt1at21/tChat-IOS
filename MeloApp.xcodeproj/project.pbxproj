@@ -26,7 +26,6 @@
 		5A0DEFB3259D7D4600A6F998 /* EmotionPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0DEFB2259D7D4600A6F998 /* EmotionPickerView.xib */; };
 		5A0DEFB6259D7ED100A6F998 /* StickerPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0DEFB5259D7ED100A6F998 /* StickerPickerView.xib */; };
 		5A0DEFB9259D7EE700A6F998 /* StickerPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DEFB8259D7EE700A6F998 /* StickerPickerView.swift */; };
-		5A0DEFC1259DB38F00A6F998 /* EmotionStickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DEFC0259DB38F00A6F998 /* EmotionStickerViewController.swift */; };
 		5A0DEFC6259E27B300A6F998 /* ChatLogViewController+Emotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DEFC5259E27B300A6F998 /* ChatLogViewController+Emotion.swift */; };
 		5A2666DD258993A500669B03 /* eercast.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A2666DC258993A500669B03 /* eercast.ttf */; };
 		5A2666EA25899D4F00669B03 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2666E925899D4F00669B03 /* LoginViewController.swift */; };
@@ -51,6 +50,7 @@
 		5A50656D258B10F0000A97F2 /* OnlineFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */; };
 		5A506575258B5662000A97F2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A506574258B5661000A97F2 /* TabBarController.swift */; };
 		5A506578258B6467000A97F2 /* NavigationBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A506577258B6467000A97F2 /* NavigationBarController.swift */; };
+		5A524052259FE78800050C82 /* ChatLogViewController+Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A524051259FE78800050C82 /* ChatLogViewController+Networking.swift */; };
 		5A65FE86259B175D00D7C0B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A65FE85259B175D00D7C0B7 /* GoogleService-Info.plist */; };
 		5A66F6AD25998D8900BE3A65 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A66F6AC25998D8900BE3A65 /* PlayerManager.swift */; };
 		5A70C1BF2588F3870048560F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A70C1BE2588F3870048560F /* User.swift */; };
@@ -68,6 +68,12 @@
 		5A7F8F52258C3243005092FD /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F8F51258C3243005092FD /* CurrentUser.swift */; };
 		5A992F2F258F349700BEF630 /* BubbleTextChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A992F2D258F349700BEF630 /* BubbleTextChat.xib */; };
 		5A992F33258F34AD00BEF630 /* BubbleTextChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */; };
+		5AAF835825A0C8D600867BEF /* NavigationBarChatLog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */; };
+		5AAF835B25A0D01200867BEF /* NavigationBarNormal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AAF835A25A0D01200867BEF /* NavigationBarNormal.xib */; };
+		5AAF835E25A0D13500867BEF /* NavigationBarMain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AAF835D25A0D13500867BEF /* NavigationBarMain.xib */; };
+		5AAF836225A0D72800867BEF /* NavigationBarChatLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF836125A0D72800867BEF /* NavigationBarChatLog.swift */; };
+		5AAF836525A0D73A00867BEF /* NavigationBarNormal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF836425A0D73A00867BEF /* NavigationBarNormal.swift */; };
+		5AAF836825A0D74800867BEF /* NavigationBarMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF836725A0D74800867BEF /* NavigationBarMain.swift */; };
 		5AC65940258A644800155FB5 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC6593F258A644800155FB5 /* RegisterViewController.swift */; };
 		5AE6086E2594E3FF005D09DD /* TypeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6086D2594E3FF005D09DD /* TypeMessage.swift */; };
 		5AED0C85258D9ACC004D1900 /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */; };
@@ -107,7 +113,6 @@
 		5A0DEFB2259D7D4600A6F998 /* EmotionPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmotionPickerView.xib; sourceTree = "<group>"; };
 		5A0DEFB5259D7ED100A6F998 /* StickerPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerPickerView.xib; sourceTree = "<group>"; };
 		5A0DEFB8259D7EE700A6F998 /* StickerPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerPickerView.swift; sourceTree = "<group>"; };
-		5A0DEFC0259DB38F00A6F998 /* EmotionStickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionStickerViewController.swift; sourceTree = "<group>"; };
 		5A0DEFC5259E27B300A6F998 /* ChatLogViewController+Emotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLogViewController+Emotion.swift"; sourceTree = "<group>"; };
 		5A2666DC258993A500669B03 /* eercast.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = eercast.ttf; sourceTree = "<group>"; };
 		5A2666E925899D4F00669B03 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 		5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlineFriendCell.xib; sourceTree = "<group>"; };
 		5A506574258B5661000A97F2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5A506577258B6467000A97F2 /* NavigationBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarController.swift; sourceTree = "<group>"; };
+		5A524051259FE78800050C82 /* ChatLogViewController+Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLogViewController+Networking.swift"; sourceTree = "<group>"; };
 		5A65FE85259B175D00D7C0B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A66F6AC25998D8900BE3A65 /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		5A70C1BE2588F3870048560F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -151,6 +157,12 @@
 		5A7F8F51258C3243005092FD /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		5A992F2D258F349700BEF630 /* BubbleTextChat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleTextChat.xib; sourceTree = "<group>"; };
 		5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleTextChat.swift; sourceTree = "<group>"; };
+		5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationBarChatLog.xib; sourceTree = "<group>"; };
+		5AAF835A25A0D01200867BEF /* NavigationBarNormal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationBarNormal.xib; sourceTree = "<group>"; };
+		5AAF835D25A0D13500867BEF /* NavigationBarMain.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationBarMain.xib; sourceTree = "<group>"; };
+		5AAF836125A0D72800867BEF /* NavigationBarChatLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarChatLog.swift; sourceTree = "<group>"; };
+		5AAF836425A0D73A00867BEF /* NavigationBarNormal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarNormal.swift; sourceTree = "<group>"; };
+		5AAF836725A0D74800867BEF /* NavigationBarMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarMain.swift; sourceTree = "<group>"; };
 		5AC6593F258A644800155FB5 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		5AE6086D2594E3FF005D09DD /* TypeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMessage.swift; sourceTree = "<group>"; };
 		5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +205,19 @@
 				E07A5DE286C57D271543718E /* Pods-MeloApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		5A0A6D1425A080680022BD62 /* CustomNavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */,
+				5AAF835A25A0D01200867BEF /* NavigationBarNormal.xib */,
+				5AAF835D25A0D13500867BEF /* NavigationBarMain.xib */,
+				5AAF836125A0D72800867BEF /* NavigationBarChatLog.swift */,
+				5AAF836425A0D73A00867BEF /* NavigationBarNormal.swift */,
+				5AAF836725A0D74800867BEF /* NavigationBarMain.swift */,
+			);
+			path = CustomNavigationBar;
 			sourceTree = "<group>";
 		};
 		5A4C359C2587517C00AAED51 = {
@@ -241,6 +266,7 @@
 				5A3C3E352596506F0009EF29 /* ChatLogViewController+Extensions.swift */,
 				5A0CCC39259A2260006FAD71 /* ChatLogViewController+TableMessage.swift */,
 				5A0DEFC5259E27B300A6F998 /* ChatLogViewController+Emotion.swift */,
+				5A524051259FE78800050C82 /* ChatLogViewController+Networking.swift */,
 			);
 			path = ChatLogViewController;
 			sourceTree = "<group>";
@@ -301,6 +327,7 @@
 		5A69033F259B84DE00B2AFDA /* ComponentController */ = {
 			isa = PBXGroup;
 			children = (
+				5A0A6D1425A080680022BD62 /* CustomNavigationBar */,
 				5AEF849C259C81B600B9E972 /* StickerPicker */,
 				5AEF8478259C80F600B9E972 /* PageControl */,
 				5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */,
@@ -341,16 +368,15 @@
 				5A4ED08A2596487400702478 /* ChatLogViewController */,
 				5A791832258C867B009051BA /* AuthController.swift */,
 				5A506549258AEAD1000A97F2 /* CoversationsViewController.swift */,
+				5A79183A258CE4E3009051BA /* NewMessageViewController.swift */,
 				5A50654C258AF796000A97F2 /* ContactsViewController.swift */,
 				5A506574258B5661000A97F2 /* TabBarController.swift */,
 				5A506577258B6467000A97F2 /* NavigationBarController.swift */,
-				5A79183A258CE4E3009051BA /* NewMessageViewController.swift */,
 				5A791836258C9881009051BA /* UserAcitivity.swift */,
 				5A79183E258CF0F2009051BA /* DatabaseController.swift */,
 				5A4ED0802595EE6900702478 /* StorageController.swift */,
 				5A4ED0832596340D00702478 /* ImageDetailViewController.swift */,
 				5A068F0D259812FB0061E115 /* VideoDetailViewController.swift */,
-				5A0DEFC0259DB38F00A6F998 /* EmotionStickerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -503,6 +529,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A037635259431380075DF9D /* BubbleVideoChat.xib in Resources */,
+				5AAF835825A0C8D600867BEF /* NavigationBarChatLog.xib in Resources */,
+				5AAF835B25A0D01200867BEF /* NavigationBarNormal.xib in Resources */,
 				5AEF84AA259C81BF00B9E972 /* StickerCell.xib in Resources */,
 				5A0DEFB3259D7D4600A6F998 /* EmotionPickerView.xib in Resources */,
 				5A2666EE25899DF500669B03 /* Main.storyboard in Resources */,
@@ -519,6 +547,7 @@
 				5A4C35B22587517E00AAED51 /* Assets.xcassets in Resources */,
 				5A068F1B2598A6E60061E115 /* loadingAnimation-white.json in Resources */,
 				5AEF84A7259C81BF00B9E972 /* ListStickerCollectionViewCell.xib in Resources */,
+				5AAF835E25A0D13500867BEF /* NavigationBarMain.xib in Resources */,
 				5A506567258B0E45000A97F2 /* ContactCell.xib in Resources */,
 				5A0DEFA5259D4B7800A6F998 /* emojiList.plist in Resources */,
 				5A0DEFA9259D6A3B00A6F998 /* EmotionInputView.xib in Resources */,
@@ -581,7 +610,9 @@
 			files = (
 				5AF2B69E2590DEC900C49BF0 /* BubbleImageChat.swift in Sources */,
 				5A506566258B0E45000A97F2 /* ContactCell.swift in Sources */,
+				5AAF836525A0D73A00867BEF /* NavigationBarNormal.swift in Sources */,
 				5A992F33258F34AD00BEF630 /* BubbleTextChat.swift in Sources */,
+				5A524052259FE78800050C82 /* ChatLogViewController+Networking.swift in Sources */,
 				5A2666EA25899D4F00669B03 /* LoginViewController.swift in Sources */,
 				5A506558258B01D4000A97F2 /* ConversationPrivateCell.swift in Sources */,
 				5AEF84A5259C81BF00B9E972 /* StickerCell.swift in Sources */,
@@ -589,6 +620,7 @@
 				5AC65940258A644800155FB5 /* RegisterViewController.swift in Sources */,
 				5A0DEFB9259D7EE700A6F998 /* StickerPickerView.swift in Sources */,
 				5A3C3E362596506F0009EF29 /* ChatLogViewController+Extensions.swift in Sources */,
+				5AAF836825A0D74800867BEF /* NavigationBarMain.swift in Sources */,
 				5A4ED0842596340E00702478 /* ImageDetailViewController.swift in Sources */,
 				5A50654A258AEAD1000A97F2 /* CoversationsViewController.swift in Sources */,
 				5AEF84A6259C81BF00B9E972 /* StickerModel.swift in Sources */,
@@ -600,7 +632,6 @@
 				5AE6086E2594E3FF005D09DD /* TypeMessage.swift in Sources */,
 				5A7F8F52258C3243005092FD /* CurrentUser.swift in Sources */,
 				5A70C1C92588F71D0048560F /* TypeDef.swift in Sources */,
-				5A0DEFC1259DB38F00A6F998 /* EmotionStickerViewController.swift in Sources */,
 				5A4ED087259646DE00702478 /* ChatLogViewController+KeyboardHandler.swift in Sources */,
 				5AEF84A8259C81BF00B9E972 /* StickerPicker+PageControl.swift in Sources */,
 				5A4C35A92587517C00AAED51 /* AppDelegate.swift in Sources */,
@@ -623,6 +654,7 @@
 				5A037634259431380075DF9D /* BubbleVideoChat.swift in Sources */,
 				5A0DEFC6259E27B300A6F998 /* ChatLogViewController+Emotion.swift in Sources */,
 				5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */,
+				5AAF836225A0D72800867BEF /* NavigationBarChatLog.swift in Sources */,
 				5A79183F258CF0F2009051BA /* DatabaseController.swift in Sources */,
 				5A03764E2594640D0075DF9D /* ImageLoading.swift in Sources */,
 				5A791833258C867B009051BA /* AuthController.swift in Sources */,

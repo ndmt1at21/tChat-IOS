@@ -312,7 +312,6 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - Hero (1.5.0)
   - IQKeyboardManagerSwift (6.5.6)
-  - ISEmojiView (0.2.6)
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
@@ -340,6 +339,15 @@ PODS:
     - MaterialComponents/Availability
     - MaterialComponents/private/Color
     - MaterialComponents/private/Math
+  - MaterialComponents/List (119.3.0):
+    - MaterialComponents/Elevation
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/private/Application (119.3.0)
   - MaterialComponents/private/Color (119.3.0):
     - MaterialComponents/Availability
@@ -383,10 +391,10 @@ DEPENDENCIES:
   - FMPhotoPicker
   - Hero
   - IQKeyboardManagerSwift
-  - ISEmojiView
   - Kingfisher
   - lottie-ios
   - MaterialComponents/Buttons
+  - MaterialComponents/List
   - SkyFloatingLabelTextField
 
 SPEC REPOS:
@@ -410,7 +418,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - Hero
     - IQKeyboardManagerSwift
-    - ISEmojiView
     - Kingfisher
     - leveldb-library
     - lottie-ios
@@ -441,7 +448,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
-  ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
@@ -452,6 +458,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
 
-PODFILE CHECKSUM: 72573dd7540b124f3ebd978364e2013513945c29
+PODFILE CHECKSUM: 86fa22f8417c4c3556aa84c26853bbf19f8ff584
 
 COCOAPODS: 1.10.0

@@ -59,11 +59,11 @@ class StickerPickerView: UIView {
 }
 
 extension StickerPickerView: StickerPickerDelegate {
-    func stickerPicker(_ stickerPicker: StickerPicker, didSelectedSticker sticker: Sticker) {
-        delegate?.stickerPicker(self, didSelectedAt: sticker)
+    func widthForSticker(_ stickerPicker: StickerPicker) -> Int {
+        return 100
     }
     
-    func numberOfStickerInRow(_ stickerPicker: StickerPicker) -> Int {
-        return delegate?.numberOfStickerInRow(self) ?? 0
+    func stickerPicker(_ stickerPicker: StickerPicker, didSelectedSticker sticker: Sticker) {
+        delegate?.stickerPicker(self, didSelectedAt: sticker)
     }
 }

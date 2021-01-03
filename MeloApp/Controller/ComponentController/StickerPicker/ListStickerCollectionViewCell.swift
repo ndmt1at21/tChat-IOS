@@ -12,7 +12,7 @@ protocol ListStickerCollectionCellDelegate: class {
 }
 
 protocol ListStickerCollectionCellDataSource: class {
-  func numberOfStickersInRow() -> Int
+  func widthForSticker() -> Int
 }
 
 let kGapCollectionCell: CGFloat = 0
@@ -94,15 +94,9 @@ extension ListStickerCollectionViewCell: UICollectionViewDataSource {
 
 extension ListStickerCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let nStickerInRow = dataSource?.numberOfStickersInRow() ?? 1
-        
-        let widthAfterInset = view.bounds.width - 2 * kInsetCollectionCell
-        let widthAfterGap = widthAfterInset - CGFloat(nStickerInRow - 1) *
-            kGapCollectionCell
-        let widthSticker = widthAfterGap / CGFloat(nStickerInRow)
-        
-        return CGSize(width: widthSticker, height: widthSticker)
+    
+        let width = dataSource?.widthForSticker() ?? 0
+        return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

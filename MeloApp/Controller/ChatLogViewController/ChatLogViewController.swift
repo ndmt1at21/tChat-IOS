@@ -11,25 +11,22 @@ import Firebase
 import FMPhotoPicker
 import Photos
 import Kingfisher
-import ISEmojiView
 
 class ChatLogViewController: UIViewController {
-
-    @IBOutlet weak var imageCover: UIImageView!
     
     @IBOutlet weak var chatLogContentView: UIView!
     @IBOutlet weak var tableMessages: UITableView!
 
     @IBOutlet weak var chatTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatTextView: UITextView!
-    @IBOutlet weak var nameGroup: UILabel!
-    @IBOutlet weak var groupStatus: UILabel!
     @IBOutlet weak var emojiButton: UIButton!
     @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
     
     var group: Group = Group()
     var messages: [Message] = []
     var nMessagePending: Int = 0
+    
+    @IBOutlet weak var customNavBar: NavigationBarChatLog!
     
     internal var isKeyboardShow: Bool = false
     internal var isEmotionInputShow: Bool = false {
@@ -50,6 +47,8 @@ class ChatLogViewController: UIViewController {
         let emotion = EmotionInputView(frame: .zero)
         emotion.delegate = self
         emotion.isHidden = true
+        emotion.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         return emotion
     }()
     
@@ -62,15 +61,26 @@ class ChatLogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        setupCustomNavigationBar()
         setupTableMessages()
-        setupScreenInfor()
         setupObserverKeyboard()
         setupObserveTapScreen()
-        setupImageCover()
         setupChatTextView()
         observerMessage(groupUID: group.uid!)
     }
 
+    private func setupCustomNavigationBar() {
+        customNavBar.delegate = self
+
+        customNavBar.backButton.backgroundColor = .white
+        customNavBar.backButton.inkColor = .systemGray5
+        
+        customNavBar.infoButton.backgroundColor = .white
+        customNavBar.infoButton.inkColor = .systemGray5
+        
+        customNavBar.shadow(0, 2, 3, UIColor.systemGray5.cgColor)
+    }
+    
     private func setupObserveTapScreen() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapInScreen))
         self.view.addGestureRecognizer(tap)
@@ -90,19 +100,11 @@ class ChatLogViewController: UIViewController {
         chatTextViewHeightConstraint.constant = chatTextView.contentSize.height
     }
     
-    func setupScreenInfor() {
-        nameGroup.text = group.displayName
-    }
-    
-    func setupImageCover() {
-        imageCover.layer.cornerRadius = imageCover.layer.frame.height / 2
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
-        navigationItem.hidesBackButton = false
         IQKeyboardManager.shared.enable = false
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         PlayerManager.shared.clear()
@@ -112,16 +114,17 @@ class ChatLogViewController: UIViewController {
         super.viewWillLayoutSubviews()
         tableMessages.layoutIfNeeded()
         tabBarController?.tabBar.isHidden = true
+        
+        emotionInputView.frame = CGRect(
+            x: 0,
+            y: UIScreen.main.bounds.height - EmotionInputView.kHeightEmotionInputView,
+            width: UIScreen.main.bounds.width,
+            height: EmotionInputView.kHeightEmotionInputView
+        )
     }
   
     override func willMove(toParent parent: UIViewController?) {
         tabBarController?.tabBar.isHidden = true
-    }
-    
-    @IBAction func backButtonPressed(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        tabBarController?.tabBar.isHidden = false
-        IQKeyboardManager.shared.enable = true
     }
     
 
@@ -225,185 +228,6 @@ extension ChatLogViewController: FMPhotoPickerViewControllerDelegate {
     }
 }
 
-
-// MARK: - HandleSendMessage
-extension ChatLogViewController {
-    func sendTextMessage(completion: @escaping (_ error: String?) -> Void) {
-        guard var text = chatTextView.text else { return }
-        
-        text = text.trimmingCharacters(in: ["\n", " "])
-        if text.count == 0 { return }
-        
-        guard let currentUser = Auth.auth().currentUser else { return }
-        let message = Message(
-            currentUser.uid,
-            Date().milisecondSince1970,
-            TypeMessage.text,
-            text
-        )
-        
-        sendMessageFirestore(message: message, to: group.uid!) { (error) in
-            if error != nil {
-                return completion(nil)
-            }
-            
-            return completion(error)
-        }
-    }
-    
-    func sendImageAndVideoMessage(_ asset: PHAsset, _ localUID: StringUID) {
-        guard let currentUser = Auth.auth().currentUser else { return }
-
-        let imageAsset = asset.getImage()
-        var urlOrigin: URL?
-        var urlThumbnail: URL?
-        var type: TypeMessage = .image
-        let currIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
-        
-        switch asset.mediaType {
-        case .image: type = .image
-        case .video: type = .video
-        default: return
-        }
-        
-        var message = Message(
-            currentUser.uid,
-            Date().milisecondSince1970,
-            type, nil
-        )
-        
-        let dispatchGroup = DispatchGroup()
-        
-        // upload original source
-        dispatchGroup.enter()
-        if type == .image {
-    
-            StorageController.uploadImage(imageAsset) { (snapshot) in
-                if let imgCell = self.tableMessages.cellForRow(
-                    at: currIndexPath) as? BubbleImageChat {
-                    
-                    DispatchQueue.main.async {
-                        imgCell.progressBar.isHidden = false
-                        imgCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount / snapshot.progress!.totalUnitCount)
-                    }
-                }
-
-                snapshot.reference.downloadURL { (urlImage, error) in
-
-                    if error != nil {
-                        print("Error: ", error!.localizedDescription)
-                        return
-                    }
-                    urlOrigin = urlImage
-                    dispatchGroup.leave()
-                }
-            }
-        } else if type == .video {
-            StorageController.uploadVideo(asset) { (snapshot) in
-                if let videoCell = self.tableMessages.cellForRow(
-                    at: currIndexPath) as? BubbleVideoChat {
-  
-                    DispatchQueue.main.async {
-                        videoCell.progressBar.isHidden = false
-                        videoCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount / snapshot.progress!.totalUnitCount)
-                    }
-                }
-                
-                snapshot.reference.downloadURL { (urlVideo, error) in
-                    
-                    if error != nil {
-                        print("Error: ", error!.localizedDescription)
-                        return
-                    }
-                    urlOrigin = urlVideo
-                    dispatchGroup.leave()
-                }
-            }
-        }
-        
-        // upload thumbnail image
-        dispatchGroup.enter()
-        guard let thumbnail = imageAsset.resize(width: 200) else {
-            return
-        }
-        
-        StorageController.uploadImage(thumbnail) { (snapshot) in
-            snapshot.reference.downloadURL { (urlThumb, error) in
-                if error != nil {
-                    print("Error: ", error!.localizedDescription)
-                    return
-                }
-                urlThumbnail = urlThumb
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            let cell = self.tableMessages.cellForRow(at: currIndexPath) as! BubbleBaseChat
-            cell.progressBar.isHidden = true
-            
-            message.type = type
-            message.content = urlOrigin?.absoluteString
-            message.thumbnail = urlThumbnail?.absoluteString
-            message.imageWidth = UInt64(thumbnail.size.width)
-            message.imageHeight = UInt64(thumbnail.size.height)
-            message.idLocalPending = localUID
-            
-            self.sendMessageFirestore(message: message, to: self.group.uid!) { (error) in
-                if error != nil { print(error!) }
-            }
-        }
-    }
-    
-
-    func sendLocalMessage(_ asset: PHAsset, _ localUID: StringUID, completion: @escaping (_ error: String?) -> Void) {
-        guard let currentUser = Auth.auth().currentUser else { return }
-        
-        var message = Message(
-            currentUser.uid,
-            Date().milisecondSince1970,
-            nil, nil
-        )
-        
-        // add to message local
-        asset.getURL { (url) in
-            guard let urlStr = url?.absoluteString else { return }
-            let imageThumb = asset.getImage()
-       
-            switch asset.mediaType {
-            case .image: message.type = .image
-            case .video: message.type = .video
-            default: return completion("Error type")
-            }
-            
-            message.content = urlStr
-            message.imageWidth = UInt64(imageThumb.size.width)
-            message.imageHeight = UInt64(imageThumb.size.height)
-            message.idLocalPending = localUID
-           
-            self.nMessagePending += 1
-            self.messages.append(message)
-                    
-            DispatchQueue.main.async {
-                self.scrollToBottom(animation: true)
-            }
-            
-            return completion(nil)
-        }
-    }
-
-    func sendMessageFirestore(message: Message, to groupUID: StringUID, completion: @escaping (_ error: String?) -> Void) {
-        guard let _ = Auth.auth().currentUser else { return }
-        
-        do {
-            try Firestore.firestore().collection("messages").document(groupUID).collection("messages").document().setData(from: message)
-            return completion(nil)
-        } catch let error {
-            return completion(error.localizedDescription)
-        }
-    }
-}
-
 extension ChatLogViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let contentSize = chatTextView.contentSize
@@ -423,5 +247,22 @@ extension ChatLogViewController: UIGestureRecognizerDelegate {
     
         if touch.view?.isDescendant(of: tableMessages) == true { return true }
         return false
+    }
+}
+
+extension ChatLogViewController: NavigationBarChatLogDelegate {
+    func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, backPressed sender: UIButton) {
+
+        UIView.transition(with: self.navigationController!.view, duration: 0.2, options: [.transitionCrossDissolve], animations: {
+            self.navigationController?.popToRootViewController(animated: false)
+        }, completion: nil)
+    }
+    
+    func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, infoPressed sender: UIButton) {
+        //
+    }
+    
+    func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, groupInfoViewPressed sender: UITapGestureRecognizer) {
+        //
     }
 }

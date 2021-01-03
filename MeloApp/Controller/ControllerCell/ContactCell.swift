@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import MaterialComponents
 
-class ContactCell: UITableViewCell {
+class ContactCell: MDCBaseCell {
 
     @IBOutlet weak var imageCover: UIImageView!
     @IBOutlet weak var name: UILabel!
@@ -28,13 +29,11 @@ class ContactCell: UITableViewCell {
             if !isOnlineValue {
                 DispatchQueue.main.async {
                     self.onlineCircleImage.isHidden = true
-                    print(self.onlineCircleImage.isHidden)
                 }
                
             } else {
                 DispatchQueue.main.async {
                     self.onlineCircleImage.isHidden = false
-                    print(self.onlineCircleImage.isHidden)
                 }
             }
         }
@@ -65,17 +64,5 @@ class ContactCell: UITableViewCell {
         onlineCircleImage.layer.masksToBounds = true
         
         containerImageCover.addSubview(onlineCircleImage)
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        if selected {
-            onlineCircleImage.layer.borderColor = UIColor.systemGray6.cgColor
-            contentView.backgroundColor = UIColor.systemGray6
-        } else {
-            onlineCircleImage.layer.borderColor = UIColor.white.cgColor
-            contentView.backgroundColor = UIColor.white
-        }
     }
 }

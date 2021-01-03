@@ -12,6 +12,9 @@ class NavigationBarController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let height: CGFloat = 50
+        let bounds = self.navigationController!.navigationBar.bounds
+        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height + height)
     }
     
     override func viewWillAppear(_ animated: Bool) {

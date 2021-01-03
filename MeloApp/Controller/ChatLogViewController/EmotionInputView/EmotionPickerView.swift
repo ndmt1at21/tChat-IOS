@@ -56,11 +56,11 @@ class EmotionPickerView: UIView {
 }
 
 extension EmotionPickerView: StickerPickerDelegate {
-    func stickerPicker(_ stickerPicker: StickerPicker, didSelectedSticker sticker: Sticker) {
-        delegate?.emotionPicker(self, didSelectedAt: sticker)
+    func widthForSticker(_ stickerPicker: StickerPicker) -> Int {
+        return 50
     }
     
-    func numberOfStickerInRow(_ emotionPicker: StickerPicker) -> Int {
-        return delegate?.numberOfEmotionInRow(self) ?? 0
+    func stickerPicker(_ stickerPicker: StickerPicker, didSelectedSticker sticker: Sticker) {
+        delegate?.emotionPicker(self, didSelectedAt: sticker)
     }
 }

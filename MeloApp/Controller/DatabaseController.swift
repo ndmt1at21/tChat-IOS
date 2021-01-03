@@ -26,4 +26,33 @@ class DatabaseController {
             return completion(nil)
         }
     }
+    
+    static func observeFriends(from userUID: StringUID, completion: @escaping (_ friend: [User]) -> Void) {
+        
+        Firestore.firestore().collection("user").document(userUID).addSnapshotListener { (snapshot, error) in
+            if error != nil {
+                print("Error:", error!.localizedDescription)
+                return completion([])
+            }
+            
+            if let userData = snapshot?.data() {
+                guard let friends = userData["friends"] as? [StringUID] else {
+                    return completion([])
+                }
+                
+                return completion([])
+            }
+        }
+    }
+    
+    static func sendMessage(message: Message, to groupUID: StringUID, completion: @escaping (_ error: String?) -> Void) {
+        guard let _ = AuthController.shared.currentUser else { return }
+        
+        do {
+            try Firestore.firestore().collection("messages").document(groupUID).collection("messages").document().setData(from: message)
+            return completion(nil)
+        } catch let error {
+            return completion(error.localizedDescription)
+        }
+    }
 }

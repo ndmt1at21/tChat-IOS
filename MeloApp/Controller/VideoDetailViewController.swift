@@ -21,6 +21,7 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
+    @IBOutlet weak var customNavBar: NavigationBarNormal!
     
     var imageThumbnail: UIImage?
     var player: AVPlayer?
@@ -58,6 +59,11 @@ class VideoDetailViewController: UIViewController {
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil
         )
+    }
+    
+    private func setupCustomNavBar() {
+        customNavBar.delegate = self
+        customNavBar.titleLabel.isHidden = true
     }
     
     @objc func playerDidFinishPlaying(_ notifi: Notification) {
@@ -232,5 +238,11 @@ class VideoDetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.pauseButton.setBackgroundImage(UIImage(systemName: imageName), for: .normal)
         }
+    }
+}
+
+extension VideoDetailViewController: NavigationBarNormalDelegate {
+    func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        navigationController?.popViewController(animated: false)
     }
 }

@@ -12,6 +12,7 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var zoomingImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var customNavBar: NavigationBarNormal!
     
     var originUrlImage: URL?
     var thumbnail: UIImage?
@@ -36,8 +37,17 @@ class ImageDetailViewController: UIViewController {
         
         zoomingImage.isUserInteractionEnabled = true
         zoomingImage.addGestureRecognizer(doubleTap)
+        
+        setupCustomNavBar()
     }
 
+    private func setupCustomNavBar() {
+        customNavBar.titleLabel.isHidden = true
+        customNavBar.delegate = self
+        customNavBar.backgroundColor = .black
+        customNavBar.backButton.backgroundColor = .black
+        customNavBar.backButton.tintColor = .white
+    }
     
     @objc func imageDidDoubleTaped(_ sender: UITapGestureRecognizer) {
 
@@ -113,5 +123,11 @@ extension ImageDetailViewController: UIScrollViewDelegate {
         } else {
             scrollView.contentInset = .zero
         }
+    }
+}
+
+extension ImageDetailViewController: NavigationBarNormalDelegate {
+    func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        navigationController?.popViewController(animated: false)
     }
 }

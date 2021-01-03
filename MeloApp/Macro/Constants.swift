@@ -32,10 +32,13 @@ struct K {
         static let conversationToChatLog = "ConversationToChatLog"
         static let imageToZoomView = "ImageToImageZoomView"
         static let videoToDetailView = "VideoToDetailView"
+        static let coversationToNewMessage = "ConversationToNewMessage"
     }
     
     struct sbID {
         static let videoDetailViewController = "VideoDetailViewController"
+        static let coversationsViewController = "CoversationsViewController"
+        static let newMessageViewController = "NewMessageViewController"
     }
     
     static let primaryColor = UIColor(named: "primaryBlue") ?? UIColor.systemBlue

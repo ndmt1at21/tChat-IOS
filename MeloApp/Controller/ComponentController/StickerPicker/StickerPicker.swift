@@ -9,7 +9,7 @@ import UIKit
 
 protocol StickerPickerDelegate: class {
     func stickerPicker(_ stickerPicker: StickerPicker, didSelectedSticker sticker: Sticker)
-    func numberOfStickerInRow(_ stickerPicker: StickerPicker) -> Int
+    func widthForSticker(_ stickerPicker: StickerPicker) -> Int
 }
 
 class StickerPicker: UIView {
@@ -101,9 +101,9 @@ extension StickerPicker: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Section Delegate DataSource For Cell
 extension StickerPicker: ListStickerCollectionCellDataSource {
-    func numberOfStickersInRow() -> Int {
-        let numSticker = delegate?.numberOfStickerInRow(self) ?? 0
-        return numSticker
+    func widthForSticker() -> Int {
+        let width = delegate?.widthForSticker(self) ?? 0
+        return width
     }
 }
 

@@ -20,20 +20,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let rootNav = mainStoryboard.instantiateViewController(withIdentifier: "RootNavigationController") as! UINavigationController
+
+        self.window?.rootViewController? = rootNav
         
-//        AuthController.shared.setupCurrentUser { (user) in
-//            if let _ = user {
-//                
-//                UserActivity.updateCurrentUserActivity(true)
-//                
-//                print("scnre")
-//                let controller = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
-//                self.window?.rootViewController?.navigationController?.popToViewController(controller, animated: true)
-//                print("scnre")
-//            } else {
-//                AuthController.shared.handleLogout()
-//            }
-//        }
+        AuthController.shared.setupCurrentUser { (user) in
+            if let _ = user {
+                
+                UserActivity.updateCurrentUserActivity(true)
+                
+                let tabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+                
+                rootNav.pushViewController(tabBarVC, animated: true)
+            } else {
+                AuthController.shared.handleLogout()
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
