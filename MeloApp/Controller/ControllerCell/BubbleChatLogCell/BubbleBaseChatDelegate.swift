@@ -15,6 +15,8 @@ import Foundation
     
     func cellDidTapImage(_ cell: BubbleBaseChat)
     
+    func cellDidTapSticker(_ cell: BubbleBaseChat)
+    
     func cellDidTapVideo(_ cell: BubbleBaseChat)
     
     func cellLongPress(_ cell: BubbleBaseChat)

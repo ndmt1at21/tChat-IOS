@@ -9,6 +9,9 @@ import UIKit
 import Hero
 
 extension ChatLogViewController: BubbleBaseChatDelegate {
+    func cellDidTapSticker(_ cell: BubbleBaseChat) {
+        print("tap sticker")
+    }
 
     func cellLongPress(_ cell: BubbleBaseChat) {
         print("long tap")
@@ -19,11 +22,6 @@ extension ChatLogViewController: BubbleBaseChatDelegate {
     }
     
     func cellDidTapText(_ cell: BubbleBaseChat) {
-        
-        if let c = cell as? BubbleTextChat {
-            c.layoutIfNeeded()
-        }
-        
         
     }
     

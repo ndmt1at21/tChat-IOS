@@ -12,32 +12,32 @@ import Photos
 class StorageController {
     static func uploadImage (
         _ image: UIImage,
-        progressBlock: @escaping (_ snapshot: StorageTaskSnapshot) -> Void) {
+        handler: @escaping (_ snapshot: StorageUploadTask) -> Void) {
         
         let refImageCollection = Storage.storage().reference().child("images")
         let uid = UUID().uuidString + "-\(Date().milisecondSince1970).jpeg"
         let refImage = refImageCollection.child(uid)
         
-        let uploadTask = refImage.putData(image.jpegData(compressionQuality: 0.7)!)
+        let uploadTask = refImage.putData(image.jpegData(compressionQuality: 0.5)!)
        
-        uploadTask.observe(.progress, handler: progressBlock)
+        return handler(uploadTask)
     }
     
     static func uploadVideo (
         _ asset: PHAsset,
-        progressBlock: @escaping (_ snapshot: StorageTaskSnapshot) -> Void) {
+        handler: @escaping (_ snapshot: StorageUploadTask) -> Void) {
   
         let refVideoCollection = Storage.storage().reference().child("videos")
-        
         let uid = UUID().uuidString + "-\(Date().milisecondSince1970).mov"
         let refVideo = refVideoCollection.child(uid)
         
         asset.getURL { (url) in
+            // Bug???
             guard let localUrl = url else { return }
             
             let uploadTask = refVideo.putFile(from: localUrl)
-                    
-            uploadTask.observe(.progress, handler: progressBlock)
+            
+            return handler(uploadTask)
         }
     }
 }

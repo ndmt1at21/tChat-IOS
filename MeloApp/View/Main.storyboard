@@ -839,12 +839,12 @@
                                             <constraint firstItem="Ujm-ff-0at" firstAttribute="top" secondItem="dXG-A5-gL2" secondAttribute="top" constant="5" id="yjz-uL-JNK"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="naT-Wr-PZC">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="naT-Wr-PZC">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="639"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dOu-NI-H2U">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dOu-NI-H2U" id="l5p-zl-exL">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1087,28 +1087,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLu-Hk-MBF">
-                                <rect key="frame" x="0.0" y="174" width="414" height="639"/>
+                            <collectionView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLu-Hk-MBF">
+                                <rect key="frame" x="0.0" y="164" width="414" height="649"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BXF-SX-g71">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ayg-62-H2z">
+                                    <size key="itemSize" width="400" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="uF3-w7-KLd">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="400" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LrF-sQ-koz">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="400" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NwS-3l-epu">
-                                <rect key="frame" x="0.0" y="114" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tới:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9c-oj-sOl">
                                         <rect key="frame" x="20" y="19.5" width="27" height="21"/>
@@ -1137,10 +1137,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Jy-Le-CnG" customClass="NavigationBarNormal" customModule="MeloApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="5WW-ow-01B"/>
+                                    <constraint firstAttribute="height" constant="60" id="5WW-ow-01B"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1148,15 +1148,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="NwS-3l-epu" firstAttribute="trailing" secondItem="iO2-bt-txk" secondAttribute="trailing" id="594-Lt-YrV"/>
+                            <constraint firstItem="iO2-bt-txk" firstAttribute="trailing" secondItem="hLu-Hk-MBF" secondAttribute="trailing" id="9w9-fx-5zM"/>
+                            <constraint firstItem="hLu-Hk-MBF" firstAttribute="leading" secondItem="iO2-bt-txk" secondAttribute="leading" id="Hhw-Dy-kG6"/>
+                            <constraint firstItem="hLu-Hk-MBF" firstAttribute="top" secondItem="NwS-3l-epu" secondAttribute="bottom" id="JWO-Zf-Plu"/>
                             <constraint firstItem="0Jy-Le-CnG" firstAttribute="leading" secondItem="2iM-dg-81N" secondAttribute="leading" id="UUB-hn-Ez6"/>
                             <constraint firstItem="0Jy-Le-CnG" firstAttribute="top" secondItem="iO2-bt-txk" secondAttribute="top" id="ayP-v4-Y4b"/>
                             <constraint firstAttribute="trailing" secondItem="0Jy-Le-CnG" secondAttribute="trailing" id="h6X-NM-zOq"/>
-                            <constraint firstItem="iO2-bt-txk" firstAttribute="bottom" secondItem="hLu-Hk-MBF" secondAttribute="bottom" id="hFz-YM-rll"/>
                             <constraint firstItem="NwS-3l-epu" firstAttribute="leading" secondItem="iO2-bt-txk" secondAttribute="leading" id="hVD-8A-dOX"/>
-                            <constraint firstItem="hLu-Hk-MBF" firstAttribute="leading" secondItem="iO2-bt-txk" secondAttribute="leading" id="jE0-ug-5Pd"/>
                             <constraint firstItem="NwS-3l-epu" firstAttribute="top" secondItem="0Jy-Le-CnG" secondAttribute="bottom" id="vN4-8l-bO7"/>
-                            <constraint firstItem="hLu-Hk-MBF" firstAttribute="top" secondItem="NwS-3l-epu" secondAttribute="bottom" id="wkJ-0a-Y89"/>
-                            <constraint firstItem="iO2-bt-txk" firstAttribute="trailing" secondItem="hLu-Hk-MBF" secondAttribute="trailing" id="wn3-6n-Oai"/>
+                            <constraint firstItem="iO2-bt-txk" firstAttribute="bottom" secondItem="hLu-Hk-MBF" secondAttribute="bottom" id="y9I-ha-j2O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OCM-jd-ePj">
@@ -1164,7 +1164,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" id="Oyd-6w-1wR"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionListFriends" destination="hLu-Hk-MBF" id="Q6p-XR-Sm6"/>
+                        <outlet property="collectionListFriends" destination="hLu-Hk-MBF" id="3Le-wa-9ff"/>
                         <outlet property="customNavBar" destination="0Jy-Le-CnG" id="Yc0-Cm-vy9"/>
                         <outlet property="searchView" destination="NwS-3l-epu" id="uFx-PC-qXU"/>
                         <segue destination="baV-Xt-6IU" kind="show" identifier="NewMessageToChatLog" id="GoN-wN-PNf"/>
@@ -1236,22 +1236,22 @@
     </scenes>
     <designables>
         <designable name="6TR-p3-rhi">
-            <size key="intrinsicContentSize" width="143.5" height="34"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
         <designable name="D4V-Zj-eW2">
-            <size key="intrinsicContentSize" width="132.5" height="34"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
         <designable name="G8A-fN-baK">
-            <size key="intrinsicContentSize" width="178" height="34"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
         <designable name="Q6Q-4Y-Ahk">
-            <size key="intrinsicContentSize" width="72" height="22"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
         <designable name="bLe-6x-Zw6">
-            <size key="intrinsicContentSize" width="164.5" height="34"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
         <designable name="c4G-kj-tOa">
-            <size key="intrinsicContentSize" width="81" height="21"/>
+            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

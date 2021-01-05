@@ -45,14 +45,29 @@ class DatabaseController {
         }
     }
     
-    static func sendMessage(message: Message, to groupUID: StringUID, completion: @escaping (_ error: String?) -> Void) {
+    
+    
+    static func sendMessage(message: Message, to groupUID: StringUID, completion: @escaping (_ documentID: StringUID?, _ error: String?) -> Void) {
         guard let _ = AuthController.shared.currentUser else { return }
+    
+        let ref = Firestore.firestore()
+            .collection("messages").document(groupUID)
+            .collection("messages").document()
         
-        do {
-            try Firestore.firestore().collection("messages").document(groupUID).collection("messages").document().setData(from: message)
-            return completion(nil)
-        } catch let error {
-            return completion(error.localizedDescription)
+        ref.setData(message.dictionaryForSend()) { (error) in
+            if error != nil {
+                return completion(nil, error?.localizedDescription)
+            }
+            return completion(ref.documentID, nil)
         }
+    }
+    
+    static func updateMessage(_ messageUID: StringUID, _ groupUID: StringUID, fields: [String: Any]) {
+        
+        let ref = Firestore.firestore()
+            .collection("messages").document(groupUID)
+            .collection("messages").document(messageUID)
+        
+        ref.updateData(fields)
     }
 }

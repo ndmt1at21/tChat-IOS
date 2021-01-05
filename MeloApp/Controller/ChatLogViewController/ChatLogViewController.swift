@@ -23,8 +23,7 @@ class ChatLogViewController: UIViewController {
     @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
     
     var group: Group = Group()
-    var messages: [Message] = []
-    var nMessagePending: Int = 0
+    var messages: ListMessage = ListMessage()
     
     @IBOutlet weak var customNavBar: NavigationBarChatLog!
     
@@ -140,13 +139,15 @@ class ChatLogViewController: UIViewController {
     
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        sendTextMessage { (error) in
+        let text = chatTextView.text
+        chatTextView.text = nil
+        
+        sendTextMessage(text: text) { (error) in
             if error != nil {
                 print(error!)
                 return
             }
             
-            self.chatTextView.text = nil
             self.chatTextViewHeightConstraint.constant = self.chatTextView.contentSize.height
         }
     }
@@ -164,43 +165,6 @@ class ChatLogViewController: UIViewController {
         
         present(imagePicker, animated: true, completion: nil)
     }
-    
-    private func observerMessage(groupUID: StringUID) {
-        let groupRef = Firestore.firestore().collection("messages").document(groupUID).collection("messages").order(by: "sendAt").limit(toLast: 10)
-        
-        groupRef.addSnapshotListener { (querySnapshot, error) in
-            guard let docsChange = querySnapshot?.documentChanges else {
-                return
-            }
-            
-            docsChange.forEach { (doc) in
-                let data = doc.document.data()
- 
-                if doc.type == .added {
-                    let message = Message(uid: doc.document.documentID, dictionary: data)
-                    
-                    let position = self.messages.lastIndex {
-                        $0.idLocalPending != nil && self.nMessagePending != 0
-                            && $0.idLocalPending == message.idLocalPending && $0.uid == nil
-                    }
-                    
-                    if let pos = position {
-                        self.nMessagePending -= 1
-                        self.messages[pos] = message
-                    } else {
-                        self.messages.append(message)
-                                            
-                        DispatchQueue.main.async {
-                            self.tableMessages.reloadData()
-                            self.scrollToBottom(animation: true)
-                        }
-                    }
-                } else if doc.type == .removed {
-                    
-                }
-            }
-        }
-    }
 }
 
 // MARK: - PhotoPickerDelegate
@@ -214,16 +178,7 @@ extension ChatLogViewController: FMPhotoPickerViewControllerDelegate {
         dismiss(animated: true, completion: nil)
         
         for asset in assets {
-            let uidLocalPending = UUID().uuidString
-            
-            // handle show image, video immedietly when pressed send
-            sendLocalMessage(asset, uidLocalPending) { (error) in
-                print("send local success")
-                if error != nil { return }
-                
-                // upload to firestore and send message to firebase
-                self.sendImageAndVideoMessage(asset, uidLocalPending)
-            }
+            self.sendImageAndVideoMessage(asset)
         }
     }
 }
@@ -232,7 +187,6 @@ extension ChatLogViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let contentSize = chatTextView.contentSize
         self.chatTextViewHeightConstraint.constant = contentSize.height
-        self.view.layoutIfNeeded()
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {

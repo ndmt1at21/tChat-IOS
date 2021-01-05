@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import MaterialComponents
 
 class NewMessageViewController: UIViewController{
 
@@ -104,39 +105,33 @@ class NewMessageViewController: UIViewController{
         queryFindGroup.getDocuments { (snapshot, error) in
             
             if let docs = snapshot?.documents, docs.count > 0 {
-                let doc = docs[0].data()
                 
-                let group = Group(
-                    uid: docs[0].documentID,
-                    createdAt: doc["createdAt"] as? UInt64,
-                    createdBy: doc["createdBy"] as? StringUID,
-                    members: doc["members"] as? [StringUID: Bool],
-                    recentMessage: doc["recentMessage"] as? RecentMessage,
-                    displayName: doc["displayName"] as? String
-                )
+                let doc = docs[0].data()
+                let group = Group(uid: docs[0].documentID, dataFromServer: doc)
                 
                 return completion(group)
             } else {
                 // Create new group
                 guard let currentUser = Auth.auth().currentUser else { return }
+                
                 var group = Group(
-                    createdAt: Date().milisecondSince1970,
                     createdBy: currentUser.uid,
                     members: usersUID.reduce(into: [:], { (result, userUID) in
                         result[userUID] = true
                     }),
-                    displayName: "Group"
+                    recentMessage: nil,
+                    displayName: "GroupTest"
                 )
                 
-                do {
-                    let ref = try groupRef.addDocument(from: group)
-                    group.uid = ref.documentID
+                let ref = groupRef.document()
+                ref.setData(group.dictionaryForSend()) { (error) in
+                    if error != nil {
+                        return completion(nil)
+                    }
                     
+                    group.uid = ref.documentID
                     return completion(group)
-                } catch _ {
-                    return completion(nil)
                 }
-                 
             }
         }
     }
@@ -160,7 +155,6 @@ extension NewMessageViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionListFriends.deselectItem(at: indexPath, animated: true)
         
         let friend = friends[indexPath.row]
         
@@ -184,10 +178,10 @@ extension NewMessageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionListFriends.dequeueReusableCell(withReuseIdentifier: K.cellID.contactCell, for: indexPath) as! ContactCell
         
+ 
         let friend = friends[indexPath.row]
  
         cell.name.text = friend.name
-        cell.imageCover = UIImageView()
         
         UserActivity.observeUserActivity(userUID: friend.uid!) { (isOnline) in
             cell.isOnline = isOnline
@@ -198,7 +192,10 @@ extension NewMessageViewController: UICollectionViewDataSource {
 }
 
 extension NewMessageViewController: UICollectionViewDelegateFlowLayout {
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
 
 extension NewMessageViewController: NavigationBarNormalDelegate {

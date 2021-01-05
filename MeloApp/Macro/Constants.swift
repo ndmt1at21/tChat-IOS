@@ -17,12 +17,14 @@ struct K {
         static let bubbleTextChat = "BubbleTextChat"
         static let bubbleImageChat = "BubbleImageChat"
         static let bubbleVideoChat = "BubbleVideoChat"
+        static let bubbleStickerChat = "BubbleStickerChat"
     }
     
     struct nib {
         static let bubbleImageChat = "BubbleImageChat"
         static let bubbleTextChat = "BubbleTextChat"
         static let bubbleVideoChat = "BubbleVideoChat"
+        static let bubbleStickerChat = "BubbleStickerChat"
     }
     
     struct segueID {
@@ -45,4 +47,6 @@ struct K {
     static let secondaryColor = UIColor(named: "lightBlue") ?? UIColor.blue
     
     static let defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/tchat-69560.appspot.com/o/default%2Fdefault-avatar.jpg?alt=media&token=4194f32f-6656-4683-9a63-ced6995c3e46"
+    
+    static let distanceTimeGroupMessage: Double = 10 * 60 // 10 minutes
 }

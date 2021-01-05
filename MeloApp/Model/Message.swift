@@ -6,50 +6,62 @@
 //
 
 import Foundation
+import Firebase
 
-struct Message: Codable {
+struct Message {
     var uid: StringUID?
     var senderAvatar: String?
     var sendBy: StringUID?
-    var sendAt: UInt64?
+    var sendAt: Any? // Date or FieldValue
     var type: TypeMessage?
     var content: String?
     var thumbnail: String?
     var imageWidth: UInt64?
     var imageHeight: UInt64?
-    var idLocalPending: StringUID?
     
-    init(uid: StringUID, dictionary: [String: Any]) {
+    init(uid: StringUID, dataFromServer: [String: Any]) {
         self.uid = uid
-        self.sendBy = dictionary["sendBy"] as? StringUID
-        self.sendAt = dictionary["sendAt"] as? UInt64
-        self.type = TypeMessage(rawValue: dictionary["type"] as! Int)
-        self.content = dictionary["content"] as? String
-        self.thumbnail = dictionary["thumbnail"] as? String
-        self.imageWidth = dictionary["imageWidth"] as? UInt64
-        self.imageHeight = dictionary["imageHeight"] as? UInt64
-        self.idLocalPending = dictionary["idLocalPending"] as? StringUID
+        self.sendBy = dataFromServer["sendBy"] as? StringUID
+        self.type = TypeMessage(rawValue: dataFromServer["type"] as! Int)
+        self.content = dataFromServer["content"] as? String
+        self.thumbnail = dataFromServer["thumbnail"] as? String
+        self.imageWidth = dataFromServer["imageWidth"] as? UInt64
+        self.imageHeight = dataFromServer["imageHeight"] as? UInt64
+        
+        self.sendAt = (dataFromServer["sendAt"] as? Timestamp)?.dateValue()
     }
     
-    init(_ sendBy: StringUID?, _ sendAt: UInt64?, _ type: TypeMessage?, _ content: String?, _ thumbnail: String?, _ imageWidth: UInt64?, _ imageHeight: UInt64?, _ idLocalPending: StringUID) {
+    init(_ sendBy: StringUID?, _ type: TypeMessage?, _ content: String?, _ thumbnail: String?, _ imageWidth: UInt64?, _ imageHeight: UInt64?) {
         
         self.sendBy = sendBy
-        self.sendAt = sendAt
+        self.sendAt = FieldValue.serverTimestamp()
         self.type = type
         self.content = content
         self.thumbnail = thumbnail
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
-        self.idLocalPending = idLocalPending
     }
     
-    init(_ sendBy: StringUID?, _ sendAt: UInt64?, _ type: TypeMessage?, _ content: String?) {
+    init(_ sendBy: StringUID?, _ type: TypeMessage?, _ content: String?) {
         
+        self.sendAt = FieldValue.serverTimestamp()
         self.sendBy = sendBy
-        self.sendAt = sendAt
         self.type = type
         self.content = content
     }
     
-
+    func dictionaryForSend() -> [String: Any] {
+        var dict: [String: Any] = [:]
+       
+        dict["senderAvatar"] = senderAvatar
+        dict["sendBy"] = sendBy
+        dict["sendAt"] = FieldValue.serverTimestamp()
+        dict["type"] = type?.rawValue
+        dict["content"] = content
+        dict["thumbnail"] = thumbnail
+        dict["imageWidth"] = imageWidth
+        dict["imageHeight"] = imageHeight
+        
+        return dict
+    }
 }

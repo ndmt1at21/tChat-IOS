@@ -7,60 +7,146 @@
 
 import UIKit
 import Photos
+import Firebase
 
 extension ChatLogViewController {
-    internal func sendTextMessage(completion: @escaping (_ error: String?) -> Void) {
-        guard var text = chatTextView.text else { return }
+    internal func observerMessage(groupUID: StringUID) {
         
-        text = text.trimmingCharacters(in: ["\n", " "])
-        if text.count == 0 { return }
+        let db = Firestore.firestore()
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
-        let message = Message(
-            currentUser.uid,
-            Date().milisecondSince1970,
-            TypeMessage.text,
-            text
-        )
-        
-        DatabaseController.sendMessage(message: message, to: group.uid!) { (error) in
-            if error != nil {
-                return completion(nil)
+        let groupRef = db.collection("messages").document(groupUID).collection("messages").order(by: "sendAt").limit(toLast: 10)
+    
+        groupRef.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
+            guard let docsChange = querySnapshot?.documentChanges else {
+                return
             }
-            return completion(error)
+     
+            var addedMessages: [Message] = []
+            
+            docsChange.forEach { (doc) in
+                let data = doc.document.data()
+
+                var message = Message(uid: doc.document.documentID, dataFromServer: data)
+                
+                if message.sendAt == nil && querySnapshot!.metadata.hasPendingWrites {
+                    message.sendAt = Timestamp().dateValue()
+                }
+                  
+                switch doc.type {
+                case .added:
+                    addedMessages.append(message)
+                case .modified:
+                    self.messages.updateMessage(message)
+                case .removed:
+                    print("ccccccc")
+                }
+            }
+            
+            // group message
+            self.messages.addSectionLast(addedMessages)
+            self.scrollToBottom(animation: true)
         }
     }
     
-    internal func sendImageAndVideoMessage(_ asset: PHAsset, _ localUID: StringUID) {
+    internal func sendTextMessage(text: String?, completion: @escaping (_ error: String?) -> Void) {
+        
+        guard let currentUser = AuthController.shared.currentUser else { return }
+        
+        guard let safeText = text else { return }
+        let textMessage = safeText.trimmingCharacters(in: ["\n", " "])
+        
+        if textMessage.count == 0 { return }
+
+        let message = Message(currentUser.uid!, .text, textMessage)
+
+        DatabaseController.sendMessage(message: message, to: group.uid!) { (docID, error) in
+            if error != nil {
+                return completion(error)
+            }
+            return completion(nil)
+        }
+    }
+    
+    internal func sendImageAndVideoMessage(_ asset: PHAsset) {
         guard let currentUser = AuthController.shared.currentUser else { return }
 
-        let imageAsset = asset.getImage()
-        var urlOrigin: URL?
-        var urlThumbnail: URL?
         var type: TypeMessage = .image
-        let currIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
+        let imageAsset = asset.getImage()
+        var currIndexPath = IndexPath(
+            row: -1,
+            section: -1
+        )
         
         switch asset.mediaType {
         case .image: type = .image
         case .video: type = .video
-        default: return
+        default:
+            print("Error: Asset type not support")
+            return
         }
         
         var message = Message(
             currentUser.uid,
-            Date().milisecondSince1970,
-            type, nil
+            type, nil, nil,
+            UInt64(imageAsset.size.width),
+            UInt64(imageAsset.size.height)
         )
+    
+        // First, send message with original url
+        // For show image and video immediately
+        var messageUID: StringUID?
+        
+        asset.getURL { (url) in
+            guard let localUrl = url else { return }
+            message.content = localUrl.absoluteString
+            
+            DatabaseController.sendMessage(message: message, to: self.group.uid!) { (docUID, error) in
+                if error != nil {
+                    print("Error:", error!)
+                    return
+                }
+                
+                messageUID = docUID
+                currIndexPath.section = self.messages.count - 1
+                currIndexPath.row = self.messages[self.messages.count - 1].count - 1
+
+                self.uploadOriginalSourceAndThumbnail(asset, imageAsset, updateProgressCellAt: currIndexPath, messageWillUpdateAt: messageUID)
+            }
+        }
+       
+ 
+    }
+    
+    internal func sendStickerMessage(_ url: String?, completion: @escaping (_ error: String?) -> Void) {
+        guard let currentUser = AuthController.shared.currentUser else { return }
+        
+        guard let safeUrl = url else { return }
+        
+        let message = Message(currentUser.uid, .sticker, safeUrl)
+
+        DatabaseController.sendMessage(message: message, to: group.uid!) { (docID, error) in
+            if error != nil {
+                return completion(error)
+            }
+            return completion(nil)
+        }
+    }
+    
+    private func uploadOriginalSourceAndThumbnail(_ asset: PHAsset, _ imageAsset: UIImage, updateProgressCellAt indexPath: IndexPath, messageWillUpdateAt uid: StringUID?) {
+        
+        let type = asset.mediaType
         
         let dispatchGroup = DispatchGroup()
         
-        // upload original source
+        // Upload original source
+        var urlOrigin: URL?
+        
         dispatchGroup.enter()
         if type == .image {
-            uploadImageAndUpdateProgessUI(imageAsset, cellUpdateAt: currIndexPath) { (urlImage, error) in
-                
+            uploadImageAndUpdateProgessUI(imageAsset, cellUpdateAt: indexPath) { (urlImage, error) in
                 if error != nil {
                     print("Error: ", error!)
+                    dispatchGroup.leave()
                     return
                 }
                 
@@ -68,9 +154,10 @@ extension ChatLogViewController {
                 dispatchGroup.leave()
             }
         } else if type == .video {
-            uploadVideoAndUpdateProgessUI(asset, cellUpdateAt: currIndexPath) { (urlVideo, error) in
+            uploadVideoAndUpdateProgessUI(asset, cellUpdateAt: indexPath) { (urlVideo, error) in
                 if error != nil {
                     print("Error: ", error!)
+                    dispatchGroup.leave()
                     return
                 }
                 
@@ -79,113 +166,116 @@ extension ChatLogViewController {
             }
         }
         
-        // upload thumbnail image
+        // Upload thumbnail image
+        var urlThumbnail: URL?
+        
         dispatchGroup.enter()
         guard let thumbnail = imageAsset.resize(width: 200) else {
             return
         }
         
-        StorageController.uploadImage(thumbnail) { (snapshot) in
-            snapshot.reference.downloadURL { (urlThumb, error) in
-                if error != nil {
-                    print("Error: ", error!.localizedDescription)
-                    return
+        StorageController.uploadImage(thumbnail) { (uploadTask) in
+            uploadTask.observe(.success) { (snapshot) in
+                snapshot.reference.downloadURL { (urlThumb, error) in
+                    if error != nil {
+                        print("Error: ", error!.localizedDescription)
+                        dispatchGroup.leave()
+                        return
+                    }
+                    urlThumbnail = urlThumb
+                    dispatchGroup.leave()
                 }
-                urlThumbnail = urlThumb
+            }
+            
+            uploadTask.observe(.failure) { (snapshot) in
+                urlThumbnail = nil
                 dispatchGroup.leave()
             }
         }
         
+        // Update message with url in storage
         dispatchGroup.notify(queue: .main) {
-            let cell = self.tableMessages.cellForRow(at: currIndexPath) as! BubbleBaseChat
+
+            guard let cell = self.tableMessages.cellForRow(at: indexPath) as? BubbleBaseChat else {
+                return
+            }
             cell.progressBar.isHidden = true
             
-            message.type = type
-            message.content = urlOrigin?.absoluteString
-            message.thumbnail = urlThumbnail?.absoluteString
-            message.imageWidth = UInt64(thumbnail.size.width)
-            message.imageHeight = UInt64(thumbnail.size.height)
-            message.idLocalPending = localUID
-            
-            DatabaseController.sendMessage(message: message, to: self.group.uid!) { (error) in
-                if error != nil { print(error!) }
+            guard let safeMessUID = uid,
+                  let safeUrlOrigin = urlOrigin?.absoluteString,
+                  let safeUrlThumbnail = urlThumbnail?.absoluteString else {
+                return
             }
+            
+            DatabaseController.updateMessage(
+                safeMessUID,
+                self.group.uid!,
+                fields: [
+                    "content": safeUrlOrigin,
+                    "thumbnail": safeUrlThumbnail
+                ]
+            )
         }
     }
     
     internal func uploadVideoAndUpdateProgessUI(_ asset: PHAsset, cellUpdateAt indexPath: IndexPath, completion: @escaping (_ urlInStorage: URL?, _ error: String?) -> Void) {
         
-        StorageController.uploadVideo(asset) { (snapshot) in
-            if let videoCell = self.tableMessages.cellForRow(
-                at: indexPath) as? BubbleVideoChat {
+        StorageController.uploadVideo(asset) { (uploadTask) in
+            
+            // Update progress UI
+            uploadTask.observe(.progress) { (snapshot) in
 
-                DispatchQueue.main.async {
-                    videoCell.progressBar.isHidden = false
-                    videoCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount / snapshot.progress!.totalUnitCount)
+                if let videoCell = self.tableMessages.cellForRow(
+                    at: indexPath) as? BubbleVideoChat {
+
+                    DispatchQueue.main.async {
+                        videoCell.progressBar.isHidden = false
+                        videoCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount) / Float(snapshot.progress!.totalUnitCount)
+                    }
                 }
-            } else {
-                return completion(nil, "Invalid indexPath")
             }
             
-            snapshot.reference.downloadURL { (urlVideo, error) in
-                completion(urlVideo, error?.localizedDescription)
+            // Get link if success
+            uploadTask.observe(.success) { (snapshot) in
+                snapshot.reference.downloadURL { (url, error) in
+                    return completion(url, error?.localizedDescription)
+                }
+            }
+            
+            // Fail
+            uploadTask.observe(.failure) { (snapshot) in
+                return completion(nil, snapshot.error?.localizedDescription)
             }
         }
     }
     
     internal func uploadImageAndUpdateProgessUI(_ image: UIImage, cellUpdateAt indexPath: IndexPath, completion: @escaping (_ urlInStorage: URL?, _ error: String?) -> Void) {
         
-        StorageController.uploadImage(image) { (snapshot) in
-            if let imgCell = self.tableMessages.cellForRow(
-                at: indexPath) as? BubbleImageChat {
-                
-                DispatchQueue.main.async {
-                    imgCell.progressBar.isHidden = false
-                    imgCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount / snapshot.progress!.totalUnitCount)
-                }
-            } else {
-                return completion(nil, "Error indexPath")
-            }
-
-            snapshot.reference.downloadURL { (urlImage, error) in
-                return completion(urlImage, error?.localizedDescription)
-            }
-        }
-    }
-    
-    internal func sendLocalMessage(_ asset: PHAsset, _ localUID: StringUID, completion: @escaping (_ error: String?) -> Void) {
-        guard let currentUser = AuthController.shared.currentUser else { return }
-        
-        var message = Message(
-            currentUser.uid,
-            Date().milisecondSince1970,
-            nil, nil
-        )
-        
-        // add to message local
-        asset.getURL { (url) in
-            guard let urlStr = url?.absoluteString else { return }
-            let imageThumb = asset.getImage()
-       
-            switch asset.mediaType {
-            case .image: message.type = .image
-            case .video: message.type = .video
-            default: return completion("Error type")
-            }
+        StorageController.uploadImage(image) { (uploadTask) in
             
-            message.content = urlStr
-            message.imageWidth = UInt64(imageThumb.size.width)
-            message.imageHeight = UInt64(imageThumb.size.height)
-            message.idLocalPending = localUID
-           
-            self.nMessagePending += 1
-            self.messages.append(message)
+            // Update UI
+            uploadTask.observe(.progress) { (snapshot) in
+                if let imgCell = self.tableMessages.cellForRow(
+                    at: indexPath) as? BubbleImageChat {
                     
-            DispatchQueue.main.async {
-                self.scrollToBottom(animation: true)
+                    DispatchQueue.main.async {
+                        imgCell.progressBar.isHidden = false
+                        imgCell.progressBar.progress = Float(snapshot.progress!.completedUnitCount) / Float(snapshot.progress!.totalUnitCount)
+                    }
+                }
             }
             
-            return completion(nil)
+            // Get link if success
+            uploadTask.observe(.success) { (snapshot) in
+                snapshot.reference.downloadURL { (url, error) in
+                    return completion(url, error?.localizedDescription)
+                }
+            }
+            
+            // Failure
+            uploadTask.observe(.failure) { (snapshot) in
+                return completion(nil, snapshot.error?.localizedDescription)
+            }
         }
     }
 }

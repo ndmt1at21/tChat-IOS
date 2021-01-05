@@ -15,7 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        Firestore.firestore()
+        
+        let setting = Firestore.firestore().settings
+        setting.isPersistenceEnabled = true
+        setting.cacheSizeBytes = 200 * 1024 * 1024
+        
+        Firestore.firestore().settings = setting
         
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false

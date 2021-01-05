@@ -59,6 +59,8 @@ class VideoDetailViewController: UIViewController {
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil
         )
+        
+        setupCustomNavBar()
     }
     
     private func setupCustomNavBar() {
@@ -218,11 +220,6 @@ class VideoDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func backButtonPressed(_ sender: Any) {
-        removeFromParent()
-        view.removeFromSuperview()
-    }
-    
     @IBAction func pauseButtonPressed(_ sender: UIButton) {
         
         var imageName: String = ""
@@ -243,6 +240,7 @@ class VideoDetailViewController: UIViewController {
 
 extension VideoDetailViewController: NavigationBarNormalDelegate {
     func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
-        navigationController?.popViewController(animated: false)
+        removeFromParent()
+        view.removeFromSuperview()
     }
 }

@@ -87,7 +87,7 @@
             <connections>
                 <outlet property="avatar" destination="qkv-Xx-aTV" id="cZh-wC-xJl"/>
                 <outlet property="bubbleView" destination="UJY-V0-1YS" id="9cw-vO-s12"/>
-                <outlet property="leftConstraintToViewCell" destination="wuz-tq-Sdi" id="2LO-zm-Hn7"/>
+                <outlet property="leftConstraintToViewCell" destination="wuz-tq-Sdi" id="neh-p2-up9"/>
                 <outlet property="playButton" destination="bYW-e2-rt1" id="0fq-9J-Rnx"/>
                 <outlet property="progressBar" destination="mde-4E-D6s" id="gvD-7p-Ltj"/>
                 <outlet property="rightConstraintToStatusCircle" destination="Quf-1G-dm3" id="vKw-hF-XL3"/>

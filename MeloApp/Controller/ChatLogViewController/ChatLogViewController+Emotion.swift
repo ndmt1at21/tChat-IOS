@@ -58,7 +58,13 @@ extension ChatLogViewController: EmotionInputViewDelegate {
         if sticker.type! == .emoji {
             chatTextView.text += sticker.content!
         } else if sticker.type! == .sticker {
-            
+            sendStickerMessage(sticker.content!) { (error) in
+                if error != nil {
+                    print("Error:", error!)
+                }
+                
+                print("send success")
+            }
         }
     }
 }

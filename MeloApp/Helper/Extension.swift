@@ -248,7 +248,7 @@ extension PHAsset {
 extension UIImage {
     // https://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
     func resize(targetSize: CGSize) -> UIImage? {
-        var size = self.size
+        let size = self.size
 
         let widthRatio  = targetSize.width  / size.width
         let heightRatio = targetSize.height / size.height

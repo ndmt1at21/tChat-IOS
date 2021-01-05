@@ -12,6 +12,7 @@ enum TypeMessage: Int, Codable {
     case text
     case image
     case video
+    case sticker
 }
 
 extension TypeMessage {
@@ -35,6 +36,12 @@ extension TypeMessage {
             cell.messageModel = message
             cell.delegate = viewController
             return cell
+            
+        case .sticker:
+            let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID.bubbleStickerChat) as! BubbleStickerChat
+            cell.messageModel = message
+            cell.delegate = viewController
+            return cell
         }
     }
     
@@ -48,6 +55,9 @@ extension TypeMessage {
             
         case .video:
             return BubbleVideoChat.cellHeight(message)
+        
+        case .sticker:
+            return BubbleStickerChat.cellHeight(message)
         }
     }
     
@@ -65,6 +75,10 @@ extension TypeMessage {
             
         case .text:
             let _ = baseCell as! BubbleTextChat
+            
+        case .sticker:
+            let stickerCell = baseCell as! BubbleStickerChat
+            stickerCell.stickerImageView.kf.cancelDownloadTask()
         }
     }
 }

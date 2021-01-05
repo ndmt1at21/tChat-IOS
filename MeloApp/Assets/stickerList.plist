@@ -40,6 +40,13 @@
 	<dict>
 		<key>stickers</key>
 		<array>
+			<string>https://scontent.fsgn5-7.fna.fbcdn.net/v/t39.1997-6/56401460_2379839602040777_5012421774407630848_n.webp?_nc_cat=1&amp;ccb=2&amp;_nc_sid=0572db&amp;_nc_ohc=K7vWJQN3AmcAX8nxLUY&amp;_nc_ht=scontent.fsgn5-7.fna&amp;oh=f66b9ac52115dfffb5a29a3e1f494f3d&amp;oe=60174B56</string>
+			<string>https://scontent.fsgn5-7.fna.fbcdn.net/v/t39.1997-6/56348945_2379564708734933_8507660370276515840_n.webp?_nc_cat=1&amp;ccb=2&amp;_nc_sid=0572db&amp;_nc_ohc=0MAtlLuPAHgAX8KklUn&amp;_nc_ht=scontent.fsgn5-7.fna&amp;oh=1c0101247c18cb40cfd8ed7e821e1a40&amp;oe=6018DB4C</string>
+		</array>
+	</dict>
+	<dict>
+		<key>stickers</key>
+		<array>
 			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18906</string>
 			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18907</string>
 			<string>https://zalo-api.zadn.vn/api/emoticon/sprite?eid=18908</string>

@@ -41,11 +41,9 @@ class ContactCell: MDCBaseCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.layoutIfNeeded()
+
         imageCover.layer.cornerRadius = imageCover.frame.height / 2
-        
         setupOnlineCircle()
-      
     }
     
     private func setupOnlineCircle() {
@@ -63,6 +61,6 @@ class ContactCell: MDCBaseCell {
         onlineCircleImage.layer.cornerRadius = onlineCircleImage.frame.height / 2
         onlineCircleImage.layer.masksToBounds = true
         
-        containerImageCover.addSubview(onlineCircleImage)
+        containerImageCover.addSubview(onlineCircleImage)   
     }
 }
