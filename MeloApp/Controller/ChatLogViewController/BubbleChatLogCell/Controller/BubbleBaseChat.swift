@@ -22,7 +22,7 @@ class BubbleBaseChat: UITableViewCell {
     var messageModel: Message? = nil {
         didSet {
             setupContentCell()
-            setNeedsLayout()
+            layoutIfNeeded()
         }
     }
     
@@ -30,7 +30,8 @@ class BubbleBaseChat: UITableViewCell {
         super.awakeFromNib()
         
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
+        bubbleView.layer.masksToBounds = true
+        
         let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(avatarImageTaped))
         
         let longPressBubble = UILongPressGestureRecognizer(target: self, action: #selector(longPressBubbleView))
@@ -50,6 +51,12 @@ class BubbleBaseChat: UITableViewCell {
     }
 
     override func layoutSubviews() {
+        if bubbleView.frame.height < 50 {
+            bubbleView.layer.cornerRadius = bubbleView.frame.height / 2
+        } else {
+            bubbleView.layer.cornerRadius = 20
+        }
+        
         if let currentUser = Auth.auth().currentUser {
             if messageModel?.sendBy! == currentUser.uid {
                 setupViewCellFromMe()
@@ -87,7 +94,7 @@ class BubbleBaseChat: UITableViewCell {
             if error != nil {
                 print("Error: ", error!)
             }
-            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
     
@@ -95,7 +102,7 @@ class BubbleBaseChat: UITableViewCell {
         delegate?.cellDidTapAvatar(self)
     }
     
-    @objc func longPressBubbleView(sender: UITapGestureRecognizer) {
-        delegate?.cellLongPress(self)
+    @objc func longPressBubbleView(sender: UILongPressGestureRecognizer) {
+        delegate?.cellLongPress(self, sender: sender)
     }
 }

@@ -62,8 +62,6 @@ extension ChatLogViewController: EmotionInputViewDelegate {
                 if error != nil {
                     print("Error:", error!)
                 }
-                
-                print("send success")
             }
         }
     }

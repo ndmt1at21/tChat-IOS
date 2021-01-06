@@ -48,7 +48,7 @@ class BubbleStickerChat: BubbleBaseChat {
                 return
             }
  
-            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
     
@@ -65,5 +65,6 @@ class BubbleStickerChat: BubbleBaseChat {
     
     @objc func bubbleImagePressed(sender: UITapGestureRecognizer) {
         delegate?.cellDidTapSticker(self)
+        delegate?.cellDidTap(self)
     }
 }

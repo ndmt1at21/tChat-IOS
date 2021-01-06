@@ -66,7 +66,7 @@ class ListMessage {
         if sectionMessages.count == 0 { return }
         
         let (sortedKeys, groupedMessages) = groupMessages(sectionMessages)
-        
+            
         if messages.count == 0 {
             sortedKeys.forEach { (date) in
                 if let values = groupedMessages[date] {
@@ -85,7 +85,8 @@ class ListMessage {
             messages[0].insert(contentsOf: groupedMessages[lastDateInNewSection]!, at: 0)
         }
         
-        for i in sortedKeys.count - 1...1 {
+        for i in stride(from: sortedKeys.count - 2, to: 0, by: -1) {
+            
             messages.insert(groupedMessages[sortedKeys[i]]!, at: 0)
         }
     }

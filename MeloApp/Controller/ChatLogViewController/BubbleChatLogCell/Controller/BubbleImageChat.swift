@@ -15,7 +15,6 @@ class BubbleImageChat: BubbleBaseChat {
         super.awakeFromNib()
         
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        bubbleView.layer.cornerRadius = 20
         bubbleView.layer.masksToBounds = true
         
         thumbnail.contentMode = .scaleAspectFill
@@ -61,7 +60,7 @@ class BubbleImageChat: BubbleBaseChat {
             }
             
             self.progressBar.isHidden = true
-            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
     
@@ -83,5 +82,6 @@ class BubbleImageChat: BubbleBaseChat {
     
     @objc func bubbleImagePressed(sender: UITapGestureRecognizer) {
         delegate?.cellDidTapImage(self)
+        delegate?.cellDidTap(self)
     }
 }

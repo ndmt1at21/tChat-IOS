@@ -37,10 +37,7 @@ class BubbleVideoChat: BubbleBaseChat {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        bubbleView.layer.cornerRadius = 20
-        bubbleView.layer.masksToBounds = true
-        
+
         thumbnail.contentMode = .scaleAspectFill
         progressBar.progress = 0
         
@@ -88,11 +85,11 @@ class BubbleVideoChat: BubbleBaseChat {
                 return
             }
             
-            self.setNeedsLayout()
+            self.layoutIfNeeded()
             self.progressBar.isHidden = true
         }
         
-        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     class func cellHeight(_ message: Message) -> CGFloat {
@@ -112,6 +109,7 @@ class BubbleVideoChat: BubbleBaseChat {
     @objc func bubbleVideoPressed(sender: UITapGestureRecognizer) {
         setupVideoPlayer()
         delegate?.cellDidTapVideo(self)
+        delegate?.cellDidTap(self)
     }
     
     @IBAction func playButtonPressed(_ sender: UIButton) {
@@ -194,7 +192,7 @@ extension BubbleVideoChat: PlayerManagerDelegate {
     
     func didFinishPlaying(_ playerManager: PlayerManager) {
         isPlaying = false
-        print("finish?")
+
         currentItem?.seek(to: .zero, completionHandler: nil)
         PlayerManager.shared.pause(with: currentItem!)
     }

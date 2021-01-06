@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -601,6 +602,21 @@
             </objects>
             <point key="canvasLocation" x="6057.971014492754" y="365.625"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="zUT-fc-O1m">
+            <objects>
+                <viewController id="aWW-WJ-a6e" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eA2-Gb-xLV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="uYg-Os-XOO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5ZX-Rc-ex2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7046" y="820"/>
+        </scene>
         <!--Coversations View Controller-->
         <scene sceneID="ykc-RE-NqH">
             <objects>
@@ -839,9 +855,10 @@
                                             <constraint firstItem="Ujm-ff-0at" firstAttribute="top" secondItem="dXG-A5-gL2" secondAttribute="top" constant="5" id="yjz-uL-JNK"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="naT-Wr-PZC">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="naT-Wr-PZC">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="639"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="sectionIndexBackgroundColor" name="darkBlue"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dOu-NI-H2U">
                                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
@@ -1236,22 +1253,22 @@
     </scenes>
     <designables>
         <designable name="6TR-p3-rhi">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="143.5" height="34"/>
         </designable>
         <designable name="D4V-Zj-eW2">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="132.5" height="34"/>
         </designable>
         <designable name="G8A-fN-baK">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="178" height="34"/>
         </designable>
         <designable name="Q6Q-4Y-Ahk">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="72" height="22"/>
         </designable>
         <designable name="bLe-6x-Zw6">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="164.5" height="34"/>
         </designable>
         <designable name="c4G-kj-tOa">
-            <size key="intrinsicContentSize" width="374" height="42.80078125"/>
+            <size key="intrinsicContentSize" width="81" height="21"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
@@ -1267,6 +1284,9 @@
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill.badge.plus" catalog="system" width="128" height="124"/>
+        <namedColor name="darkBlue">
+            <color red="0.0" green="0.35294117647058826" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

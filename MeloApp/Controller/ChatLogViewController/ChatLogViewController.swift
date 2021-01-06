@@ -25,6 +25,10 @@ class ChatLogViewController: UIViewController {
     var group: Group = Group()
     var messages: ListMessage = ListMessage()
     
+    internal var isLoadingMore: Bool = false
+    internal var isEndLoadingMore: Bool = true
+    internal var isEndMessages: Bool = false
+    
     @IBOutlet weak var customNavBar: NavigationBarChatLog!
     
     internal var isKeyboardShow: Bool = false
@@ -49,6 +53,22 @@ class ChatLogViewController: UIViewController {
         emotion.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         return emotion
+    }()
+    
+    lazy var toolbarEmotion: ToolbarEmotion = {
+        let toolbar = ToolbarEmotion(frame: .zero)
+        toolbar.backgroundColor = .white
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        return toolbar
+    }()
+    
+    lazy var loadingIndicator: LoadingIndicator = {
+        let loading = LoadingIndicator(frame: .zero)
+        loading.isTurnBlurEffect = false
+        loading.colorIndicator = .blue
+        
+        return loading
     }()
     
     deinit {
@@ -88,7 +108,11 @@ class ChatLogViewController: UIViewController {
     
     @objc func handleTapInScreen(_ sender: UITapGestureRecognizer) {
         chatTextView.endEditing(true)
+        
         handleEmotionInputViewWillHide()
+        
+        toolbarEmotion.removeFromSuperview()
+        tableMessages.isScrollEnabled = true
     }
     
     private func setupChatTextView() {
@@ -111,7 +135,7 @@ class ChatLogViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tableMessages.layoutIfNeeded()
+        
         tabBarController?.tabBar.isHidden = true
         
         emotionInputView.frame = CGRect(

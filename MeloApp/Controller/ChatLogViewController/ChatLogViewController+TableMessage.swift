@@ -10,6 +10,7 @@ import UIKit
 // MARK: - SetupTableView
 extension ChatLogViewController {
     func setupTableMessages() {
+        tableMessages.backgroundColor = .white
         tableMessages.delegate = self
         tableMessages.dataSource = self
         tableMessages.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -24,6 +25,9 @@ extension ChatLogViewController {
 
 // MARK: - TableViewDelegate
 extension ChatLogViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableMessages.deselectRow(at: indexPath, animated: false)
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let message = messages[indexPath.section][indexPath.row]
@@ -77,7 +81,7 @@ extension ChatLogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 60
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -100,7 +104,67 @@ extension ChatLogViewController: UITableViewDataSource {
         let message = messages[indexPath.section][indexPath.row]
         
         let type: TypeMessage = message.type!
+        
+        let cell = type.bubbleChatCell(tableView, message: message, self)
+        cell.backgroundColor = .clear
+        
+        return cell
+    }
+}
 
-        return type.bubbleChatCell(tableView, message: message, self)
+extension ChatLogViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y == 0 {
+            if isEndLoadingMore && !isEndMessages {
+                pullToLoadMore()
+            }
+        }
+    }
+    
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        if scrollView.contentOffset.y < -30 {
+//            if isEndLoadingMore {
+//                pullToLoadMore()
+//            }
+//        }
+//    }
+    
+    private func pullToLoadMore() {
+        self.isLoadingMore = true
+        self.isEndLoadingMore = false
+        
+        var uidMessageFlag: StringUID?
+        
+        if messages.count > 0 {
+            uidMessageFlag = messages[0][0].uid!
+        }
+       
+        tableMessages.tableHeaderView = loadingIndicator
+        loadingIndicator.frame.size.height = 60
+        loadingIndicator.startAnimation()
+        
+        DatabaseController.getMessages(
+            from: uidMessageFlag,
+            in: group.uid!, limit: 10) { (messagesFetched) in
+            
+            self.isLoadingMore = false
+            self.isEndLoadingMore = true
+            
+            if messagesFetched.count < 10 {
+                self.isEndMessages = true
+            }
+            
+            if messagesFetched.count == 0 {
+                self.loadingIndicator.stopAnimation()
+                self.tableMessages.tableHeaderView = nil
+                return
+            }
+            
+            self.messages.addSectionFirst(messagesFetched)
+            self.tableMessages.reloadData()
+            
+            self.loadingIndicator.stopAnimation()
+            self.tableMessages.tableHeaderView = nil
+        }
     }
 }

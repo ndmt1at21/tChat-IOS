@@ -9,12 +9,36 @@ import UIKit
 import Hero
 
 extension ChatLogViewController: BubbleBaseChatDelegate {
+    func cellDidTap(_ cell: BubbleBaseChat) {
+        toolbarEmotion.removeFromSuperview()
+    }
+    
     func cellDidTapSticker(_ cell: BubbleBaseChat) {
         print("tap sticker")
     }
 
-    func cellLongPress(_ cell: BubbleBaseChat) {
-        print("long tap")
+    func cellLongPress(_ cell: BubbleBaseChat, sender: UILongPressGestureRecognizer) {
+        tableMessages.isScrollEnabled = false
+        
+        if sender.state == .began {
+            
+            
+            self.toolbarEmotion.removeFromSuperview()
+            let location = sender.location(in: view)
+            
+            // after 0.1s addSubView (ensure remove and addSubView
+            // not run in same time
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.view.addSubview(self.toolbarEmotion)
+                
+                self.toolbarEmotion.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+                self.toolbarEmotion.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                self.toolbarEmotion.widthAnchor.constraint(equalToConstant: 300).isActive = true
+                self.toolbarEmotion.topAnchor.constraint(equalTo: self.view.topAnchor, constant: location.y - 50).isActive = true
+            }
+        } else if sender.state == .changed {
+            
+        }
     }
     
     func cellDidTapAvatar(_ cell: BubbleBaseChat) {

@@ -49,7 +49,7 @@ class BubbleTextChat: BubbleBaseChat {
         message.text = messageModel?.content
         message.sizeToFit()
         
-        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     class func cellHeight(_ message: Message) -> CGFloat {
@@ -58,5 +58,6 @@ class BubbleTextChat: BubbleBaseChat {
     
     @objc func textViewTaped(sender: UITapGestureRecognizer) {
         delegate?.cellDidTapText(self)
+        delegate?.cellDidTap(self)
     }
 }

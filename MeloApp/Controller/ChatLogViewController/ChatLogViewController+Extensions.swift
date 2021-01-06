@@ -57,7 +57,6 @@ func formatDate(_ date: Date) -> String {
     
     let distance = (Date().timeIntervalSince1970 - date.timeIntervalSince1970) / (60 * 60 * 24)
     
-    print(distance)
     switch distance {
     case 0..<1:
         formatter.dateFormat = "HH:mm"

@@ -45,7 +45,55 @@ class DatabaseController {
         }
     }
     
+    static func getMessages(from messageUID: StringUID?, in groupUID: StringUID, limit toLast: Int, completion: @escaping (_ messages: [Message]) -> Void) {
+        
+        let refMessage = Firestore.firestore()
+            .collection("messages")
+            .document(groupUID)
+            .collection("messages")
     
+        var messageQuery: Query = refMessage.order(by: "sendAt").limit(to: toLast)
+
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        if messageUID != nil {
+
+            refMessage.document(messageUID!).getDocument { (snapshot, error) in
+                if error != nil {
+                    return completion([])
+                }
+
+                messageQuery = messageQuery.end(beforeDocument: snapshot!)
+                dispatchGroup.leave()
+            }
+        } else {
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .global()) {
+            messageQuery.getDocuments { (snapshot, error) in
+                if error != nil {
+                    return completion([])
+                }
+                
+                var addedMessages: [Message] = []
+                
+                snapshot?.documents.forEach({ (docSnapshot) in
+                    let data = docSnapshot.data()
+                    
+                    let message = Message(
+                        uid: docSnapshot.documentID,
+                        dataFromServer: data
+                    )
+                    
+                    addedMessages.append(message)
+                })
+                
+                return completion(addedMessages)
+            }
+        }
+    }
     
     static func sendMessage(message: Message, to groupUID: StringUID, completion: @escaping (_ documentID: StringUID?, _ error: String?) -> Void) {
         guard let _ = AuthController.shared.currentUser else { return }

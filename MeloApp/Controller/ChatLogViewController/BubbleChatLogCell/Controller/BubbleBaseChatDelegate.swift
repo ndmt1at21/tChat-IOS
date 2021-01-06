@@ -5,11 +5,13 @@
 //  Created by Minh Tri on 12/24/20.
 //
 
-import Foundation
+import UIKit
 
 @objc protocol BubbleBaseChatDelegate : class {
     
     @objc func cellDidTapAvatar(_ cell: BubbleBaseChat)
+    
+    func cellDidTap(_ cell: BubbleBaseChat)
     
     func cellDidTapText(_ cell: BubbleBaseChat)
     
@@ -19,5 +21,6 @@ import Foundation
     
     func cellDidTapVideo(_ cell: BubbleBaseChat)
     
-    func cellLongPress(_ cell: BubbleBaseChat)
+    func cellLongPress(_ cell: BubbleBaseChat, sender: UILongPressGestureRecognizer)
+    
 }
