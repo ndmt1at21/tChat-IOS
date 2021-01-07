@@ -47,7 +47,7 @@ class NewMessageViewController: UIViewController{
     }
     
     private func setupLoadingView() {
-        loading.frame = collectionListFriends.bounds
+        loading.frame = view.bounds
         collectionListFriends.addSubview(loading)
     }
     
@@ -80,7 +80,7 @@ class NewMessageViewController: UIViewController{
     
     private func fetchDataFriends(currUser: User) {
 
-        guard let friends = currUser.friends else {
+        guard let friends = currUser.friends?.keys else {
             return
         }
         
@@ -151,7 +151,7 @@ extension NewMessageViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
+        return CGSize(width: view.frame.width, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -181,8 +181,7 @@ extension NewMessageViewController: UICollectionViewDataSource {
  
         let friend = friends[indexPath.row]
  
-        cell.name.text = friend.name
-        
+        cell.userModel = friend
         UserActivity.observeUserActivity(userUID: friend.uid!) { (isOnline) in
             cell.isOnline = isOnline
         }
@@ -200,6 +199,8 @@ extension NewMessageViewController: UICollectionViewDelegateFlowLayout {
 
 extension NewMessageViewController: NavigationBarNormalDelegate {
     func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        
+        navigationController?.hero.isEnabled = true
         navigationController?.popViewController(animated: true)
     }
 }

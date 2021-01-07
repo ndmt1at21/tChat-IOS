@@ -19,10 +19,17 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var retypePasswordTextField: SkyFloatingLabelTextField!
     
+    lazy var loadingAnimation: LoadingIndicator = {
+        let loadingAnimation = LoadingIndicator()
+        loadingAnimation.isTurnBlurEffect = true
+        loadingAnimation.colorIndicator = .blue
+        
+        return loadingAnimation
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        registerButton.layoutIfNeeded()
         registerButton.border(.all, 0, UIColor.clear.cgColor, 10)
         
         registerButton.addGradientLayer(colors: [UIColor(named: "primaryBlue")!.cgColor, UIColor(named: "lightBlue")!.cgColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y:0), locations: [0, 1])
@@ -79,14 +86,15 @@ class RegisterViewController: UIViewController {
             retypePasswordTextField.errorMessage = errorMsgRetypePwd
         }
         
-        let loadingAnimation = LoadingIndicator()
+     
         loadingAnimation.startAnimation()
+        loadingAnimation.frame = view.bounds
         view.addSubview(loadingAnimation)
         
         AuthController.shared.handleRegister(email: emailTextField.text!, password: passwordTextField.text!) { (err) in
             
-            loadingAnimation.stopAnimation()
-            loadingAnimation.removeFromSuperview()
+            self.loadingAnimation.stopAnimation()
+            self.loadingAnimation.removeFromSuperview()
             
             // Error
             if err != nil {
@@ -109,13 +117,12 @@ class RegisterViewController: UIViewController {
                 ])
                
                 UserActivity.updateCurrentUserActivity(true)
-                loadingAnimation.stopAnimation()
-                loadingAnimation.removeFromSuperview()
-                
+                self.loadingAnimation.stopAnimation()
+                self.loadingAnimation.removeFromSuperview()
+            
                 self.performSegue(withIdentifier: K.segueID.registerToConversation, sender: self)
             }
         }
-        
     }
     
     

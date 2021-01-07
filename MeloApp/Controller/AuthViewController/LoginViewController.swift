@@ -32,14 +32,6 @@ class LoginViewController: UIViewController {
         registerButton.addGradientLayer(colors: [UIColor.systemGray5.cgColor, UIColor.systemGray6.cgColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y:0), locations: [0, 1])
 
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
 
     @IBAction func loginButtonPressed(_ sender: UIButton) {
 

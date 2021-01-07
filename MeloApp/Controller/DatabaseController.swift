@@ -10,6 +10,35 @@ import Firebase
 
 class DatabaseController {
     
+    static func checkUserExist(by email: String, completion: @escaping (_ isExist: Bool) -> Void) {
+    
+        Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, error) in
+            
+            if error != nil {
+                return completion(false)
+            }
+            
+            if querySnapshot!.count > 0 { return completion(true) }
+            return completion(false)
+        })
+    }
+    
+    static func getUserByEmail(email: String, completion: @escaping (_ user: User?) -> Void) {
+        
+        Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
+            if error != nil {
+                return completion(nil)
+            }
+            
+            if let docSnap = querySnapshot?.documents.first {
+                let user = User(uid: docSnap.documentID, dictionary: docSnap.data())
+                return completion(user)
+            }
+            
+            return completion(nil)
+        }
+    }
+    
     static func getUser(userUID: StringUID, completion: @escaping (_ user: User?) -> Void) {
         
         Firestore.firestore().collection("users").document(userUID).getDocument { (userDoc, error) in

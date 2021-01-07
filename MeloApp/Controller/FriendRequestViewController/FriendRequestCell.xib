@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendRequestCell" rowHeight="183" id="KGk-i7-Jjw" customClass="FriendRequestCell" customModule="MeloApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="537" height="183"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="537" height="183"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drooling-face" translatesAutoresizingMaskIntoConstraints="NO" id="8Ia-Ep-g4j">
+                        <rect key="frame" x="10" y="46.5" width="90" height="90"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="8Ia-Ep-g4j" secondAttribute="height" multiplier="1:1" id="W9h-ww-wM3"/>
+                            <constraint firstAttribute="width" constant="90" id="hth-NS-SjY"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="kRL-Zv-PQC">
+                        <rect key="frame" x="110" y="52" width="417" height="79"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Duc Minh" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YbI-eb-6KO">
+                                <rect key="frame" x="0.0" y="0.0" width="417" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ITm-wU-9GC">
+                                <rect key="frame" x="0.0" y="29" width="417" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQK-Mr-t48" customClass="MDCButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="203.5" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="Thêm bạn bè">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="acceptButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="R8D-3c-odB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHX-B8-e1f" customClass="MDCButton">
+                                        <rect key="frame" x="213.5" y="0.0" width="203.5" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="Xoá">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7UO-zl-4Xq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="QJt-gQ-eye"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kRL-Zv-PQC" firstAttribute="leading" secondItem="8Ia-Ep-g4j" secondAttribute="trailing" constant="10" id="EYl-Dv-t51"/>
+                    <constraint firstItem="8Ia-Ep-g4j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="EzV-ta-MEg"/>
+                    <constraint firstItem="kRL-Zv-PQC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="JsI-dH-HYN"/>
+                    <constraint firstItem="8Ia-Ep-g4j" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eEc-oj-gBe"/>
+                    <constraint firstAttribute="trailing" secondItem="kRL-Zv-PQC" secondAttribute="trailing" constant="10" id="yoT-QJ-I0p"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="acceptButton" destination="DQK-Mr-t48" id="Xgo-nj-yZ7"/>
+                <outlet property="deleteButton" destination="lHX-B8-e1f" id="fX4-EM-HZl"/>
+                <outlet property="userAvatar" destination="8Ia-Ep-g4j" id="kjp-Xx-n7Q"/>
+                <outlet property="userName" destination="YbI-eb-6KO" id="Skt-9f-niu"/>
+            </connections>
+            <point key="canvasLocation" x="132.60869565217394" y="26.450892857142858"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="drooling-face" width="144" height="144"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

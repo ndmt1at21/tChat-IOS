@@ -18,6 +18,7 @@ struct K {
         static let bubbleImageChat = "BubbleImageChat"
         static let bubbleVideoChat = "BubbleVideoChat"
         static let bubbleStickerChat = "BubbleStickerChat"
+        static let friendRequestCell = "FriendRequestCell"
     }
     
     struct nib {
@@ -41,6 +42,10 @@ struct K {
         static let videoDetailViewController = "VideoDetailViewController"
         static let coversationsViewController = "CoversationsViewController"
         static let newMessageViewController = "NewMessageViewController"
+        static let addFriendViewController = "AddFriendViewController"
+        static let friendRequestViewController = "FriendRequestViewController"
+        static let userSettingViewController = "UserSettingViewController"
+        static let rootNavigationController = "RootNavigationController"
     }
     
     static let primaryColor = UIColor(named: "primaryBlue") ?? UIColor.systemBlue

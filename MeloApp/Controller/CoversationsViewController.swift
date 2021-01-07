@@ -23,6 +23,14 @@ class CoversationsViewController: UIViewController {
         setupCustomNavBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupTransition()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.hero.isEnabled = false
+    }
+    
     private func setupCustomNavBar() {
         let config = UIImage.SymbolConfiguration(pointSize: 12.0, weight: .heavy, scale: .large)
         
@@ -36,29 +44,23 @@ class CoversationsViewController: UIViewController {
         customNavigationBar.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
+    private func setupTransition() {
+        navigationController?.hero.isEnabled = true
+        navigationController?.hero.navigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
     }
-    
-    @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
-
-        UserActivity.updateCurrentUserActivity(false)
-        AuthController.shared.handleLogout()
-        
-        performSegue(withIdentifier: "UnwindToLoginController", sender: self)
-    }
-    
     
     @IBAction func newMessagePressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "ConversationToNewMessage", sender: self)
+   
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: K.sbID.coversationsViewController)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
 }
 
 extension CoversationsViewController: UITableViewDelegate {
     
 }
-
 
 extension CoversationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,6 +82,10 @@ extension CoversationsViewController: NavigationBarMainDelegate {
     }
     
     func navigationBar(_ naviagtionBarMain: NavigationBarMain, userImagePressed sender: UITapGestureRecognizer) {
-        //
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: K.sbID.userSettingViewController)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -17,6 +17,10 @@
 		5A068F0E259812FB0061E115 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A068F0D259812FB0061E115 /* VideoDetailViewController.swift */; };
 		5A068F122598A3C70061E115 /* loadingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A068F112598A3C40061E115 /* loadingAnimation.json */; };
 		5A068F1B2598A6E60061E115 /* loadingAnimation-white.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A068F1A2598A6E60061E115 /* loadingAnimation-white.json */; };
+		5A0C820825A5790500CACC78 /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C820625A5790500CACC78 /* FriendRequestCell.swift */; };
+		5A0C820925A5790500CACC78 /* FriendRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0C820725A5790500CACC78 /* FriendRequestCell.xib */; };
+		5A0C820D25A5913300CACC78 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C820C25A5913300CACC78 /* FriendRequestViewController.swift */; };
+		5A0C821025A5B81800CACC78 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C820F25A5B81800CACC78 /* AddFriendViewController.swift */; };
 		5A0CCC3A259A2260006FAD71 /* ChatLogViewController+TableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0CCC39259A2260006FAD71 /* ChatLogViewController+TableMessage.swift */; };
 		5A0DEFA4259D4B7800A6F998 /* stickerList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A0DEFA2259D4B7700A6F998 /* stickerList.plist */; };
 		5A0DEFA5259D4B7800A6F998 /* emojiList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A0DEFA3259D4B7800A6F998 /* emojiList.plist */; };
@@ -29,6 +33,8 @@
 		5A0DEFC6259E27B300A6F998 /* ChatLogViewController+Emotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DEFC5259E27B300A6F998 /* ChatLogViewController+Emotion.swift */; };
 		5A11720E25A1D7DE00AD8D8B /* BubbleStickerChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A11720C25A1D7DE00AD8D8B /* BubbleStickerChat.swift */; };
 		5A11720F25A1D7DE00AD8D8B /* BubbleStickerChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A11720D25A1D7DE00AD8D8B /* BubbleStickerChat.xib */; };
+		5A13D4CD25A68D24000AA7CD /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A13D4CC25A68D24000AA7CD /* UserSettingViewController.swift */; };
+		5A13D4DC25A6B9E0000AA7CD /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A13D4DA25A6B9E0000AA7CD /* ContactCell.xib */; };
 		5A2666DD258993A500669B03 /* eercast.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A2666DC258993A500669B03 /* eercast.ttf */; };
 		5A2666EA25899D4F00669B03 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2666E925899D4F00669B03 /* LoginViewController.swift */; };
 		5A2666EE25899DF500669B03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A2666ED25899DF500669B03 /* Main.storyboard */; };
@@ -48,7 +54,6 @@
 		5A506559258B01D4000A97F2 /* ConversationPrivateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A506557258B01D4000A97F2 /* ConversationPrivateCell.xib */; };
 		5A50655D258B0D1A000A97F2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A50655C258B0D1A000A97F2 /* Constants.swift */; };
 		5A506566258B0E45000A97F2 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A506564258B0E45000A97F2 /* ContactCell.swift */; };
-		5A506567258B0E45000A97F2 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A506565258B0E45000A97F2 /* ContactCell.xib */; };
 		5A50656C258B10F0000A97F2 /* OnlineFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A50656A258B10F0000A97F2 /* OnlineFriendCell.swift */; };
 		5A50656D258B10F0000A97F2 /* OnlineFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */; };
 		5A506575258B5662000A97F2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A506574258B5661000A97F2 /* TabBarController.swift */; };
@@ -69,6 +74,8 @@
 		5A79183B258CE4E3009051BA /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79183A258CE4E3009051BA /* NewMessageViewController.swift */; };
 		5A79183F258CF0F2009051BA /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79183E258CF0F2009051BA /* DatabaseController.swift */; };
 		5A7F8F52258C3243005092FD /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F8F51258C3243005092FD /* CurrentUser.swift */; };
+		5A85F7A825A4565800EFE7CF /* ToolbarEmotion.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A85F7A725A4565800EFE7CF /* ToolbarEmotion.xib */; };
+		5A85F7AB25A4567300EFE7CF /* ToolbarEmotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A85F7AA25A4567300EFE7CF /* ToolbarEmotion.swift */; };
 		5A992F2F258F349700BEF630 /* BubbleTextChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A992F2D258F349700BEF630 /* BubbleTextChat.xib */; };
 		5A992F33258F34AD00BEF630 /* BubbleTextChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */; };
 		5AAF835825A0C8D600867BEF /* NavigationBarChatLog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */; };
@@ -107,6 +114,10 @@
 		5A068F0D259812FB0061E115 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
 		5A068F112598A3C40061E115 /* loadingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loadingAnimation.json; sourceTree = "<group>"; };
 		5A068F1A2598A6E60061E115 /* loadingAnimation-white.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "loadingAnimation-white.json"; sourceTree = "<group>"; };
+		5A0C820625A5790500CACC78 /* FriendRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
+		5A0C820725A5790500CACC78 /* FriendRequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendRequestCell.xib; sourceTree = "<group>"; };
+		5A0C820C25A5913300CACC78 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
+		5A0C820F25A5B81800CACC78 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		5A0CCC39259A2260006FAD71 /* ChatLogViewController+TableMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLogViewController+TableMessage.swift"; sourceTree = "<group>"; };
 		5A0DEFA2259D4B7700A6F998 /* stickerList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stickerList.plist; sourceTree = "<group>"; };
 		5A0DEFA3259D4B7800A6F998 /* emojiList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emojiList.plist; sourceTree = "<group>"; };
@@ -117,8 +128,10 @@
 		5A0DEFB5259D7ED100A6F998 /* StickerPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StickerPickerView.xib; sourceTree = "<group>"; };
 		5A0DEFB8259D7EE700A6F998 /* StickerPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerPickerView.swift; sourceTree = "<group>"; };
 		5A0DEFC5259E27B300A6F998 /* ChatLogViewController+Emotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLogViewController+Emotion.swift"; sourceTree = "<group>"; };
-		5A11720C25A1D7DE00AD8D8B /* BubbleStickerChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BubbleStickerChat.swift; path = "../../../View/View Cell/BubbleStickerChat.swift"; sourceTree = "<group>"; };
+		5A11720C25A1D7DE00AD8D8B /* BubbleStickerChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleStickerChat.swift; sourceTree = "<group>"; };
 		5A11720D25A1D7DE00AD8D8B /* BubbleStickerChat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleStickerChat.xib; sourceTree = "<group>"; };
+		5A13D4CC25A68D24000AA7CD /* UserSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
+		5A13D4DA25A6B9E0000AA7CD /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		5A2666DC258993A500669B03 /* eercast.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = eercast.ttf; sourceTree = "<group>"; };
 		5A2666E925899D4F00669B03 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5A2666ED25899DF500669B03 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -140,7 +153,6 @@
 		5A506557258B01D4000A97F2 /* ConversationPrivateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationPrivateCell.xib; sourceTree = "<group>"; };
 		5A50655C258B0D1A000A97F2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5A506564258B0E45000A97F2 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		5A506565258B0E45000A97F2 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		5A50656A258B10F0000A97F2 /* OnlineFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFriendCell.swift; sourceTree = "<group>"; };
 		5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlineFriendCell.xib; sourceTree = "<group>"; };
 		5A506574258B5661000A97F2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -161,6 +173,8 @@
 		5A79183A258CE4E3009051BA /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		5A79183E258CF0F2009051BA /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		5A7F8F51258C3243005092FD /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		5A85F7A725A4565800EFE7CF /* ToolbarEmotion.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarEmotion.xib; sourceTree = "<group>"; };
+		5A85F7AA25A4567300EFE7CF /* ToolbarEmotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarEmotion.swift; sourceTree = "<group>"; };
 		5A992F2D258F349700BEF630 /* BubbleTextChat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleTextChat.xib; sourceTree = "<group>"; };
 		5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleTextChat.swift; sourceTree = "<group>"; };
 		5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationBarChatLog.xib; sourceTree = "<group>"; };
@@ -213,17 +227,56 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5A06472F25A4544400CE1CDE /* LoadingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				5A754A10258BA80100A3B21D /* LoadingIndicator.xib */,
+				5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */,
+			);
+			path = LoadingIndicator;
+			sourceTree = "<group>";
+		};
+		5A06473025A454BF00CE1CDE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A992F2D258F349700BEF630 /* BubbleTextChat.xib */,
+				5AF2B69D2590DEC900C49BF0 /* BubbleImageChat.xib */,
+				5A037633259431380075DF9D /* BubbleVideoChat.xib */,
+				5A11720D25A1D7DE00AD8D8B /* BubbleStickerChat.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A06473125A454DE00CE1CDE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5A037638259431540075DF9D /* BubbleBaseChat.swift */,
+				5A03763B2594324E0075DF9D /* BubbleBaseChatDelegate.swift */,
+				5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */,
+				5AF2B69C2590DEC900C49BF0 /* BubbleImageChat.swift */,
+				5A037632259431380075DF9D /* BubbleVideoChat.swift */,
+				5A11720C25A1D7DE00AD8D8B /* BubbleStickerChat.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		5A0A6D1425A080680022BD62 /* CustomNavigationBar */ = {
 			isa = PBXGroup;
 			children = (
-				5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */,
-				5AAF835A25A0D01200867BEF /* NavigationBarNormal.xib */,
-				5AAF835D25A0D13500867BEF /* NavigationBarMain.xib */,
-				5AAF836125A0D72800867BEF /* NavigationBarChatLog.swift */,
-				5AAF836425A0D73A00867BEF /* NavigationBarNormal.swift */,
-				5AAF836725A0D74800867BEF /* NavigationBarMain.swift */,
+				5A85F79D25A4556800EFE7CF /* View */,
+				5A85F79E25A4557700EFE7CF /* Controller */,
 			);
 			path = CustomNavigationBar;
+			sourceTree = "<group>";
+		};
+		5A0C820525A578CB00CACC78 /* FriendRequestViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5A0C820625A5790500CACC78 /* FriendRequestCell.swift */,
+				5A0C820725A5790500CACC78 /* FriendRequestCell.xib */,
+				5A0C820C25A5913300CACC78 /* FriendRequestViewController.swift */,
+			);
+			path = FriendRequestViewController;
 			sourceTree = "<group>";
 		};
 		5A4C359C2587517C00AAED51 = {
@@ -265,6 +318,7 @@
 		5A4ED08A2596487400702478 /* ChatLogViewController */ = {
 			isa = PBXGroup;
 			children = (
+				5A66F6AA2599645200BE3A65 /* BubbleChatLogCell */,
 				5AEF84B8259C936F00B9E972 /* EmotionInputView */,
 				5AED0C84258D9ACC004D1900 /* ChatLogViewController.swift */,
 				5A4ED086259646DE00702478 /* ChatLogViewController+KeyboardHandler.swift */,
@@ -282,12 +336,8 @@
 			isa = PBXGroup;
 			children = (
 				5A506557258B01D4000A97F2 /* ConversationPrivateCell.xib */,
-				5A506565258B0E45000A97F2 /* ContactCell.xib */,
 				5A50656B258B10F0000A97F2 /* OnlineFriendCell.xib */,
-				5A992F2D258F349700BEF630 /* BubbleTextChat.xib */,
-				5AF2B69D2590DEC900C49BF0 /* BubbleImageChat.xib */,
-				5A037633259431380075DF9D /* BubbleVideoChat.xib */,
-				5A11720D25A1D7DE00AD8D8B /* BubbleStickerChat.xib */,
+				5A13D4DA25A6B9E0000AA7CD /* ContactCell.xib */,
 			);
 			path = "View Cell";
 			sourceTree = "<group>";
@@ -303,7 +353,6 @@
 		5A506572258B1131000A97F2 /* ControllerCell */ = {
 			isa = PBXGroup;
 			children = (
-				5A66F6AA2599645200BE3A65 /* BubbleChatLogCell */,
 				5A50656A258B10F0000A97F2 /* OnlineFriendCell.swift */,
 				5A506564258B0E45000A97F2 /* ContactCell.swift */,
 				5A506556258B01D4000A97F2 /* ConversationPrivateCell.swift */,
@@ -323,25 +372,22 @@
 		5A66F6AA2599645200BE3A65 /* BubbleChatLogCell */ = {
 			isa = PBXGroup;
 			children = (
-				5A037638259431540075DF9D /* BubbleBaseChat.swift */,
-				5A03763B2594324E0075DF9D /* BubbleBaseChatDelegate.swift */,
-				5A992F31258F34AD00BEF630 /* BubbleTextChat.swift */,
-				5AF2B69C2590DEC900C49BF0 /* BubbleImageChat.swift */,
-				5A037632259431380075DF9D /* BubbleVideoChat.swift */,
-				5A11720C25A1D7DE00AD8D8B /* BubbleStickerChat.swift */,
+				5A06473125A454DE00CE1CDE /* Controller */,
+				5A06473025A454BF00CE1CDE /* View */,
 			);
 			path = BubbleChatLogCell;
 			sourceTree = "<group>";
 		};
-		5A69033F259B84DE00B2AFDA /* ComponentController */ = {
+		5A69033F259B84DE00B2AFDA /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				5A85F7A625A4563100EFE7CF /* ToolbarEmotion */,
 				5A0A6D1425A080680022BD62 /* CustomNavigationBar */,
 				5AEF849C259C81B600B9E972 /* StickerPicker */,
 				5AEF8478259C80F600B9E972 /* PageControl */,
-				5A754A0D258BA78D00A3B21D /* LoadingIndicator.swift */,
+				5A06472F25A4544400CE1CDE /* LoadingIndicator */,
 			);
-			path = ComponentController;
+			path = Component;
 			sourceTree = "<group>";
 		};
 		5A70C1972588F05B0048560F /* Model */ = {
@@ -353,6 +399,7 @@
 				5A70C1CB2588F88D0048560F /* UserAction.swift */,
 				5A7F8F51258C3243005092FD /* CurrentUser.swift */,
 				5AE6086D2594E3FF005D09DD /* TypeMessage.swift */,
+				5AEF849E259C81BD00B9E972 /* StickerModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -363,7 +410,6 @@
 				5A506570258B1114000A97F2 /* LauchScreen */,
 				5A50656F258B1100000A97F2 /* View Cell */,
 				5A2666ED25899DF500669B03 /* Main.storyboard */,
-				5A754A10258BA80100A3B21D /* LoadingIndicator.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -371,9 +417,10 @@
 		5A70C1992588F0680048560F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5A69033F259B84DE00B2AFDA /* ComponentController */,
+				5A69033F259B84DE00B2AFDA /* Component */,
 				5A66F6A92599628A00BE3A65 /* AuthViewController */,
 				5A506572258B1131000A97F2 /* ControllerCell */,
+				5A0C820525A578CB00CACC78 /* FriendRequestViewController */,
 				5A4ED08A2596487400702478 /* ChatLogViewController */,
 				5A791832258C867B009051BA /* AuthController.swift */,
 				5A506549258AEAD1000A97F2 /* CoversationsViewController.swift */,
@@ -386,6 +433,8 @@
 				5A4ED0802595EE6900702478 /* StorageController.swift */,
 				5A4ED0832596340D00702478 /* ImageDetailViewController.swift */,
 				5A068F0D259812FB0061E115 /* VideoDetailViewController.swift */,
+				5A0C820F25A5B81800CACC78 /* AddFriendViewController.swift */,
+				5A13D4CC25A68D24000AA7CD /* UserSettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -431,6 +480,76 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		5A85F79D25A4556800EFE7CF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5AAF835725A0C8D600867BEF /* NavigationBarChatLog.xib */,
+				5AAF835A25A0D01200867BEF /* NavigationBarNormal.xib */,
+				5AAF835D25A0D13500867BEF /* NavigationBarMain.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A85F79E25A4557700EFE7CF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5AAF836125A0D72800867BEF /* NavigationBarChatLog.swift */,
+				5AAF836425A0D73A00867BEF /* NavigationBarNormal.swift */,
+				5AAF836725A0D74800867BEF /* NavigationBarMain.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		5A85F79F25A4559100EFE7CF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5AEF849F259C81BD00B9E972 /* ListStickerCollectionViewCell.xib */,
+				5AEF84A2259C81BE00B9E972 /* StickerCell.xib */,
+				5AEF84A3259C81BE00B9E972 /* StickerPicker.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A85F7A025A455A300EFE7CF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5AEF84A1259C81BE00B9E972 /* ListStickerCollectionViewCell.swift */,
+				5AEF849D259C81BC00B9E972 /* StickerCell.swift */,
+				5AEF84A4259C81BF00B9E972 /* StickerPicker.swift */,
+				5AEF84A0259C81BD00B9E972 /* StickerPicker+PageControl.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5A85F7A325A4561000EFE7CF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A0DEFA8259D6A3B00A6F998 /* EmotionInputView.xib */,
+				5A0DEFB2259D7D4600A6F998 /* EmotionPickerView.xib */,
+				5A0DEFB5259D7ED100A6F998 /* StickerPickerView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A85F7A425A4561800EFE7CF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5A0DEFAC259D7ACE00A6F998 /* EmotionInputView.swift */,
+				5A0DEFAF259D7D3A00A6F998 /* EmotionPickerView.swift */,
+				5A0DEFB8259D7EE700A6F998 /* StickerPickerView.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5A85F7A625A4563100EFE7CF /* ToolbarEmotion */ = {
+			isa = PBXGroup;
+			children = (
+				5A85F7A725A4565800EFE7CF /* ToolbarEmotion.xib */,
+				5A85F7AA25A4567300EFE7CF /* ToolbarEmotion.swift */,
+			);
+			path = ToolbarEmotion;
+			sourceTree = "<group>";
+		};
 		5AEF8478259C80F600B9E972 /* PageControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,14 +564,8 @@
 		5AEF849C259C81B600B9E972 /* StickerPicker */ = {
 			isa = PBXGroup;
 			children = (
-				5AEF84A1259C81BE00B9E972 /* ListStickerCollectionViewCell.swift */,
-				5AEF849F259C81BD00B9E972 /* ListStickerCollectionViewCell.xib */,
-				5AEF849D259C81BC00B9E972 /* StickerCell.swift */,
-				5AEF84A2259C81BE00B9E972 /* StickerCell.xib */,
-				5AEF849E259C81BD00B9E972 /* StickerModel.swift */,
-				5AEF84A4259C81BF00B9E972 /* StickerPicker.swift */,
-				5AEF84A3259C81BE00B9E972 /* StickerPicker.xib */,
-				5AEF84A0259C81BD00B9E972 /* StickerPicker+PageControl.swift */,
+				5A85F79F25A4559100EFE7CF /* View */,
+				5A85F7A025A455A300EFE7CF /* Controller */,
 			);
 			path = StickerPicker;
 			sourceTree = "<group>";
@@ -460,12 +573,8 @@
 		5AEF84B8259C936F00B9E972 /* EmotionInputView */ = {
 			isa = PBXGroup;
 			children = (
-				5A0DEFA8259D6A3B00A6F998 /* EmotionInputView.xib */,
-				5A0DEFAC259D7ACE00A6F998 /* EmotionInputView.swift */,
-				5A0DEFAF259D7D3A00A6F998 /* EmotionPickerView.swift */,
-				5A0DEFB2259D7D4600A6F998 /* EmotionPickerView.xib */,
-				5A0DEFB5259D7ED100A6F998 /* StickerPickerView.xib */,
-				5A0DEFB8259D7EE700A6F998 /* StickerPickerView.swift */,
+				5A85F7A325A4561000EFE7CF /* View */,
+				5A85F7A425A4561800EFE7CF /* Controller */,
 			);
 			path = EmotionInputView;
 			sourceTree = "<group>";
@@ -538,6 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A037635259431380075DF9D /* BubbleVideoChat.xib in Resources */,
+				5A85F7A825A4565800EFE7CF /* ToolbarEmotion.xib in Resources */,
 				5AAF835825A0C8D600867BEF /* NavigationBarChatLog.xib in Resources */,
 				5AAF835B25A0D01200867BEF /* NavigationBarNormal.xib in Resources */,
 				5AEF84AA259C81BF00B9E972 /* StickerCell.xib in Resources */,
@@ -551,14 +661,15 @@
 				5AF2B69F2590DEC900C49BF0 /* BubbleImageChat.xib in Resources */,
 				5A992F2F258F349700BEF630 /* BubbleTextChat.xib in Resources */,
 				5A50656D258B10F0000A97F2 /* OnlineFriendCell.xib in Resources */,
+				5A0C820925A5790500CACC78 /* FriendRequestCell.xib in Resources */,
 				5AEF84CC259C9BD400B9E972 /* image.jpeg in Resources */,
 				5A4C35B52587517E00AAED51 /* LaunchScreen.storyboard in Resources */,
 				5A506559258B01D4000A97F2 /* ConversationPrivateCell.xib in Resources */,
 				5A4C35B22587517E00AAED51 /* Assets.xcassets in Resources */,
 				5A068F1B2598A6E60061E115 /* loadingAnimation-white.json in Resources */,
 				5AEF84A7259C81BF00B9E972 /* ListStickerCollectionViewCell.xib in Resources */,
+				5A13D4DC25A6B9E0000AA7CD /* ContactCell.xib in Resources */,
 				5AAF835E25A0D13500867BEF /* NavigationBarMain.xib in Resources */,
-				5A506567258B0E45000A97F2 /* ContactCell.xib in Resources */,
 				5A0DEFA5259D4B7800A6F998 /* emojiList.plist in Resources */,
 				5A0DEFA9259D6A3B00A6F998 /* EmotionInputView.xib in Resources */,
 				5A65FE86259B175D00D7C0B7 /* GoogleService-Info.plist in Resources */,
@@ -631,6 +742,7 @@
 				5A0DEFB9259D7EE700A6F998 /* StickerPickerView.swift in Sources */,
 				5A3C3E362596506F0009EF29 /* ChatLogViewController+Extensions.swift in Sources */,
 				5AAF836825A0D74800867BEF /* NavigationBarMain.swift in Sources */,
+				5A13D4CD25A68D24000AA7CD /* UserSettingViewController.swift in Sources */,
 				5A4ED0842596340E00702478 /* ImageDetailViewController.swift in Sources */,
 				5A50654A258AEAD1000A97F2 /* CoversationsViewController.swift in Sources */,
 				5AEF84A6259C81BF00B9E972 /* StickerModel.swift in Sources */,
@@ -662,16 +774,20 @@
 				5A0DEFB0259D7D3A00A6F998 /* EmotionPickerView.swift in Sources */,
 				5A66F6AD25998D8900BE3A65 /* PlayerManager.swift in Sources */,
 				5AEF847D259C810700B9E972 /* PageControlCell.swift in Sources */,
+				5A0C820D25A5913300CACC78 /* FriendRequestViewController.swift in Sources */,
 				5A50656C258B10F0000A97F2 /* OnlineFriendCell.swift in Sources */,
 				5A037634259431380075DF9D /* BubbleVideoChat.swift in Sources */,
 				5A0DEFC6259E27B300A6F998 /* ChatLogViewController+Emotion.swift in Sources */,
+				5A85F7AB25A4567300EFE7CF /* ToolbarEmotion.swift in Sources */,
 				5A754A0E258BA78D00A3B21D /* LoadingIndicator.swift in Sources */,
 				5AAF836225A0D72800867BEF /* NavigationBarChatLog.swift in Sources */,
 				5A79183F258CF0F2009051BA /* DatabaseController.swift in Sources */,
+				5A0C821025A5B81800CACC78 /* AddFriendViewController.swift in Sources */,
 				5A03764E2594640D0075DF9D /* ImageLoading.swift in Sources */,
 				5A791833258C867B009051BA /* AuthController.swift in Sources */,
 				5A4C35AB2587517C00AAED51 /* SceneDelegate.swift in Sources */,
 				5A0DEFAD259D7ACE00A6F998 /* EmotionInputView.swift in Sources */,
+				5A0C820825A5790500CACC78 /* FriendRequestCell.swift in Sources */,
 				5A03764B259463090075DF9D /* Config.swift in Sources */,
 				5A791837258C9881009051BA /* UserAcitivity.swift in Sources */,
 				5AEF8480259C810700B9E972 /* PageControlView.swift in Sources */,

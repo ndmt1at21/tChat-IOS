@@ -20,10 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
         let rootNav = mainStoryboard.instantiateViewController(withIdentifier: "RootNavigationController") as! UINavigationController
 
-        self.window?.rootViewController? = rootNav
+       
         
         AuthController.shared.setupCurrentUser { (user) in
             if let _ = user {
@@ -32,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 let tabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
                 
+                self.window?.rootViewController? = rootNav
                 rootNav.pushViewController(tabBarVC, animated: true)
             } else {
                 AuthController.shared.handleLogout()

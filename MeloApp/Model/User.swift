@@ -12,8 +12,8 @@ struct User: Codable {
     var name: String?
     var email: String?
     var profileImage: String?
-    var friends: [StringUID]?
-    var friendRequests: [StringUID]?
+    var friends: [StringUID: Bool]?
+    var friendRequests: [StringUID: Bool]?
     
     enum CodingKeys: String, CodingKey {
         case uid
@@ -29,7 +29,7 @@ struct User: Codable {
         self.name = dictionary["name"] as? String
         self.email = dictionary["email"] as? String
         self.profileImage = dictionary["profileImage"] as? String
-        self.friends = dictionary["friends"] as? [StringUID]
-        self.friendRequests = dictionary["friendRequests"] as? [StringUID]
+        self.friends = dictionary["friends"] as? [StringUID: Bool]
+        self.friendRequests = dictionary["friendRequests"] as? [StringUID: Bool]
     }
 }

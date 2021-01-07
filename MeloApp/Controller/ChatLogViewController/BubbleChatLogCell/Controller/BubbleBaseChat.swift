@@ -51,6 +51,8 @@ class BubbleBaseChat: UITableViewCell {
     }
 
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         if bubbleView.frame.height < 50 {
             bubbleView.layer.cornerRadius = bubbleView.frame.height / 2
         } else {

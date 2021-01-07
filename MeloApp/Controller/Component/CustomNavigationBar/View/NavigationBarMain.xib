@@ -23,16 +23,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="8Lb-jn-3fM">
-                    <rect key="frame" x="20" y="24.5" width="183" height="40"/>
+                    <rect key="frame" x="20" y="24.5" width="136" height="40"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="NY5-jo-H60">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="NY5-jo-H60">
                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="NY5-jo-H60" secondAttribute="height" multiplier="1:1" id="rNC-zZ-yhO"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="ML0-Dw-DXr">
-                            <rect key="frame" x="55" y="2" width="128" height="36"/>
+                            <rect key="frame" x="55" y="2" width="81" height="36"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -92,7 +92,6 @@
                 <constraint firstItem="mXS-35-qoh" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6QE-OV-Wpk"/>
                 <constraint firstItem="8Lb-jn-3fM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="7Nu-Ya-TPI"/>
                 <constraint firstItem="8Lb-jn-3fM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="D72-ql-Ocl"/>
-                <constraint firstItem="8Lb-jn-3fM" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.4" id="U58-Ew-lRo"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mXS-35-qoh" secondAttribute="trailing" constant="20" id="ij4-hN-5lj"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
