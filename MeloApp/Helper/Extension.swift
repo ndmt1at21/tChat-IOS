@@ -312,3 +312,38 @@ func readPlist(forResource path: String?) -> [[String:Any]]? {
     
     return []
 }
+
+class RadialGradient: UIView {
+    var startCenter: CGPoint = CGPoint()
+    var endCenter: CGPoint = CGPoint()
+    var startRadius: CGFloat = CGFloat()
+    var endRadius: CGFloat = CGFloat()
+    var gradient: CGGradient?
+    var options: CGGradientDrawingOptions = []
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    init(startCenter: CGPoint, endCenter: CGPoint, startRadius: CGFloat, endRadius: CGFloat, gradient: CGGradient?, options: CGGradientDrawingOptions) {
+        super.init(frame: .zero)
+        
+        self.startCenter = startCenter
+        self.endCenter = endCenter
+        self.startRadius = startRadius
+        self.endRadius = endRadius
+        self.gradient = gradient
+        self.options = options
+    }
+    
+    override func draw(_ rect: CGRect) {
+        let context = UIGraphicsGetCurrentContext()!
+
+        context.drawRadialGradient(gradient!, startCenter: startCenter, startRadius: startRadius, endCenter: endCenter, endRadius: endRadius, options: options)
+    }
+}
+

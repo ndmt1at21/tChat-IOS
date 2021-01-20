@@ -8,6 +8,7 @@
 import Foundation
 
 typealias StringUID = String
+typealias StringHex = String
 
 enum MessageDestination {
     case me

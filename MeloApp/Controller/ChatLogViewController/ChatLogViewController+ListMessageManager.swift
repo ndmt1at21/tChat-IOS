@@ -8,9 +8,15 @@
 import Foundation
 import UIKit
 
-class ListMessage {
+/// Class manage array of messages group by distance date, one array messages - one group
+///
+/// Element of ListMessages is array of messages
+///
+/// Date key of group is oldest message in array message = first message in array messages
+class ListMessages {
     var messages: [[Message]] = []
     
+    /// Number of array messages in ListMessages
     var count: Int {
         get {
             return messages.count
@@ -27,6 +33,11 @@ class ListMessage {
         }
     }
     
+    /// This function add one message to ListMessage at begin ListMessage
+    ///
+    /// Array messages auto append or create new section for message depend message's date
+    ///
+    /// - Parameter message: message add to ListMessage
     func addMessageBegin(_ message: Message) {
         if messages.count == 0 {
             messages.append([message])
@@ -43,6 +54,11 @@ class ListMessage {
         }
     }
     
+    /// This function add one message to ListMessage at last ListMessage
+    ///
+    /// Array messages auto append or create new section for message depend message's date
+    ///
+    /// - Parameter message: message add to ListMessage
     func addMessageLast(_ message: Message) {
         if messages.count == 0 {
             messages.append([message])
@@ -62,11 +78,18 @@ class ListMessage {
         }
     }
     
+    /// This function add array messages to ListMessage at begin ListMessage
+    ///
+    /// Array messages auto splited into sub section message (by distance date config in class) and add to begin ListMessage
+    ///
+    /// - Parameter sectionMessages: array message add to ListMessage
     func addSectionFirst(_ sectionMessages: [Message]) {
         if sectionMessages.count == 0 { return }
         
-        let (sortedKeys, groupedMessages) = groupMessages(sectionMessages)
-            
+        // group message by distance time
+        let (sortedKeys, groupedMessages) = groupMessages(sectionMessages, by: K.distanceTimeGroupMessage)
+        
+        // if messages[] dont't have anything
         if messages.count == 0 {
             sortedKeys.forEach { (date) in
                 if let values = groupedMessages[date] {
@@ -91,10 +114,15 @@ class ListMessage {
         }
     }
     
+    /// This function add array messages to ListMessage at last
+    ///
+    /// Array messages auto splited into sub section message (by distance date config in class) and add to ListMessage
+    ///
+    /// - Parameter sectionMessages: array message add to ListMessage
     func addSectionLast(_ sectionMessages: [Message]) {
         if sectionMessages.count == 0 { return }
         
-        let (sortedKeys, groupedMessages) = groupMessages(sectionMessages)
+        let (sortedKeys, groupedMessages) = groupMessages(sectionMessages, by: K.distanceTimeGroupMessage)
         
         if messages.count == 0 {
             sortedKeys.forEach { (date) in
@@ -119,11 +147,17 @@ class ListMessage {
         }
     }
     
+    /// This function returns update message by id when it changed
+    ///
+    /// ```
+    /// updateMessage(Message(id: 123, 'test'))
+    /// ```
+    ///
+    /// - Parameter newMessage: new message content use to update with ID already in ListMessage
     func updateMessage(_ newMessage: Message) {
         var prevIndex = 0
         var currIndex = 0
         let messageDate = newMessage.sendAt as! Date
-        
         
         for (i, value) in messages.enumerated() {
             let firstDateInSection = value.first!.sendAt as! Date
@@ -141,15 +175,24 @@ class ListMessage {
         }
     }
     
-    // Note: message sorted from firestore
-    private func groupMessages(_ messages: [Message]) -> ([Date], [Date: [Message]]) {
+    /// This function returns a tupple (sortedDateKeys, sortedDateDictionary) for a give messages
+    ///
+    /// ```
+    /// groupMessage([m1, m2], 500)
+    /// ```
+    /// Why use sortedKeys in return? Because Dictionary Date: [Message] can't sorted, so use sortedKeys to find faster and in sorted position
+    ///
+    /// - Parameter messages: Array messages will be grouped by distanceTime
+    /// - Parameter distanceTime: Distance time between two group (in miliseconds)
+    /// - Returns: sortedDateKeys (sorted ascending date key in each group) and dateDictionary (messages array with key)
+    private func groupMessages(_ messages: [Message], by distanceTime: Double) -> ([Date], [Date: [Message]]) {
 
         var flag: Date = Date(timeIntervalSince1970: 0)
         let result = Dictionary(grouping: messages) { (message) -> Date in
 
             let date = message.sendAt as! Date
             
-            if abs(date.timeIntervalSince1970 - flag.timeIntervalSince1970) > K.distanceTimeGroupMessage {
+            if abs(date.timeIntervalSince1970 - flag.timeIntervalSince1970) > distanceTime {
                 flag = date
             }
 

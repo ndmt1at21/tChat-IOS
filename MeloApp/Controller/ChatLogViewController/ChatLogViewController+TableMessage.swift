@@ -28,6 +28,7 @@ extension ChatLogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableMessages.deselectRow(at: indexPath, animated: false)
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let message = messages[indexPath.section][indexPath.row]
@@ -66,7 +67,6 @@ extension ChatLogViewController: UITableViewDelegate {
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 12)
         label.textColor = .systemGray3
-        
         label.text = formatDate(messages[section].first!.sendAt as! Date)
         
         let view = UIView()
@@ -107,6 +107,7 @@ extension ChatLogViewController: UITableViewDataSource {
         
         let cell = type.bubbleChatCell(tableView, message: message, self)
         cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -120,25 +121,19 @@ extension ChatLogViewController: UIScrollViewDelegate {
             }
         }
     }
-    
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        if scrollView.contentOffset.y < -30 {
-//            if isEndLoadingMore {
-//                pullToLoadMore()
-//            }
-//        }
-//    }
-    
+
     private func pullToLoadMore() {
         self.isLoadingMore = true
         self.isEndLoadingMore = false
         
+        // for get message from .. to.. in firebase
         var uidMessageFlag: StringUID?
         
         if messages.count > 0 {
             uidMessageFlag = messages[0][0].uid!
         }
        
+        // start animation loading
         tableMessages.tableHeaderView = loadingIndicator
         loadingIndicator.frame.size.height = 60
         loadingIndicator.startAnimation()
@@ -147,6 +142,9 @@ extension ChatLogViewController: UIScrollViewDelegate {
             from: uidMessageFlag,
             in: group.uid!, limit: 10) { (messagesFetched) in
             
+            self.loadingIndicator.stopAnimation()
+            self.tableMessages.tableHeaderView = nil
+            
             self.isLoadingMore = false
             self.isEndLoadingMore = true
             
@@ -154,17 +152,34 @@ extension ChatLogViewController: UIScrollViewDelegate {
                 self.isEndMessages = true
             }
             
+            // nothing fetched
             if messagesFetched.count == 0 {
-                self.loadingIndicator.stopAnimation()
-                self.tableMessages.tableHeaderView = nil
                 return
             }
             
+            let oldSectionSize = self.messages.count
             self.messages.addSectionFirst(messagesFetched)
-            self.tableMessages.reloadData()
-            
-            self.loadingIndicator.stopAnimation()
-            self.tableMessages.tableHeaderView = nil
+            let newSectionSize = self.messages.count
+    
+            self.updateTableMessageWithNewSections(newSectionSize - oldSectionSize)
         }
+    }
+    
+    private func updateTableMessageWithNewSections(_ nSection: Int) {
+        let oldOffsetY = self.tableMessages.contentOffset.y
+        let oldHeightOffset = self.tableMessages.contentSize.height
+        
+        // prevent scroll when insert section
+        UIView.setAnimationsEnabled(false)
+        
+        self.tableMessages.beginUpdates()
+        self.tableMessages.deleteSections(IndexSet(integer: 0), with: .fade)
+        self.tableMessages.insertSections(IndexSet(integersIn: 0...nSection), with: .fade)
+        self.tableMessages.endUpdates()
+        
+        let newHeightOffset = self.tableMessages.contentSize.height
+        self.tableMessages.contentOffset.y = oldOffsetY + (newHeightOffset - oldHeightOffset)
+        
+        UIView.setAnimationsEnabled(true)
     }
 }

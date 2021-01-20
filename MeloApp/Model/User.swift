@@ -12,6 +12,7 @@ struct User: Codable {
     var name: String?
     var email: String?
     var profileImage: String?
+    var profileImageThumbnail: String?
     var friends: [StringUID: Bool]?
     var friendRequests: [StringUID: Bool]?
     
@@ -29,6 +30,7 @@ struct User: Codable {
         self.name = dictionary["name"] as? String
         self.email = dictionary["email"] as? String
         self.profileImage = dictionary["profileImage"] as? String
+        self.profileImageThumbnail = dictionary["profileImageThumbnail"] as? String
         self.friends = dictionary["friends"] as? [StringUID: Bool]
         self.friendRequests = dictionary["friendRequests"] as? [StringUID: Bool]
     }

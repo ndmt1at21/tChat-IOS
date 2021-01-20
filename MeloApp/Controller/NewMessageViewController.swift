@@ -94,48 +94,6 @@ class NewMessageViewController: UIViewController{
         }
     }
     
-    private func fetchGroup(from usersUID: [StringUID], completion: @escaping (_ group: Group?) -> Void) {
-        
-        let groupRef = Firestore.firestore().collection("groups")
-        
-        let queryFindGroup = groupRef
-            .whereField("members.\(usersUID[0])", isEqualTo: true)
-            .whereField("members.\(usersUID[1])", isEqualTo: true)
-        
-        queryFindGroup.getDocuments { (snapshot, error) in
-            
-            if let docs = snapshot?.documents, docs.count > 0 {
-                
-                let doc = docs[0].data()
-                let group = Group(uid: docs[0].documentID, dataFromServer: doc)
-                
-                return completion(group)
-            } else {
-                // Create new group
-                guard let currentUser = Auth.auth().currentUser else { return }
-                
-                var group = Group(
-                    createdBy: currentUser.uid,
-                    members: usersUID.reduce(into: [:], { (result, userUID) in
-                        result[userUID] = true
-                    }),
-                    recentMessage: nil,
-                    displayName: "GroupTest"
-                )
-                
-                let ref = groupRef.document()
-                ref.setData(group.dictionaryForSend()) { (error) in
-                    if error != nil {
-                        return completion(nil)
-                    }
-                    
-                    group.uid = ref.documentID
-                    return completion(group)
-                }
-            }
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueID.newMessageToChatLog {
             let group = sender as! Group
@@ -162,10 +120,14 @@ extension NewMessageViewController: UICollectionViewDelegate {
             return AuthController.shared.handleLogout()
         }
         
-        fetchGroup(from: [currentUser.uid, friend.uid!]) { (group) in
-            guard let groupInfor = group else { return }
-
-            self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: groupInfor)
+        DatabaseController.getGroup(by: currentUser.uid, and: friend.uid!) { (group) in
+            if group == nil {
+                DatabaseController.createGroup(with: [currentUser.uid, friend.uid!]) { (newGroup) in
+                    self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: newGroup)
+                }
+            } else {
+                self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: group)
+            }
         }
     }
 }
@@ -177,7 +139,6 @@ extension NewMessageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionListFriends.dequeueReusableCell(withReuseIdentifier: K.cellID.contactCell, for: indexPath) as! ContactCell
-        
  
         let friend = friends[indexPath.row]
  

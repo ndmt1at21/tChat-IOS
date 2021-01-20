@@ -12,12 +12,20 @@ class AuthController {
     static let shared = AuthController()
     var currentUser: User? = nil
     
+    private init() {}
+    
     func setupCurrentUser(completion: @escaping (_ user: User?) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             return completion(nil)
         }
-
-        Firestore.firestore().collection("users").document(currentUser.uid).addSnapshotListener { (snapshot, error) in
+        
+        self.listenChangeCurrentUser { (user) in
+            if user != nil {
+                self.currentUser = user
+            }
+        }
+       
+        Firestore.firestore().collection("users").document(currentUser.uid).getDocument { (snapshot, error) in
             if error != nil {
                 print("Error: ", error!.localizedDescription)
                 return completion(nil)
@@ -30,10 +38,25 @@ class AuthController {
                 return completion(user)
             }
         }
-       
     }
     
-    private init() {}
+    func listenChangeCurrentUser(completion: @escaping (_ currentUser: User?) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            return completion(nil)
+        }
+        
+        Firestore.firestore().collection("users").document(currentUser.uid).addSnapshotListener { (snapshot, error) in
+            if error != nil {
+                print("Error: ", error!.localizedDescription)
+                return completion(nil)
+            }
+
+            if let data = snapshot?.data() {
+                let user = User(uid: currentUser.uid, dictionary: data)
+                return completion(user)
+            }
+        }
+    }
     
     func handleLogin(email: String, password: String, completion: @escaping (_ error: String?) -> Void) {
         
@@ -47,8 +70,15 @@ class AuthController {
                 switch err.code {
                 case AuthErrorCode.userNotFound.rawValue:
                     return completion("Email không tồn tại")
-                default:
+                    
+                case AuthErrorCode.networkError.rawValue:
+                    return completion("Lỗi đường truyền")
+                    
+                case AuthErrorCode.wrongPassword.rawValue:
                     return completion("Sai tên đăng nhập hoặc mật khẩu")
+                    
+                default:
+                    return completion("Lỗi máy chủ")
                 }
             }
         }
@@ -72,9 +102,12 @@ class AuthController {
                 
                 case AuthErrorCode.weakPassword.rawValue:
                     return completion("Mật khẩu quá yếu")
+                
+                case AuthErrorCode.networkError.rawValue:
+                    return completion("Lỗi đường truyền")
                     
                 default:
-                    return completion("Lỗi đường truyền")
+                    return completion("Lỗi máy chủ")
                 }
             }
         }
@@ -83,8 +116,8 @@ class AuthController {
     func handleLogout() {
         do {
             try Auth.auth().signOut()
-        } catch let err as NSError {
-            print(err)
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
     }
 }

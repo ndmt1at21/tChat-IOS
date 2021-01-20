@@ -36,11 +36,23 @@ class CoversationsViewController: UIViewController {
         
         customNavigationBar.titleLabel.text = "Chats"
         customNavigationBar.secondRightButton.isHidden = true
-        customNavigationBar.userImage.image = UIImage(named: "john")
+        
+        // loading user image
+        AuthController.shared.listenChangeCurrentUser { (user) in
+            if user == nil { return }
+            
+            let imageLoading = ImageLoading()
+            imageLoading.loadingImageAndCaching(
+                target: self.customNavigationBar.userImage,
+                with: AuthController.shared.currentUser?.profileImageThumbnail,
+                placeholder: nil,
+                progressHandler: nil) { (error) in
+                if (error != nil) { print(error!) }
+            }
+        }
         
         let imagePen = UIImage(systemName: "pencil", withConfiguration: config)
         customNavigationBar.firstRightButton.setImage(imagePen, for: .normal)
-        
         customNavigationBar.delegate = self
     }
     

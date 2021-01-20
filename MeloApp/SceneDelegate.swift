@@ -22,8 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootNav = mainStoryboard.instantiateViewController(withIdentifier: "RootNavigationController") as! UINavigationController
 
-       
-        
         AuthController.shared.setupCurrentUser { (user) in
             if let _ = user {
                 

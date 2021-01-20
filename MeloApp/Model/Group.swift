@@ -29,6 +29,9 @@ struct Group {
     var members: [StringUID: Bool]? // list uid
     var recentMessage: RecentMessage?
     var displayName: String?
+    var groupImage: String? // url to group's image avatar
+    var themeColors: [StringHex]? // list colors in hex
+    var backgroundImage: String? // url image
     
     init() {}
     
@@ -38,7 +41,10 @@ struct Group {
         self.members = dataFromServer["members"] as? [StringUID: Bool]
         self.recentMessage = dataFromServer["recentMessage"] as? RecentMessage
         self.displayName = dataFromServer["displayName"] as? String
-        
+        self.groupImage = dataFromServer["groupImage"] as? String
+        self.themeColors = dataFromServer["themColor"] as? [StringHex]
+        self.backgroundImage = dataFromServer["backgroundImage"] as? String
+    
         self.createdAt = (dataFromServer["createdAt"] as? Timestamp)?.dateValue()
     }
     
@@ -59,6 +65,9 @@ struct Group {
         dict["members"] = members
         dict["recentMessage"] = recentMessage
         dict["displayName"] = displayName
+        dict["groupImage"] = groupImage
+        dict["themeColors"] = themeColors
+        dict["backgroundImage"] = backgroundImage
         
         return dict
     }

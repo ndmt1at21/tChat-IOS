@@ -23,6 +23,12 @@ class BubbleStickerChat: BubbleBaseChat {
         stickerImageView.addGestureRecognizer(tap)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        bubbleView.layer.cornerRadius = 0
+    }
+    
     override func setupViewCellFromMe() {
         super.setupViewCellFromMe()
     }

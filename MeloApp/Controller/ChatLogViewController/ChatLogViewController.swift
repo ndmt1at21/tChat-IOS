@@ -14,6 +14,7 @@ import Kingfisher
 
 class ChatLogViewController: UIViewController {
     
+    @IBOutlet weak var customNavBar: NavigationBarChatLog!
     @IBOutlet weak var chatLogContentView: UIView!
     @IBOutlet weak var tableMessages: UITableView!
 
@@ -21,15 +22,15 @@ class ChatLogViewController: UIViewController {
     @IBOutlet weak var chatTextView: UITextView!
     @IBOutlet weak var emojiButton: UIButton!
     @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
-    
+
     var group: Group = Group()
-    var messages: ListMessage = ListMessage()
+    var messages: ListMessages = ListMessages()
+    var members: [User] = []
+    var onlineMembers: [StringUID: Bool] = [:]
     
     internal var isLoadingMore: Bool = false
     internal var isEndLoadingMore: Bool = true
     internal var isEndMessages: Bool = false
-    
-    @IBOutlet weak var customNavBar: NavigationBarChatLog!
     
     internal var isKeyboardShow: Bool = false
     internal var isEmotionInputShow: Bool = false {
@@ -85,9 +86,11 @@ class ChatLogViewController: UIViewController {
         setupObserverKeyboard()
         setupObserveTapScreen()
         setupChatTextView()
+        setupInfoMembers()
+        observerMembers()
         observerMessage(groupUID: group.uid!)
     }
-
+    
     private func setupCustomNavigationBar() {
         customNavBar.delegate = self
 
@@ -104,6 +107,34 @@ class ChatLogViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapInScreen))
         self.view.addGestureRecognizer(tap)
         tap.delegate = self
+    }
+    
+    private func setupInfoMembers() {
+        if group.members == nil { return }
+        
+        let usersUID = group.members!.keys
+        usersUID.forEach { (userUID) -> Void in
+            DatabaseController.getUser(userUID: userUID) { (user) in
+                if (user == nil) { return }
+                
+                self.members.append(user!)
+            }
+        }
+    }
+    
+    private func observerMembers() {
+        if group.members == nil { return }
+        
+        let usersUID = group.members!.keys
+        usersUID.forEach { (userUID) -> Void in
+            UserActivity.observeUserActivity(userUID: userUID) { (isOnline) in
+                self.onlineMembers[userUID] = isOnline
+                
+                if self.onlineMembers.mapValues({$0}).count > 0 {
+                    self.customNavBar.activityCircle.isHidden = false
+                }
+            }
+        }
     }
     
     @objc func handleTapInScreen(_ sender: UITapGestureRecognizer) {
@@ -215,7 +246,6 @@ extension ChatLogViewController: UITextViewDelegate{
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         chatTextView.tintColor = .black
-        chatTextView.keyboardType = .default
         return true
     }
 }
@@ -237,10 +267,20 @@ extension ChatLogViewController: NavigationBarChatLogDelegate {
     }
     
     func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, infoPressed sender: UIButton) {
-        //
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: K.sbID.groupSettingViewController) as! GroupSettingViewController
+        
+        vc.groupName.text = group.displayName
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, groupInfoViewPressed sender: UITapGestureRecognizer) {
-        //
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: K.sbID.groupSettingViewController) as! GroupSettingViewController
+        
+        vc.groupName.text = group.displayName
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
