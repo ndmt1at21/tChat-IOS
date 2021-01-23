@@ -23,11 +23,15 @@ class ChatLogViewController: UIViewController {
     @IBOutlet weak var emojiButton: UIButton!
     @IBOutlet weak var bottomConstraintChatLogContentView: NSLayoutConstraint!
 
+    // just for track time
+    var timer: Timer?
+    
     var group: Group = Group()
     var messages: ListMessages = ListMessages()
     var members: [User] = []
     var onlineMembers: [StringUID: Bool] = [:]
     
+    internal var isFirstFetchMessages: Bool = true
     internal var isLoadingMore: Bool = false
     internal var isEndLoadingMore: Bool = true
     internal var isEndMessages: Bool = false
@@ -80,7 +84,7 @@ class ChatLogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+    
         setupCustomNavigationBar()
         setupTableMessages()
         setupObserverKeyboard()
@@ -92,14 +96,29 @@ class ChatLogViewController: UIViewController {
     }
     
     private func setupCustomNavigationBar() {
-        customNavBar.delegate = self
-
+        
         customNavBar.backButton.backgroundColor = .white
         customNavBar.backButton.inkColor = .systemGray5
         
         customNavBar.infoButton.backgroundColor = .white
         customNavBar.infoButton.inkColor = .systemGray5
         
+        group.getNameGroup { (name) in
+            self.customNavBar.groupName.text = name
+        }
+
+        group.getGroupImageAvatar { (groupImage) in
+            let imgLoading = ImageLoading()
+            imgLoading.loadingImageAndCaching(
+                target: self.customNavBar.groupImage,
+                with: groupImage,
+                placeholder: nil,
+                progressHandler: nil) { (error) in
+                if error != nil { print(error!) }
+            }
+        }
+        
+        customNavBar.delegate = self
         customNavBar.shadow(0, 2, 3, UIColor.systemGray5.cgColor)
     }
     
@@ -113,6 +132,7 @@ class ChatLogViewController: UIViewController {
         if group.members == nil { return }
         
         let usersUID = group.members!.keys
+        
         usersUID.forEach { (userUID) -> Void in
             DatabaseController.getUser(userUID: userUID) { (user) in
                 if (user == nil) { return }
@@ -242,11 +262,23 @@ extension ChatLogViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let contentSize = chatTextView.contentSize
         self.chatTextViewHeightConstraint.constant = contentSize.height
+        
+        UserActivity.setCurrentUserTyping(true, groupID: group.uid!)
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+            UserActivity.setCurrentUserTyping(false, groupID: self.group.uid!)
+        })
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         chatTextView.tintColor = .black
+
         return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        UserActivity.setCurrentUserTyping(false, groupID: group.uid!)
     }
 }
 
@@ -270,16 +302,12 @@ extension ChatLogViewController: NavigationBarChatLogDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         let vc = storyboard.instantiateViewController(identifier: K.sbID.groupSettingViewController) as! GroupSettingViewController
         
-        vc.groupName.text = group.displayName
-        
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func navigationBar(_ naviagtionBarChatLog: NavigationBarChatLog, groupInfoViewPressed sender: UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         let vc = storyboard.instantiateViewController(identifier: K.sbID.groupSettingViewController) as! GroupSettingViewController
-        
-        vc.groupName.text = group.displayName
         
         navigationController?.pushViewController(vc, animated: true)
     }

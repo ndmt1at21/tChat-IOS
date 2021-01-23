@@ -11,11 +11,10 @@ import Firebase
 
 extension ChatLogViewController {
     internal func observerMessage(groupUID: StringUID) {
-        
         let db = Firestore.firestore()
         
         let groupRef = db.collection("messages").document(groupUID).collection("messages").order(by: "sendAt").limit(toLast: 10)
-    
+        
         groupRef.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
             guard let docsChange = querySnapshot?.documentChanges else {
                 return
@@ -23,7 +22,7 @@ extension ChatLogViewController {
      
             var addedMessages: [Message] = []
             
-            docsChange.forEach { (doc) in
+            let _ = docsChange.map { (doc) -> Void in
                 let data = doc.document.data()
 
                 var message = Message(uid: doc.document.documentID, dataFromServer: data)
@@ -31,7 +30,7 @@ extension ChatLogViewController {
                 if message.sendAt == nil && querySnapshot!.metadata.hasPendingWrites {
                     message.sendAt = Timestamp().dateValue()
                 }
-                  
+                
                 switch doc.type {
                 case .added:
                     addedMessages.append(message)
@@ -43,20 +42,26 @@ extension ChatLogViewController {
             }
             
             // group message
-            self.messages.addSectionLast(addedMessages)
-            self.scrollToBottom(animation: true)
+            if addedMessages.count > 0 {
+                self.messages.addSectionLast(addedMessages)
+                
+                DispatchQueue.main.async {
+                    self.tableMessages.reloadData()
+                    self.scrollToBottom(animation: true)
+                }
+               
+            }
         }
     }
     
     internal func sendTextMessage(text: String?, completion: @escaping (_ error: String?) -> Void) {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser =  CurrentUser.shared.currentUser else { return }
         
         guard let safeText = text else { return }
         let textMessage = safeText.trimmingCharacters(in: ["\n", " "])
         
         if textMessage.count == 0 { return }
-
         let message = Message(currentUser.uid!, .text, textMessage)
 
         DatabaseController.sendMessage(message: message, to: group.uid!) { (docID, error) in
@@ -68,7 +73,7 @@ extension ChatLogViewController {
     }
     
     internal func sendImageAndVideoMessage(_ asset: PHAsset) {
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser =  CurrentUser.shared.currentUser else { return }
 
         var type: TypeMessage = .image
         let imageAsset = asset.getImage()
@@ -118,7 +123,7 @@ extension ChatLogViewController {
     }
     
     internal func sendStickerMessage(_ url: String?, completion: @escaping (_ error: String?) -> Void) {
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser =  CurrentUser.shared.currentUser else { return }
         
         guard let safeUrl = url else { return }
         

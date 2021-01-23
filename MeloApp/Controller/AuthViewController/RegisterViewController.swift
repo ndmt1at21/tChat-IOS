@@ -116,10 +116,11 @@ class RegisterViewController: UIViewController {
                     "profileImage": K.defaultAvatar
                 ])
                
-                UserActivity.updateCurrentUserActivity(true)
+               
                 self.loadingAnimation.stopAnimation()
                 self.loadingAnimation.removeFromSuperview()
-            
+                
+                CurrentUser.shared.setupCurrentUser()
                 self.performSegue(withIdentifier: K.segueID.registerToConversation, sender: self)
             }
         }

@@ -28,6 +28,7 @@ class NewMessageViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        CurrentUser.shared.addDelegate(delegate: self)
         setupCustomNavBar()
         setupLoadingView()
         setupSearchView()
@@ -79,19 +80,8 @@ class NewMessageViewController: UIViewController{
     }
     
     private func fetchDataFriends(currUser: User) {
-
-        guard let friends = currUser.friends?.keys else {
-            return
-        }
-        
-        friends.forEach { (friendUID) in
-            DatabaseController.getUser(userUID: friendUID) { (friend) in
-                if let friend = friend {
-                    self.friends.append(friend)
-                    self.collectionListFriends.reloadData()
-                }
-            }
-        }
+        friends = CurrentUser.shared.friends.map{ $0.value }
+        self.collectionListFriends.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -109,7 +99,7 @@ extension NewMessageViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 70)
+        return CGSize(width: view.frame.width, height: 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -126,7 +116,12 @@ extension NewMessageViewController: UICollectionViewDelegate {
                     self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: newGroup)
                 }
             } else {
-                self.performSegue(withIdentifier: K.segueID.newMessageToChatLog, sender: group)
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                
+                let vc = storyboard.instantiateViewController(identifier: K.sbID.chatLogViewController) as! ChatLogViewController
+                vc.group = group!
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
@@ -163,5 +158,26 @@ extension NewMessageViewController: NavigationBarNormalDelegate {
         
         navigationController?.hero.isEnabled = true
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension NewMessageViewController: CurrentUserDelegate {
+    func incommingMessage(inGroup uid: StringUID, newMessage: Message) {
+        //
+    }
+    
+    func incommingFriendRequest(user: User) {
+        //
+    }
+    
+    func currentUserChange() {
+        //
+    }
+    
+    func onlineStatusFriendChange(friend: StringUID, status: Bool) {
+        if let item = friends.firstIndex(where: { $0.uid! == friend }) {
+            let cell = collectionListFriends.cellForItem(at: IndexPath(item: item, section: 0)) as! ContactCell
+            cell.isOnline = status
+        }
     }
 }

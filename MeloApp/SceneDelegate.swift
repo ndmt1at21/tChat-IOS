@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     
         guard let _ = (scene as? UIWindowScene) else { return }
@@ -22,18 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootNav = mainStoryboard.instantiateViewController(withIdentifier: "RootNavigationController") as! UINavigationController
 
-        AuthController.shared.setupCurrentUser { (user) in
-            if let _ = user {
-                
-                UserActivity.updateCurrentUserActivity(true)
-                
-                let tabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
-                
-                self.window?.rootViewController? = rootNav
-                rootNav.pushViewController(tabBarVC, animated: true)
-            } else {
-                AuthController.shared.handleLogout()
-            }
+       
+        if let _ = Auth.auth().currentUser {
+            
+            CurrentUser.shared.setupCurrentUser()
+            
+            let tabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+            
+            self.window?.rootViewController? = rootNav
+            rootNav.pushViewController(tabBarVC, animated: true)
+        } else {
+            AuthController.shared.handleLogout()
         }
     }
 

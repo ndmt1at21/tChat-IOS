@@ -88,7 +88,7 @@ class BubbleBaseChat: UITableViewCell {
 
         imgLoading.loadingImageAndCaching(
             target: avatar,
-            with: AuthController.shared.currentUser?.profileImage,
+            with:  CurrentUser.shared.currentUser?.profileImage,
             placeholder: nil
         ) { (_, _) in
 

@@ -39,9 +39,8 @@ extension ChatLogViewController: UITableViewDelegate {
         
         return 0
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
- 
         let message = messages[indexPath.section][indexPath.row]
         
         if let type = message.type {
@@ -50,7 +49,7 @@ extension ChatLogViewController: UITableViewDelegate {
         
         return 0
     }
-
+    
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let videoCell = cell as? BubbleVideoChat, let currentItem = videoCell.currentItem {
             PlayerManager.shared.removePlayerItem(currentItem, videoCell)
@@ -178,6 +177,7 @@ extension ChatLogViewController: UIScrollViewDelegate {
         self.tableMessages.endUpdates()
         
         let newHeightOffset = self.tableMessages.contentSize.height
+        
         self.tableMessages.contentOffset.y = oldOffsetY + (newHeightOffset - oldHeightOffset)
         
         UIView.setAnimationsEnabled(true)

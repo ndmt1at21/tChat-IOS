@@ -56,6 +56,8 @@ class NavigationBarMain: UIView {
         super.layoutSubviews()
         
         userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.layer.masksToBounds = true
+        userImage.clipsToBounds = true
         firstRightButton.layer.cornerRadius = firstRightButton.frame.height / 2
         secondRightButton.layer.cornerRadius = secondRightButton.frame.height / 2
     }

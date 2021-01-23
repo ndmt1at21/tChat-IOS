@@ -23,6 +23,7 @@ class GroupSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupCustomNavBar()
         iconTheme.layer.cornerRadius = iconTheme.bounds.height / 2
         iconImageVideo.layer.cornerRadius = iconImageVideo.bounds.height / 2
         
@@ -33,11 +34,22 @@ class GroupSettingViewController: UIViewController {
         imageVideoStackView.addGestureRecognizer(tapImageVideo)
     }
     
+    private func setupCustomNavBar() {
+        customNav.delegate = self
+        customNav.titleLabel.text = ""
+    }
+    
     @objc func handleThemeTapped(_ sender: UITapGestureRecognizer) {
         
     }
     
     @objc func handleImageVideoTapped(_ sender: UITapGestureRecognizer) {
         
+    }
+}
+
+extension GroupSettingViewController: NavigationBarNormalDelegate {
+    func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        navigationController?.popViewController(animated: false)
     }
 }

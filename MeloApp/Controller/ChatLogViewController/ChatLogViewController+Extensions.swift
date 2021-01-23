@@ -10,10 +10,9 @@ import UIKit
 // MARK: - ScrollToBottom TableView
 extension ChatLogViewController {
     internal func scrollToBottom(animation: Bool) {
-        tableMessages.reloadData()
         if messages.messages.count > 0 {
+            let lastIndex = self.messages.messages.count - 1
             DispatchQueue.main.async {
-                let lastIndex = self.messages.messages.count - 1
                 self.tableMessages.scrollToRow(
                     at: IndexPath(
                         row: self.messages.messages[lastIndex].count - 1,

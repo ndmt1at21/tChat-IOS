@@ -22,6 +22,7 @@ struct K {
         static let headerUserSettingCell = "HeaderUserSettingCell"
         static let userSettingCell = "UserSettingCell"
         static let customizeChatCell = "CustomizeChatCell"
+        static let headerContactCell = "HeaderContactCell"
     }
     
     struct nib {
@@ -45,12 +46,13 @@ struct K {
         static let imageDetailViewController = "ImageDetailViewController"
         static let videoDetailViewController = "VideoDetailViewController"
         static let coversationsViewController = "CoversationsViewController"
+        static let chatLogViewController = "ChatLogViewController"
         static let newMessageViewController = "NewMessageViewController"
         static let addFriendViewController = "AddFriendViewController"
         static let friendRequestViewController = "FriendRequestViewController"
         static let userSettingViewController = "UserSettingViewController"
         static let rootNavigationController = "RootNavigationController"
-        static let groupSettingViewController = "groupSettingViewController"
+        static let groupSettingViewController = "GroupSettingViewController"
     }
     
     static let primaryColor = UIColor(named: "primaryBlue") ?? UIColor.systemBlue

@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import Firebase
 
 class CoversationsViewController: UIViewController {
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var collectionFriendOnline: UICollectionView!
-    @IBOutlet weak var tableConversation: UITableView!
+
+    @IBOutlet weak var collectionConversations: UICollectionView!
     @IBOutlet weak var customNavigationBar: NavigationBarMain!
     
     var groups: [Group] = []
@@ -19,11 +19,19 @@ class CoversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableConversation.delegate = self
+        CurrentUser.shared.addDelegate(delegate: self)
         setupCustomNavBar()
+        setupCollectionConversation()
+        fetchDataGroup()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionConversations.collectionViewLayout.invalidateLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupTransition()
     }
     
@@ -36,29 +44,48 @@ class CoversationsViewController: UIViewController {
         
         customNavigationBar.titleLabel.text = "Chats"
         customNavigationBar.secondRightButton.isHidden = true
-        
-        // loading user image
-        AuthController.shared.listenChangeCurrentUser { (user) in
-            if user == nil { return }
             
-            let imageLoading = ImageLoading()
-            imageLoading.loadingImageAndCaching(
-                target: self.customNavigationBar.userImage,
-                with: AuthController.shared.currentUser?.profileImageThumbnail,
-                placeholder: nil,
-                progressHandler: nil) { (error) in
-                if (error != nil) { print(error!) }
-            }
-        }
+        setCurrentAvatarImage()
         
         let imagePen = UIImage(systemName: "pencil", withConfiguration: config)
         customNavigationBar.firstRightButton.setImage(imagePen, for: .normal)
         customNavigationBar.delegate = self
     }
     
+    private func setupCollectionConversation() {
+        collectionConversations.delegate = self
+        collectionConversations.dataSource = self
+        collectionConversations.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionConversations.register(UINib(nibName: "ConversationPrivateCell", bundle: .main), forCellWithReuseIdentifier: K.cellID.conversationPrivate)
+    }
+    
     private func setupTransition() {
         navigationController?.hero.isEnabled = true
         navigationController?.hero.navigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
+    }
+    
+    private func fetchDataGroup() {
+        
+        guard let currentUser = CurrentUser.shared.currentUser else { return }
+        
+        Firestore.firestore().collection("groups")
+            .whereField("members.\(currentUser.uid!)", isEqualTo: true).getDocuments { (querySnap, error) in
+                if (error != nil) {
+                    print(error!.localizedDescription)
+                }
+                
+                querySnap?.documents.forEach({ (queryDocSnap) in
+                    let data = queryDocSnap.data()
+                    
+                    let group = Group(uid: queryDocSnap.documentID, dataFromServer: data)
+
+                    self.groups.append(group)
+                    self.collectionConversations.reloadData()
+                })
+            }
+        
+        collectionConversations.reloadData()
     }
     
     @IBAction func newMessagePressed(_ sender: UIBarButtonItem) {
@@ -68,19 +95,50 @@ class CoversationsViewController: UIViewController {
         
         navigationController?.pushViewController(vc, animated: true)
     }
-}
-
-extension CoversationsViewController: UITableViewDelegate {
     
+    private func setCurrentAvatarImage() {
+        if CurrentUser.shared.currentUser == nil { return }
+        
+        let imageLoading = ImageLoading()
+        imageLoading.loadingImageAndCaching(
+            target: self.customNavigationBar.userImage,
+            with:  CurrentUser.shared.currentUser?.profileImageThumbnail,
+            placeholder: nil,
+            progressHandler: nil) { (error) in
+            if (error != nil) { print(error!) }
+        }
+    }
 }
 
-extension CoversationsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+extension CoversationsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: K.sbID.chatLogViewController) as! ChatLogViewController
+       
+        vc.group = groups[indexPath.item]
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension CoversationsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return groups.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionConversations.dequeueReusableCell(withReuseIdentifier: K.cellID.conversationPrivate, for: indexPath) as! ConversationPrivateCell
+        
+        cell.groupModel = groups[indexPath.item]
+        
+        return cell
+    }
+}
+
+extension CoversationsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.bounds.width, height: 60)
     }
 }
 
@@ -99,5 +157,23 @@ extension CoversationsViewController: NavigationBarMainDelegate {
         let vc = storyboard.instantiateViewController(identifier: K.sbID.userSettingViewController)
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension CoversationsViewController: CurrentUserDelegate {
+    func onlineStatusFriendChange(friend: StringUID, status: Bool) {
+        //
+    }
+    
+    func incommingMessage(inGroup uid: StringUID, newMessage: Message) {
+        //
+    }
+    
+    func incommingFriendRequest(user: User) {
+        //
+    }
+    
+    func currentUserChange() {
+        setCurrentAvatarImage()
     }
 }

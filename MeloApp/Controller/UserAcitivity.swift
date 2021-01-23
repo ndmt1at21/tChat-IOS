@@ -36,19 +36,21 @@ class UserActivity {
         }
         
         let ref = Database.database().reference()
-        let userRef = ref.child("usersAction").child(groupID)
-        userRef.setValue(currentUser.uid)
+        let userRef = ref.child("usersAction").child(groupID).child(currentUser.uid)
+        userRef.setValue(isTyping)
+        userRef.onDisconnectSetValue(false)
     }
     
-    static func getUsersTyping(userID: StringUID, groupID: StringUID) -> [StringUID] {
-        let ref = Database.database().reference()
-        let userRef = ref.child("usersAction").child(groupID)
+    static func getUsersTyping(groupID: StringUID, completion: @escaping (_ usersUID: [StringUID]) -> Void) {
         
-        userRef.observe(.value) { (snap) in
-            print(snap)
+        let ref = Database.database().reference()
+        let userRef = ref.child("usersAction").child(groupID).observe(.value) { (snap) in
+            snap.children.forEach { (child) in
+                print(child)
+            }
         }
         
-        return []
+        return completion([])
     }
     
     static func removeCurrentUserTyping(userID: StringUID, groupID: StringUID) {

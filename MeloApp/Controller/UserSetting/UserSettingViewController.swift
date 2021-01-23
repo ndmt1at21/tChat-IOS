@@ -30,11 +30,13 @@ class UserSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        CurrentUser.shared.addDelegate(delegate: self)
         setupCustomNav()
         setupCollectionUserSetting()
     }
     
     private func setupCustomNav() {
+        customNav.backButton.backgroundColor = .white
         customNav.titleLabel.text = "Cài đặt"
         customNav.preferLarge = false
         customNav.delegate = self
@@ -78,12 +80,27 @@ extension UserSettingViewController: UICollectionViewDelegate {
         self.view.window?.rootViewController = vc
         self.view.window?.makeKeyAndVisible()
     }
+    
+    private func setImageAndNameCurrentUser(headerView: HeaderUserSettingCell) {
+        if CurrentUser.shared.currentUser == nil { return }
+        
+        let imgLoading = ImageLoading()
+        imgLoading.loadingImageAndCaching(
+            target: headerView.avatar,
+            with:  CurrentUser.shared.currentUser?.profileImageThumbnail,
+            placeholder: nil,
+            progressHandler: nil) { (error) in
+            if (error != nil) { print(error!) }
+        }
+        
+        headerView.userName.text =  CurrentUser.shared.currentUser?.name
+    }
 }
 
 extension UserSettingViewController: FMPhotoPickerViewControllerDelegate {
     func fmPhotoPickerController(_ picker: FMPhotoPickerViewController, didFinishPickingPhotoWith photos: [UIImage]) {
         
-        guard let _ = AuthController.shared.currentUser else { return }
+        guard let _ =  CurrentUser.shared.currentUser else { return }
         if photos.count != 1 { return }
         
         dismiss(animated: true, completion: nil)
@@ -100,7 +117,7 @@ extension UserSettingViewController: FMPhotoPickerViewControllerDelegate {
                         }
                         
                         Firestore.firestore().collection("users")
-                            .document(AuthController.shared.currentUser!.uid!)
+                            .document( CurrentUser.shared.currentUser!.uid!)
                             .updateData(["profileImageThumbnail" : url!.absoluteString])
                     }
                 }
@@ -118,7 +135,7 @@ extension UserSettingViewController: FMPhotoPickerViewControllerDelegate {
                     }
                     
                     Firestore.firestore().collection("users")
-                        .document(AuthController.shared.currentUser!.uid!)
+                        .document( CurrentUser.shared.currentUser!.uid!)
                         .updateData(["profileImage" : url!.absoluteString])
                 }
             }
@@ -144,21 +161,8 @@ extension UserSettingViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionUserSetting.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: K.cellID.headerUserSettingCell, for: indexPath) as! HeaderUserSettingCell
-            
-            AuthController.shared.listenChangeCurrentUser { (user) in
-                if user == nil { return }
-                
-                let imgLoading = ImageLoading()
-                imgLoading.loadingImageAndCaching(
-                    target: headerView.avatar,
-                    with: AuthController.shared.currentUser?.profileImageThumbnail,
-                    placeholder: nil,
-                    progressHandler: nil) { (error) in
-                    if (error != nil) { print(error!) }
-                }
-                headerView.userName.text = AuthController.shared.currentUser?.name
-            }
 
+            setImageAndNameCurrentUser(headerView: headerView)
             headerView.delegate = self
             return headerView
             
@@ -180,6 +184,7 @@ extension UserSettingViewController: UICollectionViewDelegateFlowLayout {
 
 extension UserSettingViewController: NavigationBarNormalDelegate {
     func navigationBar(_ naviagtionBarNormal: NavigationBarNormal, backPressed sender: UIButton) {
+        navigationController?.hero.isEnabled = true
         navigationController?.popViewController(animated: true)
     }
     
@@ -197,7 +202,30 @@ extension UserSettingViewController: HeaderUserSettingCellDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         let vc = storyboard.instantiateViewController(identifier: K.sbID.imageDetailViewController) as! ImageDetailViewController
         
-        vc.originUrlImage = URL(string: AuthController.shared.currentUser!.profileImage!)
+        vc.originUrlImage = URL(string:  CurrentUser.shared.currentUser!.profileImage!)
         navigationController?.pushViewController(vc, animated: false)
+    }
+}
+
+extension UserSettingViewController: CurrentUserDelegate {
+    func onlineStatusFriendChange(friend: StringUID, status: Bool) {
+        //
+    }
+    
+    func incommingMessage(inGroup uid: StringUID, newMessage: Message) {
+        //
+    }
+    
+    func incommingFriendRequest(user: User) {
+        //
+    }
+    
+    func currentUserChange() {
+        let headerView = collectionUserSetting.supplementaryView(
+            forElementKind: UICollectionView.elementKindSectionHeader,
+            at: IndexPath(item: 0, section: 0)
+        ) as! HeaderUserSettingCell
+        
+        setImageAndNameCurrentUser(headerView: headerView)
     }
 }

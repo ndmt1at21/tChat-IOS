@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -52,31 +51,31 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTW-pU-5JR">
-                    <rect key="frame" x="65" y="6.5" width="222" height="52"/>
+                    <rect key="frame" x="65" y="6.5" width="170" height="52"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NWY-37-EP4">
-                            <rect key="frame" x="0.0" y="0.0" width="222" height="52"/>
+                            <rect key="frame" x="0.0" y="0.0" width="170" height="52"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="john" translatesAutoresizingMaskIntoConstraints="NO" id="2zd-1c-baM">
-                                    <rect key="frame" x="0.0" y="1" width="50" height="50"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="2zd-1c-baM">
+                                    <rect key="frame" x="0.0" y="6" width="40" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="2zd-1c-baM" secondAttribute="height" multiplier="1:1" id="6uV-nG-qFr"/>
-                                        <constraint firstAttribute="height" constant="50" id="J3w-h3-QqC"/>
+                                        <constraint firstAttribute="height" constant="40" id="J3w-h3-QqC"/>
                                     </constraints>
                                 </imageView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="15" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZlF-r6-wH7">
-                                    <rect key="frame" x="60" y="7.5" width="162" height="37.5"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="12" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZlF-r6-wH7">
+                                    <rect key="frame" x="50" y="7" width="120" height="38"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Duc Minh Tri" lineBreakMode="wordWrap" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="YWV-Cl-B2j">
-                                            <rect key="frame" x="0.0" y="0.0" width="162" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" lineBreakMode="wordWrap" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWV-Cl-B2j">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dang hoc tap" lineBreakMode="tailTruncation" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="MZv-pA-ejy">
-                                            <rect key="frame" x="0.0" y="17" width="129.5" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
-                                            <color key="textColor" systemColor="systemGray2Color"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đang hoạt động" lineBreakMode="tailTruncation" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="MZv-pA-ejy">
+                                            <rect key="frame" x="0.0" y="16.5" width="96" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -117,10 +116,7 @@
     </objects>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="default-avatar" width="600" height="600"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="john" width="258" height="195"/>
-        <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

@@ -10,7 +10,6 @@ import Firebase
 
 class ContactsViewController: UIViewController {
 
- 
     @IBOutlet weak var customNavBar: NavigationBarMain!
     @IBOutlet weak var collectionListFriends: UICollectionView!
     
@@ -19,15 +18,15 @@ class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        CurrentUser.shared.addDelegate(delegate: self)
         setupNavBar()
         setupCollectionListFriends()
-        fetchAllFriends()
+        getAllFriends()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        collectionListFriends.collectionViewLayout.invalidateLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +41,8 @@ class ContactsViewController: UIViewController {
         customNavBar.delegate = self
         customNavBar.titleLabel.text = "Danh bạ"
         
+        setCurrentAvatarImage()
+        
         customNavBar.firstRightButton.setImage(UIImage(systemName: "person.fill.badge.plus"), for: .normal)
         customNavBar.secondRightButton.setImage(UIImage(systemName: "person.crop.circle.badge.exclamationmark"), for: .normal)
     }
@@ -49,55 +50,50 @@ class ContactsViewController: UIViewController {
     private func setupCollectionListFriends() {
         collectionListFriends.delegate = self
         collectionListFriends.dataSource = self
-        collectionListFriends.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        let nib = UINib(nibName: "ContactCell", bundle: .main)
-        collectionListFriends.register(nib, forCellWithReuseIdentifier: K.cellID.contactCell)
-    }
     
-    private func fetchAllFriends() {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        collectionListFriends.register(UINib(nibName: "ContactCell", bundle: .main), forCellWithReuseIdentifier: K.cellID.contactCell)
         
-        guard let allFriendsUID = currentUser.friends?.keys else { return }
-        
-        var allFriends: [User] = []
-            
-        allFriendsUID.forEach { (userUID) in
-            DatabaseController.getUser(userUID: userUID) { (user) in
-                if user == nil {
-                    return
-                }
-                
-                allFriends.append(user!)
-                
-                let groupedFriends = Dictionary(grouping: allFriends) { (friend) -> Character in
-                    return friend.name!.first!
-                }
-            
-                
-                self.friends = groupedFriends.map { $0.value }
-                
-                self.collectionListFriends.reloadData()
-            }
-        }
+        collectionListFriends.register(UINib(nibName: "HeaderContactCell", bundle: .main), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: K.cellID.headerContactCell)
     }
     
     private func setupTransition() {
         navigationController?.hero.isEnabled = true
         navigationController?.hero.navigationAnimationType = .selectBy(presenting: .zoom, dismissing: .zoomOut)
     }
+    
+    private func getAllFriends() {
+        let friendsArr = CurrentUser.shared.friends.map { $0.value }
+        
+        let groupedFriends = Dictionary(grouping: friendsArr) { (friend) -> Character in
+            return friend.name!.first!
+        }
+    
+        self.friends = groupedFriends.map { $0.value }
+        self.collectionListFriends.reloadData()
+    }
+    
+    private func setCurrentAvatarImage() {
+        if CurrentUser.shared.currentUser == nil { return }
+        
+        let imageLoading = ImageLoading()
+        imageLoading.loadingImageAndCaching(
+            target: self.customNavBar.userImage,
+            with:  CurrentUser.shared.currentUser?.profileImageThumbnail,
+            placeholder: nil,
+            progressHandler: nil) { (error) in
+            if (error != nil) { print(error!) }
+        }
+    }
 }
 
 
 // MARK: - CollectionDlelegate
 extension ContactsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 70)
-    }
 
 }
 
+// MARK: - CollectionDataSource
 extension ContactsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return friends.count
@@ -114,12 +110,34 @@ extension ContactsViewController: UICollectionViewDataSource {
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+ 
+        let headerView = collectionListFriends.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: K.cellID.headerContactCell, for: indexPath) as! HeaderContactCell
+        
+        if let name = friends[indexPath.section].first?.name {
+            headerView.sectionTitle.text = String(name.first!).capitalized
+        }
+        
+        return headerView
+    }
 }
 
+// MARK: - CollectionFlowLayoutt
 extension ContactsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 60)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 20)
     }
 }
 
@@ -149,3 +167,22 @@ extension ContactsViewController: NavigationBarMainDelegate {
     }
 }
 
+// MARK: - CurrentUserDelegate
+extension ContactsViewController: CurrentUserDelegate {
+    func onlineStatusFriendChange(friend: StringUID, status: Bool) {
+        //
+    }
+    
+    func incommingMessage(inGroup uid: StringUID, newMessage: Message) {
+        //
+    }
+    
+    func incommingFriendRequest(user: User) {
+        //
+    }
+    
+    func currentUserChange() {
+        getAllFriends()
+        setCurrentAvatarImage()
+    }
+}

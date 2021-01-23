@@ -125,8 +125,9 @@ class DatabaseController {
     }
     
     static func sendMessage(message: Message, to groupUID: StringUID, completion: @escaping (_ documentID: StringUID?, _ error: String?) -> Void) {
-        guard let _ = AuthController.shared.currentUser else { return }
+        guard let _ = CurrentUser.shared.currentUser else { return }
     
+        // set new message
         let ref = Firestore.firestore()
             .collection("messages").document(groupUID)
             .collection("messages").document()
@@ -135,8 +136,17 @@ class DatabaseController {
             if error != nil {
                 return completion(nil, error?.localizedDescription)
             }
+            
+            // update recent message group
+            let recentMessage = RecentMessage(message, nil)
+            
+            Firestore.firestore()
+                .collection("groups").document(groupUID)
+                .updateData(["recentMessage" : recentMessage.dictionaryForSend()])
             return completion(ref.documentID, nil)
         }
+        
+        
     }
     
     static func updateMessage(_ messageUID: StringUID, _ groupUID: StringUID, fields: [String: Any]) {
@@ -221,6 +231,10 @@ class DatabaseController {
         query.getDocuments { (querySnap, error) in
             if (error != nil) {
                 print(error!.localizedDescription)
+                return completion(nil)
+            }
+            
+            if querySnap?.count == 0 {
                 return completion(nil)
             }
             

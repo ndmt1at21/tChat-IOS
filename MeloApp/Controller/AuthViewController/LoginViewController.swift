@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            UserActivity.updateCurrentUserActivity(true)
+            CurrentUser.shared.setupCurrentUser()
             self.performSegue(withIdentifier: K.segueID.loginToConversation, sender: self)
         }
     }

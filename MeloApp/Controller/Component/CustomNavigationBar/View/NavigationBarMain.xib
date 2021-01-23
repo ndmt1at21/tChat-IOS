@@ -25,7 +25,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="8Lb-jn-3fM">
                     <rect key="frame" x="20" y="24.5" width="136" height="40"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="NY5-jo-H60">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="NY5-jo-H60">
                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="NY5-jo-H60" secondAttribute="height" multiplier="1:1" id="rNC-zZ-yhO"/>
@@ -99,7 +99,7 @@
         </view>
     </objects>
     <resources>
-        <image name="image" width="2000" height="1328"/>
+        <image name="default-avatar" width="600" height="600"/>
         <image name="person.crop.circle.badge.plus.fill" catalog="system" width="128" height="113"/>
         <image name="person.crop.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemGray4Color">

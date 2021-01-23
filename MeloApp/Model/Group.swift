@@ -12,10 +12,15 @@ struct RecentMessage {
     var message: Message
     var readBy: [StringUID: Bool]?
     
+    init(_ message: Message, _ readBy: [StringUID: Bool]?) {
+        self.message = message
+        self.readBy = readBy
+    }
+    
     func dictionaryForSend() -> [String: Any] {
         var dict: [String: Any] = [:]
         
-        dict["message"] = message
+        dict["message"] = message.dictionaryForSend()
         dict["readBy"] = readBy
         
         return dict
@@ -70,6 +75,49 @@ struct Group {
         dict["backgroundImage"] = backgroundImage
         
         return dict
+    }
+    
+    func getNameGroup(completion: @escaping (_ name: String?) -> Void) {
+        guard let safeMems = self.members else { return completion(nil) }
+        
+        if safeMems.count == 2 {
+            self.getRemainMember { (user) in
+                if user == nil { return completion(nil) }
+                return completion(user!.name)
+            }
+        } else {
+            return completion(displayName)
+        }
+    }
+    
+    func getGroupImageAvatar(completion: @escaping (_ groupImageUrl: String?) -> Void) {
+        guard let safeMems = self.members else { return completion(nil) }
+        
+        if safeMems.count == 2 {
+            self.getRemainMember { (user) in
+                if user == nil { return completion(nil) }
+                
+                return completion(user?.profileImageThumbnail)
+            }
+        }
+        
+        return completion(groupImage)
+    }
+    
+    private func getRemainMember(completion: @escaping (_ user: User?) -> Void) {
+        guard let safeMems = self.members else { return completion(nil) }
+        
+        if safeMems.count == 2 {
+            guard let currentUser = CurrentUser.shared.currentUser else { return completion(nil) }
+            
+            guard let keysUID = self.members?.map({$0.key}) else { return completion(nil) }
+            let receiver = currentUser.uid! == keysUID[0] ? keysUID[1] : keysUID[0]
+            
+            DatabaseController.getUser(userUID: receiver) { (user) in
+                if user == nil { return completion(nil) }
+                return completion(user)
+            }
+        }
     }
 }
 

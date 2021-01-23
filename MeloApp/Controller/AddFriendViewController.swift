@@ -100,7 +100,7 @@ class AddFriendViewController: UIViewController {
             return "Email không đúng định dạng"
         }
         
-        if let currentUser = AuthController.shared.currentUser {
+        if let currentUser =  CurrentUser.shared.currentUser {
             if email == currentUser.email! {
                 return "Không thể kết bạn chính mình :))"
             }
@@ -111,7 +111,7 @@ class AddFriendViewController: UIViewController {
     
     private func sendFriendRequest(to email: String, completion: @escaping (_ error: String?) -> Void) {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser =  CurrentUser.shared.currentUser else { return }
         
         DatabaseController.getUserByEmail(email: email) { (user) in
             if user == nil { return completion(nil) }

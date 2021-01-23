@@ -23,6 +23,7 @@ class FriendRequestViewController: UIViewController {
     }
     
     private func setupNavBar() {
+        customNavBar.backButton.backgroundColor = .white
         customNavBar.titleLabel.text = "Lời mời kết bạn"
         customNavBar.preferLarge = false
         customNavBar.delegate = self
@@ -40,7 +41,7 @@ class FriendRequestViewController: UIViewController {
 
     private func fetchAllFriendRequests() {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser = CurrentUser.shared.currentUser else { return }
         
         // fetch friend requets detail
         guard let requestsID = currentUser.friendRequests?.keys else  { return }
@@ -89,20 +90,25 @@ extension FriendRequestViewController: UITableViewDataSource {
 extension FriendRequestViewController: FriendRequestCellDelegate {
     func acceptDidPressed(_ cell: FriendRequestCell, userUID: StringUID) {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser = CurrentUser.shared.currentUser else { return }
         
-        let ref =  Firestore.firestore().collection("users").document(currentUser.uid!)
+        let refCurrent =  Firestore.firestore().collection("users").document(currentUser.uid!)
+        let refFriend = Firestore.firestore().collection("users").document(userUID)
         
         // add friend to friend field of current user
-        ref.updateData(["friends.\(userUID)": true])
+        refCurrent.updateData(["friends.\(userUID)": true])
+        refFriend.updateData(["friends.\(currentUser.uid!)": true])
         
         // delete request from data base
-        ref.updateData(["friendRequests.\(userUID)": FieldValue.delete()])
+        refCurrent.updateData(["friendRequests.\(userUID)": FieldValue.delete()])
+        
+        friendRequests.removeAll(where: { $0.uid == userUID})
+        tableFriendRequest.reloadData()
     }
     
     func deleteDidPressed(_ cell: FriendRequestCell, userUID: StringUID) {
         
-        guard let currentUser = AuthController.shared.currentUser else { return }
+        guard let currentUser = CurrentUser.shared.currentUser else { return }
         Firestore.firestore().collection("users").document(currentUser.uid!).updateData(["friendRequests.\(userUID)": FieldValue.delete()])
     }
 }

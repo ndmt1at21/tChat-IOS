@@ -1,28 +1,28 @@
 //
-//  ContactCell.swift
+//  ConversationPrivateCell.swift
 //  MeloApp
 //
-//  Created by Minh Tri on 12/17/20.
+//  Created by Minh Tri on 1/22/21.
 //
 
 import UIKit
 import MaterialComponents
 
-class ContactCell: MDCBaseCell {
+class ConversationPrivateCell: MDCBaseCell {
 
-    @IBOutlet weak var imageCover: UIImageView!
     @IBOutlet weak var containerImageCover: UIView!
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var contentVIew: UIView!
+    @IBOutlet weak var imageCover: UIImageView!
+    @IBOutlet weak var nameGroup: UILabel!
+    @IBOutlet weak var recentMessage: UILabel!
     
-    var userModel: User? {
+    var onlineCircleImage = UIImageView()
+    
+    var groupModel: Group? {
         didSet {
             setupContentCell()
             layoutIfNeeded()
         }
     }
-    
-    var onlineCircleImage = UIImageView()
     
     private var isOnlineValue = false
     var isOnline: Bool {
@@ -48,9 +48,15 @@ class ContactCell: MDCBaseCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupOnlineCircle()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageCover.layer.cornerRadius = imageCover.bounds.height / 2
+        imageCover.layer.masksToBounds = true
     }
     
     private func setupOnlineCircle() {
@@ -70,35 +76,43 @@ class ContactCell: MDCBaseCell {
         containerImageCover.addSubview(onlineCircleImage)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        imageCover.layer.cornerRadius = imageCover.frame.height / 2
-        onlineCircleImage.layer.cornerRadius = onlineCircleImage.frame.height / 2
-    }
-    
     private func setupContentCell() {
-        name.text = userModel?.name!
         
-        let imgLoading = ImageLoading()
-        imgLoading.loadingImageAndCaching(
-            target: imageCover,
-            with: userModel?.profileImage,
-            placeholder: nil,
-            progressHandler: nil) { (error) in
-            if error != nil {
-                print("Error:", error!)
-                return
+        groupModel?.getGroupImageAvatar(completion: { (imageUrl) in
+            // image group
+            let imgLoading = ImageLoading()
+            imgLoading.loadingImageAndCaching(
+                target: self.imageCover,
+                with: imageUrl,
+                placeholder: nil,
+                progressHandler: nil) { (error) in
+                if error != nil {
+                    print("Error:", error!)
+                    return
+                }
             }
-            
-            self.layoutIfNeeded()
-        }
+        })
         
-        UserActivity.observeUserActivity(userUID: userModel!.uid!) { (isActivity) in
-            if isActivity {
-                self.isOnline = true
-            } else {
-                self.isOnline = false
+        
+        
+        // name group
+        groupModel?.getNameGroup(completion: { (name) in
+            self.nameGroup.text = name
+        })
+        
+        // message
+        if let message = groupModel?.recentMessage?.message {
+            switch message.type {
+            case .image:
+                recentMessage.text = "[Hình ảnh]"
+            case .video:
+                recentMessage.text = "[Video]"
+            case .sticker:
+                recentMessage.text = "[Sticker]"
+            case .text:
+                nameGroup.text = message.content
+            default:
+                nameGroup.text = ""
             }
         }
     }
